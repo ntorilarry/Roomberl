@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
+import ProtectedRoutes from "../presentation/auth/utils/ProtectedRoutes";
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,4 +22,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default ProtectedRoutes(MainLayout);
