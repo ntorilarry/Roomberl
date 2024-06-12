@@ -29,3 +29,14 @@ export interface signUpAddInfoRequest {
   dateOfAdmission: string;
   user: string;
 }
+
+
+export interface updateRoomTypeRequest {
+  roomType: string;
+
+}
+
+export interface UpdateRoomTypeParams {
+  body: updateRoomTypeRequest;
+  userId: string;
+}

@@ -72,6 +72,7 @@ export const roomService = createApi({
       }),
       providesTags: ["Room"],
     }),
+
     addRoomType: build.mutation<BaseResponse<any>, roomTypeRequest>({
       query: (body: roomTypeRequest) => ({
         url: "/room/room_types/",

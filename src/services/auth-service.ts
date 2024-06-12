@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
+  UpdateRoomTypeParams,
   loginRequest,
   signUpAddInfoRequest,
   signUpRequest,
@@ -39,6 +40,26 @@ export const authService = createApi({
       invalidatesTags: ["Auth"],
     }),
 
+    getAddInfoByUserId: build.query<BaseResponse<any>, string>({
+      query: (userId ) => ({
+        url: `/accounts/user-additional-detail/${userId}/`,
+        method: "GET",
+   
+      }),
+      providesTags: ["Auth"],
+    }),
+
+
+    updateRoomType: build.mutation<BaseResponse<any>, UpdateRoomTypeParams>({
+      query: ({ body, userId }: UpdateRoomTypeParams) => ({
+        url: `/accounts/user-additional-detail/${userId}/`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
+
+
     getHostels: build.query<BaseResponse<any>, void>({
       query: () => ({
         url: "/literals/Unauthenticated/",
@@ -54,4 +75,6 @@ export const {
   useLoginMutation,
   useSignUpAddInfoMutation,
   useGetHostelsQuery,
+  useUpdateRoomTypeMutation,
+  useGetAddInfoByUserIdQuery,
 } = authService;

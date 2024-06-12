@@ -6,6 +6,7 @@ import { FaGamepad, FaRegStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import ViewRoomTypesLoader from "./components/ViewRoomTypesLoader";
+import SelectRoomType from "./components/SelectRoomType";
 
 const ViewRoomTypes = () => {
   const [hostel, setHostel] = useState(sessionStorage.getItem("hostel"));
@@ -59,15 +60,18 @@ const ViewRoomTypes = () => {
                   <hr className=" w-full"></hr>
                 </div>
                 <div className="flex text-[14px] leading-4 py-2 text-[#53575A] dark:text-white  items-center">
-                  <p>{item.description}</p>
+                  <p>{item.description || "NA"}</p>
                 </div>
-                <Link
-                  to={`/rooms/rooms/${item.id}`}
-                  className="inline-flex cursor-pointer my-2 items-center justify-center rounded-md bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
-                >
-                  View rooms
-                  <BsSendCheck className="ml-2" />
-                </Link>
+                <div className="flex gap-2">
+                  <Link
+                    to={`/rooms/rooms/${item.id}`}
+                    className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                  >
+                    View rooms
+                    <BsSendCheck className="ml-2" />
+                  </Link>
+                  <SelectRoomType roomTypeId={item.id} />
+                </div>
               </div>
             </div>
           ))}

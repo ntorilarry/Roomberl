@@ -37,7 +37,7 @@ const RoomData = () => {
             <img
               src={`https://cyrax1.pythonanywhere.com${value}`}
               alt="Floor Plan"
-              style={{ width: "100px", height: "auto" }}
+              style={{ width: "50px", height: "auto" }}
             />
           ) : (
             "NA"
@@ -48,25 +48,17 @@ const RoomData = () => {
         accessor: "images",
         Cell: ({ value }) =>
           value && value.length > 0 ? (
-            <Swiper
-              modules={[Navigation, Pagination]}
-              navigation
-              pagination={{ clickable: true }}
-              slidesPerView={1}
-              // autoplay={{ delay: 3000 }}
-
-              className="mySwiper"
-            >
+            <div className="grid gap-2 grid-cols-3">
               {value.map((image, index) => (
-                <SwiperSlide key={index}>
+                <div key={index}>
                   <img
                     src={`https://cyrax1.pythonanywhere.com${image.image}`}
                     alt={`Room Image ${index + 1}`}
-                    style={{ width: "100px", height: "100px" }}
+                    style={{ width: "50px", height: "auto" }}
                   />
-                </SwiperSlide>
+                </div>
               ))}
-            </Swiper>
+            </div>
           ) : (
             "NA"
           ),

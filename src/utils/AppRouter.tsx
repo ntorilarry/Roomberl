@@ -12,6 +12,7 @@ import RoomDetails from "../presentation/main/rooms/roomDetails/RoomDetails";
 import ViewRooms from "../presentation/main/rooms/viewRooms/ViewRooms";
 import Dashboard from "../presentation/main/dashboard/Dashboard";
 import Users from "../presentation/main/users/Users";
+import Payment from "../presentation/main/rooms/payment/Payment";
 
 const AppRouter = () => {
   return (
@@ -38,6 +39,7 @@ const AppRouter = () => {
             path="room-details/:roomTypeId/:roomId"
             element={<RoomDetails />}
           />
+          <Route path="payment" element={<Payment />} />
         </Route>
       </Route>
     </Routes>
