@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useGetRoomTypeQuery } from "../../../../../services/room-service";
 import RoomTypeTable from "./RoomTypeTable.tsx";
+import { EditRoomType } from "./EditRoomType";
+import { DeleteRoomType } from "./DeleteRoomType";
 
 const RoomTypeData = () => {
   const [filterValue, setFilterValue] = useState("");
@@ -37,12 +39,22 @@ const RoomTypeData = () => {
       },
       {
         Header: "Room Amenities",
-        accessor: (row) => row.roomAmenities.map(amenity => amenity.name).join(", "),
+        accessor: (row) =>
+          row.roomAmenities.map((amenity) => amenity.name).join(", "),
       },
 
       {
         Header: "Date Created",
         accessor: (row) => moment(row.createdAt).format("MMMM Do YYYY"),
+      },
+      {
+        Header: "Actions",
+        Cell: ({ row }) => (
+          <div className="flex gap-x-2">
+            <EditRoomType typeroom={row.original} />
+            <DeleteRoomType typeroom={row.original} />
+          </div>
+        ),
       },
     ],
     []
@@ -60,7 +72,6 @@ const RoomTypeData = () => {
     currentPage * pageSize
   );
 
-
   return (
     <div>
       <RoomTypeTable
@@ -72,7 +83,6 @@ const RoomTypeData = () => {
         isLoading={isLoading}
         setFilterValue={setFilterValue}
       />
-
     </div>
   );
 };

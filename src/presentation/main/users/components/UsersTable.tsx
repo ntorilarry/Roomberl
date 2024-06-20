@@ -1,10 +1,10 @@
 import React from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
-import Pagination from "../../../../../components/Pagination";
 import { FiSearch } from "react-icons/fi";
-import { AddRoomType } from "./AddRoomType";
-import { FilterRoomType } from "./FilterRoomType";
+import { FilterUsers } from "./FilterUsers";
+import Pagination from "../../../../components/Pagination";
+
 
 const GlobalFilter = ({
   preGlobalFilteredRows,
@@ -46,7 +46,7 @@ const GlobalFilter = ({
   );
 };
 
-const RoomAmenityTable = ({
+const UsersTable = ({
   columns,
   data,
   totalPages,
@@ -81,8 +81,7 @@ const RoomAmenityTable = ({
                   <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className="gap-x-2 relative inline-flex">
-                        <FilterRoomType setFilterValue={setFilterValue} />
-                        <AddRoomType />
+                        <FilterUsers setFilterValue={setFilterValue} />
                       </div>
                     </div>
                   </div>
@@ -126,17 +125,17 @@ const RoomAmenityTable = ({
                   </thead>
                   <tbody
                     {...getTableBodyProps()}
-                    className="divide-y divide-gray-200 dark:divide-slate-700"
+                    className="divide-y divide-gray-200 dark:divide-slate-600"
                   >
                     {isLoading ? (
                       Array.from({ length: 5 }).map((_, index) => (
-                        <tr key={index} className="animate-pulse">
+                        <tr key={index} className=" animate-pulse">
                           {columns.map((column, colIndex) => (
                             <td
                               key={colIndex}
                               className="px-6 py-4 whitespace-nowrap"
                             >
-                              <div className="h-4 bg-gray-200 rounded dark:bg-slate-700"></div>
+                              <div className="h-4 bg-gray-200 rounded dark:bg-slate-600"></div>
                             </td>
                           ))}
                         </tr>
@@ -145,30 +144,17 @@ const RoomAmenityTable = ({
                       rows.map((row) => {
                         prepareRow(row);
                         return (
-                          <tr {...row.getRowProps()}>
+                          <tr {...row.getRowProps()} className="">
                             {row.cells.map((cell) => (
                               <td
                                 {...cell.getCellProps()}
                                 className="px-6 py-4 whitespace-nowrap align-top"
                               >
-                                {cell.column.Header === "Description" ? (
-                                  <td
-                                    {...cell.getCellProps()}
-                                    className="h-px w-60 min-w-60"
-                                  >
-                                    <div className="block relative z-10">
-                                      <p className="text-xs text-wrap text-gray-800 dark:text-slate-200">
-                                        {cell.render("Cell")}
-                                      </p>
-                                    </div>
-                                  </td>
-                                ) : (
-                                  <div className="block">
-                                    <span className="block text-xs font-normal text-gray-800 dark:text-slate-200">
-                                      {cell.render("Cell")}
-                                    </span>
-                                  </div>
-                                )}
+                                <div className="block">
+                                  <span className="block text-xs font-normal text-gray-800 dark:text-slate-200">
+                                    {cell.render("Cell")}
+                                  </span>
+                                </div>
                               </td>
                             ))}
                           </tr>
@@ -205,4 +191,4 @@ const RoomAmenityTable = ({
   );
 };
 
-export default RoomAmenityTable;
+export default UsersTable;

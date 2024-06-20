@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from "react";
+import UsersData from "./components/UsersData";
+
 
 const Users = () => {
   return (
-    <div>Users</div>
-  )
-}
+    <div>
+      <UsersData />
+    </div>
+  );
+};
 
-export default Users
+export default Users;

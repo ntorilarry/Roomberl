@@ -59,7 +59,6 @@ export const authService = createApi({
       invalidatesTags: ["Auth"],
     }),
 
-
     getHostels: build.query<BaseResponse<any>, void>({
       query: () => ({
         url: "/literals/Unauthenticated/",

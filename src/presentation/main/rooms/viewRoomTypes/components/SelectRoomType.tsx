@@ -31,7 +31,9 @@ const SelectRoomType = ({ roomTypeId }) => {
       const { status } = response["data"] as responseType;
       if (status === "success") {
         toast.success(status);
-        navigate("/rooms/payment");
+        navigate("/rooms/payment", {
+          state: { roomTypeId },
+        });
       } else {
         toast.error(status);
       }
@@ -44,15 +46,22 @@ const SelectRoomType = ({ roomTypeId }) => {
   const { data: response, isLoading: getInfoLoading } =
     useGetAddInfoByUserIdQuery(userID || "");
   const checkRoomType = response?.data.roomType.id || [];
+
+  const handleNavigatePayment = () => {
+    navigate("/rooms/payment", {
+      state: { roomTypeId },
+    });
+  };
+
   return (
     <div>
       {roomTypeId === checkRoomType ? (
-        <Link
-          to="/rooms/payment"
+        <button
+          onClick={handleNavigatePayment}
           className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-teal-700 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
         >
           Make payment
-        </Link>
+        </button>
       ) : (
         <button
           onClick={handleFormSubmit}

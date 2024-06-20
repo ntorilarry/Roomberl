@@ -51,7 +51,7 @@ const LogIn = () => {
     }
   };
   return (
-    <div className="bg-white ">
+    <div className="bg-white dark:dark:bg-slate-800">
       <div className="flex justify-center h-screen">
         <div
           className="hidden bg-cover lg:block lg:w-[60%]"
@@ -62,11 +62,11 @@ const LogIn = () => {
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
-              <h2 className="text-4xl font-bold text-white">
+              <h2 className="text-4xl font-bold text-white dark:text-white">
                 Welcome to RoomBerl
               </h2>
 
-              <p className="max-w-xl mt-3 text-gray-300">
+              <p className="max-w-xl mt-3 text-gray-300 dark:text-white">
                 More than ever, we believe that perfect student accommodation
                 combined with the right roommates create an exciting university
                 experience.
@@ -78,11 +78,11 @@ const LogIn = () => {
         <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
           <div className="flex-1">
             <div className="text-center">
-              <h2 className="text-3xl font-bold text-center text-gray-700">
+              <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-white">
                 Sign in
               </h2>
 
-              <p className="mt-3 text-gray-500 ">
+              <p className="mt-3 text-gray-500 dark:text-white">
                 Enter your email and password
               </p>
             </div>
@@ -92,7 +92,7 @@ const LogIn = () => {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block mb-2 text-sm text-gray-600 "
+                    className="block mb-2 text-sm text-gray-600 dark:text-white"
                   >
                     Email Address
                   </label>
@@ -101,7 +101,7 @@ const LogIn = () => {
                     name="email"
                     placeholder="example@example.com"
                     onChange={handleFormChanged}
-                    className="block w-full px-4 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full px-4 py-3 mt-2 text-gray-700 dark:text-white placeholder-gray-400 bg-white rounded-lg dark:bg-slate-700  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
 
@@ -109,7 +109,7 @@ const LogIn = () => {
                   <div className="flex justify-between mb-2">
                     <label
                       htmlFor="password"
-                      className="text-sm text-gray-600 "
+                      className="text-sm text-gray-600 dark:text-white"
                     >
                       Password
                     </label>
@@ -120,7 +120,7 @@ const LogIn = () => {
                     name="password"
                     onChange={handleFormChanged}
                     placeholder="Your Password"
-                    className="block w-full px-4 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full px-4 py-3 mt-2 text-gray-700 dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                   {showPassword ? (
                     <FiEyeOff
@@ -137,7 +137,7 @@ const LogIn = () => {
                 <p className="text-right">
                   <a
                     href="#"
-                    className="text-sm text-gray-400  focus:text-blue-500 hover:text-blue-500 hover:underline"
+                    className="text-sm text-gray-400 dark:text-white focus:text-blue-500 hover:text-blue-500 hover:underline"
                   >
                     Forgot password?
                   </a>
@@ -158,7 +158,7 @@ const LogIn = () => {
                 </div>
               </form>
 
-              <p className="mt-6 text-sm text-center text-gray-400">
+              <p className="mt-6 text-sm text-center text-gray-400 dark:text-white">
                 Don&#x27;t have an account yet?{" "}
                 <Link
                   to="/auth/sign-up"

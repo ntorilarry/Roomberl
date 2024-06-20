@@ -1,35 +1,27 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoCloseCircle } from "react-icons/io5";
 import { FaFilter } from "react-icons/fa";
-import { useGetHostelsQuery } from "../../../../../services/auth-service";
-import { useGetRoomTypeQuery } from "../../../../../services/room-service";
+import { useGetHostelsQuery } from "../../../../services/auth-service";
 
-export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
+export const FilterUsers = ({ setFilterValue }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHostel, setSelectedHostel] = useState("");
-  const [selectedRoomType, setSelectedRoomType] = useState("");
+  function closeModal() {
+    setIsOpen(false);
+  }
 
-  const closeModal = () => setIsOpen(false);
-  const openModal = () => setIsOpen(true);
+  function openModal() {
+    setIsOpen(true);
+  }
 
-  const { data: responseHostel } = useGetHostelsQuery();
-  const Hostels = responseHostel?.data?.hostels || [];
-
-  const { data: responseRoomType, isLoading: isRoomTypeLoading } =
-    useGetRoomTypeQuery(selectedHostel);
-  const RoomTypes = responseRoomType?.data?.results || [];
+  const { data: response } = useGetHostelsQuery();
+  const Hostels = response?.data?.hostels || [];
 
   const applyFilter = () => {
-    setFilterHostel(selectedHostel);
-    setFilterRoomType(selectedRoomType);
+    setFilterValue(selectedHostel);
     closeModal();
   };
-
-  useEffect(() => {
-    // Clear the room type selection when the hostel changes
-    setSelectedRoomType("");
-  }, [selectedHostel]);
 
   return (
     <>
@@ -66,7 +58,7 @@ export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative inline-flex w-full transform flex-col  rounded-xl border-2 bg-white dark:bg-slate-700 dark:border-slate-600 text-left align-bottom transition-all sm:my-8 sm:max-w-md sm:align-middle">
+              <Dialog.Panel className="relative inline-flex w-full transform flex-col  rounded-xl border-2 bg-white dark:bg-slate-800 dark:border-slate-600 text-left align-bottom transition-all sm:my-8 sm:max-w-md sm:align-middle">
                 <div className="absolute top-4 right-5">
                   <button
                     type="button"
@@ -83,52 +75,27 @@ export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
                     as="h3"
                     className="text-xl font-semibold dark:text-white"
                   >
-                    Filter Room
+                    Filter Room Type
                   </Dialog.Title>
-                  <hr className="border-hr border-gray-500 mt-4" />
+
                   <form className="mt-5">
-                    <div className="my-2">
+                    <div className="mb-2">
                       <label
-                        htmlFor="hostel"
+                        htmlFor="hs-feedback-post-comment-name-1"
                         className="block mb-2 text-sm font-medium dark:text-white"
                       >
                         Hostel
                       </label>
                       <select
-                        id="hostel"
                         value={selectedHostel}
                         onChange={(e) => setSelectedHostel(e.target.value)}
-                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                       >
-                        <option value="" selected disabled>
+                        <option value="" selected>
                           Choose hostel
                         </option>
-                        {Hostels.map((data) => (
-                          <option key={data.id} value={data.id}>
-                            {data.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="my-2">
-                      <label
-                        htmlFor="roomType"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Room Type
-                      </label>
-                      <select
-                        id="roomType"
-                        value={selectedRoomType}
-                        onChange={(e) => setSelectedRoomType(e.target.value)}
-                        disabled={!selectedHostel || isRoomTypeLoading}
-                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
-                      >
-                        <option value="" selected disabled>
-                          Choose room type
-                        </option>
-                        {RoomTypes.map((data) => (
-                          <option key={data.id} value={data.id}>
+                        {Hostels.map((data, index) => (
+                          <option key={index} value={data.id}>
                             {data.name}
                           </option>
                         ))}

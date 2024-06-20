@@ -1,13 +1,14 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { MdDelete } from "react-icons/md";
 import { IoCloseCircle } from "react-icons/io5";
-import { IoMdAdd } from "react-icons/io";
-import { useGetHostelsQuery } from "../../../../../services/auth-service";
-import { FaFilter } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { responseType } from "../../../../../models/response/base-response";
+import { useDeleteRoomAmenitiesMutation } from "../../../../../services/room-service";
 
-export const FilterRoomType = ({ setFilterValue }) => {
+export const DeleteRoomAmenity = ({ amenity }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedHostel, setSelectedHostel] = useState("");
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -16,23 +17,29 @@ export const FilterRoomType = ({ setFilterValue }) => {
     setIsOpen(true);
   }
 
-  const { data: response } = useGetHostelsQuery();
-  const Hostels = response?.data?.hostels || [];
+  const [deleteRoomAmenities, { isLoading }] = useDeleteRoomAmenitiesMutation();
 
-  const applyFilter = () => {
-    setFilterValue(selectedHostel);
-    closeModal();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await deleteRoomAmenities(amenity.id);
+      console.log(response);
+      toast.success("Amenity deleted successfully");
+      setIsOpen(false);
+    } catch (error: any) {
+      console.error("Error:", error);
+      toast.error(error.message || "An unexpected error occurred");
+    }
   };
-
   return (
     <>
       <button
         type="button"
-        className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-white dark:hover:bg-slate-700"
+        className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-white dark:hover:bg-slate-700"
         onClick={openModal}
       >
-        <FaFilter className="flex-shrink-0 size-3.5" />
-        Filter
+        <MdDelete className="flex-shrink-0 size-3.5" />
+        Delete
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -49,7 +56,7 @@ export const FilterRoomType = ({ setFilterValue }) => {
             <div className="fixed inset-0 bg-black dark:bg-black dark:bg-opacity-50 bg-opacity-20 transition-opacity" />
           </Transition.Child>
 
-          <div className="fixed z-50 inset-0 flex  items-end justify-center   px-4 pt-4  text-center sm:block sm:p-0">
+          <div className="fixed z-50 inset-0 flex min-h-screen items-end justify-center  overflow-hidden px-4 pt-4 pb-20 text-center sm:block sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -59,7 +66,7 @@ export const FilterRoomType = ({ setFilterValue }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative inline-flex w-full transform flex-col  rounded-xl border-2 bg-white dark:bg-slate-800 dark:border-slate-600 text-left align-bottom transition-all sm:my-8 sm:max-w-md sm:align-middle">
+              <Dialog.Panel className="relative inline-flex w-full transform flex-col overflow-hidden rounded-xl bg-white dark:bg-slate-800 text-left align-bottom shadow-2xl transition-all sm:my-8 md:my-32 sm:max-w-md sm:align-middle">
                 <div className="absolute top-4 right-5">
                   <button
                     type="button"
@@ -76,33 +83,14 @@ export const FilterRoomType = ({ setFilterValue }) => {
                     as="h3"
                     className="text-xl font-semibold dark:text-white"
                   >
-                    Filter Room Type
+                    Delete Amenity
                   </Dialog.Title>
+
                   <hr className="border-hr border-gray-500 mt-4" />
-                  <form className="mt-5">
-                    <div className="mb-2">
-                      <label
-                        htmlFor="hs-feedback-post-comment-name-1"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Hostel
-                      </label>
-                      <select
-                        value={selectedHostel}
-                        onChange={(e) => setSelectedHostel(e.target.value)}
-                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
-                      >
-                        <option value="" selected>
-                          Choose hostel
-                        </option>
-                        {Hostels.map((data, index) => (
-                          <option key={index} value={data.id}>
-                            {data.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </form>
+
+                  <div className="flex-1  py-5 sm:py-6 dark:text-white">
+                    <p>Are you sure you want to delete this ammenity?</p>
+                  </div>
                 </div>
 
                 <div className="flex h-16 flex-shrink-0 items-center justify-end space-x-2 bg-layer-3 px-6 shadow-lg">
@@ -115,10 +103,10 @@ export const FilterRoomType = ({ setFilterValue }) => {
                   </button>
                   <button
                     type="button"
-                    onClick={applyFilter}
+                    onClick={handleFormSubmit}
                     className="inline-flex cursor-pointer items-center justify-center rounded-2xl  bg-[#1B8ADB] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
                   >
-                    Filter
+                    Delete
                   </button>
                 </div>
               </Dialog.Panel>

@@ -1,20 +1,20 @@
-import { ChangeEvent, Fragment, useState } from "react";
+import { ChangeEvent, Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoCloseCircle } from "react-icons/io5";
-import { IoMdAdd } from "react-icons/io";
 import { roomTypeRequest } from "../../../../../models/request/room-request";
 import {
-  useAddRoomTypeMutation,
+  useEditRoomTypeMutation,
   useGetRoomAmenitiesQuery,
 } from "../../../../../services/room-service";
 import { responseType } from "../../../../../models/response/base-response";
 import toast from "react-hot-toast";
 import { useGetHostelsQuery } from "../../../../../services/auth-service";
 import Select from "react-select";
+import { TbEditCircle } from "react-icons/tb";
 
-export const AddRoomType = () => {
+export const EditRoomType = ({ typeroom }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  console.log("typeroom", typeroom);
   function closeModal() {
     setIsOpen(false);
   }
@@ -24,12 +24,12 @@ export const AddRoomType = () => {
   }
 
   const [formData, setFormData] = useState<roomTypeRequest>({
-    name: "",
-    description: "",
-    price: 0,
-    numOccupancy: 0,
-    hostel: "",
-    roomAmenities: [],
+    name: typeroom.name,
+    description: typeroom.description,
+    price: typeroom.price,
+    numOccupancy: typeroom.numOccupancy,
+    hostel: typeroom.hostel.id,
+    roomAmenities: typeroom.roomAmenities.map((amenity) => amenity.id),
   });
 
   const handleFormChanged = (
@@ -42,24 +42,19 @@ export const AddRoomType = () => {
     }));
   };
 
-  const [addRoomType, { isLoading }] = useAddRoomTypeMutation();
+  const [editRoomType, { isLoading }] = useEditRoomTypeMutation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await addRoomType(formData);
+      const response = await editRoomType({
+        body: formData,
+        id: typeroom.id,
+      });
       console.log(response);
       const { status } = response["data"] as responseType;
       if (status === "success") {
         toast.success(status);
-        setFormData({
-          name: "",
-          description: "",
-          price: 0,
-          numOccupancy: 0,
-          hostel: "",
-          roomAmenities: [],
-        });
         setIsOpen(false);
       } else {
         toast.error(status);
@@ -88,6 +83,18 @@ export const AddRoomType = () => {
     }));
   };
 
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      name: typeroom.name,
+      description: typeroom.description,
+      price: typeroom.price,
+      numOccupancy: typeroom.numOccupancy,
+      hostel: typeroom.hostel.id,
+      roomAmenities: typeroom.roomAmenities.map((amenity) => amenity.id),
+    }));
+  }, [typeroom]);
+
   return (
     <>
       <button
@@ -95,8 +102,8 @@ export const AddRoomType = () => {
         className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:border-slate-700 dark:text-white dark:hover:bg-slate-800"
         onClick={openModal}
       >
-        <IoMdAdd className="flex-shrink-0 size-3.5" />
-        Add Room Type
+        <TbEditCircle className="flex-shrink-0 size-3.5" />
+        Edit Room Type
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -140,7 +147,7 @@ export const AddRoomType = () => {
                     as="h3"
                     className="text-xl font-semibold dark:text-white"
                   >
-                    Create Room Type
+                    Edit Room Type
                   </Dialog.Title>
                   <hr className="border-hr border-gray-500 mt-4" />
                   <form className="overflow-y-auto">
@@ -154,6 +161,7 @@ export const AddRoomType = () => {
                       <input
                         type="text"
                         name="name"
+                        value={formData.name}
                         id="hs-feedback-post-comment-name-1"
                         className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
                         placeholder="Name"
@@ -170,6 +178,7 @@ export const AddRoomType = () => {
                       <textarea
                         placeholder="Description"
                         name="description"
+                        value={formData.description}
                         onChange={handleFormChanged}
                         className="py-4 px-3 block w-full  bg-[#f0efef] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
                       />
@@ -184,6 +193,7 @@ export const AddRoomType = () => {
                       <input
                         type="number"
                         name="price"
+                        value={formData.price}
                         id="hs-feedback-post-comment-name-1"
                         className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
                         placeholder="price"
@@ -200,6 +210,7 @@ export const AddRoomType = () => {
                       <input
                         type="number"
                         name="numOccupancy"
+                        value={formData.numOccupancy}
                         id="hs-feedback-post-comment-name-1"
                         className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
                         placeholder="Enter number of occupants"
@@ -217,6 +228,7 @@ export const AddRoomType = () => {
                         name="hostel"
                         id="hs-feedback-post-comment-name-1"
                         className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
+                        value={formData.hostel}
                         onChange={handleFormChanged}
                       >
                         <option value="" selected>
@@ -237,11 +249,18 @@ export const AddRoomType = () => {
                         Room Amenities
                       </label>
                       <Select
-                        className="basic-multi-select"
+                        className="basic-multi-select "
                         classNamePrefix="select"
                         options={amenityOptions}
                         isMulti
                         name="roomAmenities"
+                        value={
+                          formData.roomAmenities
+                            ? amenityOptions.filter((option) =>
+                                formData.roomAmenities.includes(option.value)
+                              )
+                            : []
+                        }
                         onChange={handleAmenitiessSelectChange}
                       />
                     </div>

@@ -2,9 +2,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
+  roomAmenityParams,
   roomAmenityRequest,
-  roomRequest,
   roomTypeRequest,
+  roomTypesParams,
 } from "../models/request/room-request";
 
 export const roomService = createApi({
@@ -65,6 +66,21 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
+    updateRoomAmenities: build.mutation<BaseResponse<any>, roomAmenityParams>({
+      query: ({body, id}: roomAmenityParams) => ({
+        url: `/room/amenities/${id}/`,
+        method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    deleteRoomAmenities: build.mutation<BaseResponse<any>, string>({
+      query: (id) => ({
+        url: `/room/amenities/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Room"],
+    }),
     getRoomType: build.query<BaseResponse<any>, string>({
       query: (hostelId) => ({
         url: `/room/room_types/?hostel=${hostelId}`,
@@ -81,6 +97,37 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
+
+    editRoomType: build.mutation<BaseResponse<any>, roomTypesParams>({
+      query: ({body, id}: roomTypesParams) => ({
+        url: `/room/room_types/${id}/`,
+        method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    deleteRoomType: build.mutation<BaseResponse<any>, string>({
+      query: (id) => ({
+        url: `/room/room_types/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    makeRoomPayment: build.mutation<BaseResponse<any>, FormData>({
+      query: (body: FormData) => ({
+        url: "/accounts/room-payment/",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    getRoomPayment: build.query<BaseResponse<any>, void>({
+      query: () => ({
+        url: "/accounts/room-payment/",
+        method: "GET",
+      }),
+      providesTags: ["Room"],
+    }),
   }),
 });
 
@@ -90,6 +137,12 @@ export const {
   useAddRoomMutation,
   useGetRoomAmenitiesQuery,
   useAddRoomAmenitiesMutation,
+  useUpdateRoomAmenitiesMutation,
+  useDeleteRoomAmenitiesMutation,
   useGetRoomTypeQuery,
   useAddRoomTypeMutation,
+  useEditRoomTypeMutation,
+  useDeleteRoomTypeMutation,
+  useMakeRoomPaymentMutation,
+  useGetRoomPaymentQuery
 } = roomService;

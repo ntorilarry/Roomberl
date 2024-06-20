@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import moment from "moment";
 import { useGetRoomAmenitiesQuery } from "../../../../../services/room-service";
 import RoomAmenityTable from "./RoomAmenityTable.tsx";
-import TableShimmerLoader from "../../../../../components/TableShimmerLoader";
+import { EditRoomAmenity } from "./EditRoomAmenity";
+import { DeleteRoomAmenity } from "./DeleteRoomAmenity";
 
 const RoomAmenityData = () => {
-  const location = useLocation();
-
   const { data: response, isLoading } = useGetRoomAmenitiesQuery();
 
   const RoomAmenity = response?.data.results || [];
 
   const columns = React.useMemo(
     () => [
-   
       {
         Header: "Name",
         accessor: "name",
@@ -27,6 +24,16 @@ const RoomAmenityData = () => {
       {
         Header: "Date Created",
         accessor: (row) => moment(row.createdAt).format("MMMM Do YYYY"),
+      },
+
+      {
+        Header: "Actions",
+        Cell: ({ row }) => (
+          <div className="flex gap-x-2">
+            <EditRoomAmenity amenity={row.original} />
+            <DeleteRoomAmenity amenity={row.original} />
+          </div>
+        ),
       },
     ],
     []
@@ -44,7 +51,6 @@ const RoomAmenityData = () => {
     currentPage * pageSize
   );
 
-
   return (
     <div>
       <RoomAmenityTable
@@ -55,7 +61,6 @@ const RoomAmenityData = () => {
         onPageChange={setCurrentPage}
         isLoading={isLoading}
       />
-
     </div>
   );
 };

@@ -22,3 +22,27 @@ export interface roomRequest {
   hostel: string;
   roomAmenities: string[];
 }
+
+
+export interface roomAmenityParams{
+  body: roomAmenityRequest;
+  id: string;
+}
+
+
+export interface roomTypesParams{
+  body: roomTypeRequest;
+  id: string;
+}
+
+
+export interface paymentRequest{
+  firstReceipt: string;
+  secondReceipt: string;
+  amountPayed: string;
+  note: string;
+  user: string;
+  roomType: string;
+  
+
+}

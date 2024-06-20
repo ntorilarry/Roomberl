@@ -1,92 +1,3 @@
-// import { Transition } from "@headlessui/react";
-// import {
-//   MdOutlineBedroomParent,
-//   MdOutlineMeetingRoom,
-//   MdOutlineRoomPreferences
-// } from "react-icons/md";
-// import { GiHouse } from "react-icons/gi";
-// import { NavLink } from "react-router-dom";
-
-// const Sidebar = ({ sideBar, setSideBar }) => {
-//   return (
-//     <div>
-//       <div>
-//         <aside
-//           id="logo-sidebar"
-//           className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-slate-700 dark:border-slate-800"
-//           aria-label="Sidebar"
-//         >
-//           <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-slate-700">
-//             <ul className="space-y-2 font-medium">
-//               <li>
-//                 <NavLink
-//                   to="/rooms/view-room-types"
-//                   className={({ isActive }) =>
-//                     `flex items-center nav-active p-2 rounded-lg text-sm dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600 ${
-//                       isActive
-//                         ? "bg-slate-200 dark:bg-slate-600 rounded-xl"
-//                         : ""
-//                     }`
-//                   }
-//                 >
-//                   <MdOutlineMeetingRoom className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-//                   <span className="ml-3">Register your room</span>
-//                 </NavLink>
-//               </li>
-//               <li>
-//                 <NavLink
-//                   to="/rooms/amenities"
-//                   className={({ isActive }) =>
-//                     `flex items-center nav-active text-sm p-2 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600 ${
-//                       isActive
-//                         ? "bg-slate-200 dark:bg-slate-600 rounded-xl"
-//                         : ""
-//                     }`
-//                   }
-//                 >
-//                   <MdOutlineBedroomParent className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-//                   <span className="ml-3">Room Amenities</span>
-//                 </NavLink>
-//               </li>
-//               <li>
-//                 <NavLink
-//                   to="/rooms/roomtypes"
-//                   className={({ isActive }) =>
-//                     `flex items-center nav-active text-sm p-2 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600 ${
-//                       isActive
-//                         ? "bg-slate-200 dark:bg-slate-600 rounded-xl"
-//                         : ""
-//                     }`
-//                   }
-//                 >
-//                   <MdOutlineRoomPreferences className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-//                   <span className="ml-3">Room Types</span>
-//                 </NavLink>
-//               </li>
-//               <li>
-//                 <NavLink
-//                   to="/rooms/all-rooms"
-//                   className={({ isActive }) =>
-//                     `flex items-center nav-active text-sm p-2 rounded-lg dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600 ${
-//                       isActive
-//                         ? "bg-slate-200 dark:bg-slate-600 rounded-xl"
-//                         : ""
-//                     }`
-//                   }
-//                 >
-//                   <GiHouse className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
-//                   <span className="ml-3">Rooms</span>
-//                 </NavLink>
-//               </li>
-//             </ul>
-//           </div>
-//         </aside>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Sidebar;
 import { Fragment } from "react";
 import { Dialog, Disclosure, Transition } from "@headlessui/react";
 import {
@@ -100,6 +11,7 @@ import {
 import {
   MdOutlineBedroomParent,
   MdOutlineMeetingRoom,
+  MdOutlinePayments,
   MdOutlineRoomPreferences,
 } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
@@ -131,6 +43,7 @@ const navigation = [
       { name: "All Rooms", href: "/rooms/all-rooms", icon: SiGoogleclassroom },
     ],
   },
+  { name: "Payment", href: "/verify-payment", icon: MdOutlinePayments },
   { name: "Users", href: "/users", icon: HiOutlineUsers },
 ];
 

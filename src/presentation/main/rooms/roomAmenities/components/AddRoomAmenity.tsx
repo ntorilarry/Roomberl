@@ -109,9 +109,9 @@ export const AddRoomAmenity = () => {
                     as="h3"
                     className="text-xl font-semibold dark:text-white"
                   >
-                    Create amenity
+                    Create Amenity
                   </Dialog.Title>
-
+                  <hr className="border-hr border-gray-500 mt-4" />
                   <form>
                     <div className="my-3">
                       <label

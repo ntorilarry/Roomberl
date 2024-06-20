@@ -1,9 +1,9 @@
 import { HiMiniBars4, HiOutlineBell, HiMiniChevronDown } from "react-icons/hi2";
 import { Menu, Transition } from "@headlessui/react";
-import { Switcher } from "./Switcher";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../presentation/auth/utils/AuthContext";
+import DarkModeToggle from "./DarkModeToggle";
 
 const userNavigation = [
   { name: "Your profile", href: "/profile" },
@@ -77,7 +77,7 @@ const Header = ({ setSidebarOpen }) => {
             aria-hidden="true"
           />
 
-          <Switcher />
+          <DarkModeToggle />
 
           {/* Separator */}
           <div
@@ -121,7 +121,9 @@ const Header = ({ setSidebarOpen }) => {
                     {({ active }) => (
                       <a
                         href={item.href}
-                        onClick={item.name === "Sign out" ? handleLogout : undefined}
+                        onClick={
+                          item.name === "Sign out" ? handleLogout : undefined
+                        }
                         className={classNames(
                           active ? "bg-gray-50" : "",
                           "block px-3 py-1 text-sm leading-6 text-gray-900"

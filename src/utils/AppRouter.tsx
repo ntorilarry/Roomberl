@@ -11,8 +11,9 @@ import AllRooms from "../presentation/main/rooms/allRooms/AllRooms";
 import RoomDetails from "../presentation/main/rooms/roomDetails/RoomDetails";
 import ViewRooms from "../presentation/main/rooms/viewRooms/ViewRooms";
 import Dashboard from "../presentation/main/dashboard/Dashboard";
+import UserPayment from "../presentation/main/payment/userPayment/UserPayment";
 import Users from "../presentation/main/users/Users";
-import Payment from "../presentation/main/rooms/payment/Payment";
+import AdminPayment from "../presentation/main/payment/adminPayment/AdminPayment";
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,7 @@ const AppRouter = () => {
         <Route index element={<Navigate replace to="dashboard" />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="users" element={<Users />} />
+
         <Route path="rooms">
           <Route index element={<Navigate replace to="view-room-types" />} />
           <Route path="view-room-types" element={<ViewRoomTypes />} />
@@ -39,8 +41,10 @@ const AppRouter = () => {
             path="room-details/:roomTypeId/:roomId"
             element={<RoomDetails />}
           />
-          <Route path="payment" element={<Payment />} />
+          <Route path="payment" element={<UserPayment />} />
         </Route>
+        <Route path="verify-payment" element={<AdminPayment />} />
+
       </Route>
     </Routes>
   );
