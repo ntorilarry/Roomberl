@@ -8,11 +8,11 @@ const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className=" dark:bg-slate-900  h-screen bg-gray-50 ">
+    <div className=" dark:bg-slate-900  h-screen bg-gray-100 ">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      <div className="lg:pl-72">
+      <div className="lg:pl-[280px]">
         <Header setSidebarOpen={setSidebarOpen} />
-        <main className="py-10 dark:bg-slate-900 bg-gray-50">
+        <main className="py-10 dark:bg-slate-900 bg-gray-100">
           <div className="px-4 sm:px-6 lg:px-8">
             <Outlet />
           </div>

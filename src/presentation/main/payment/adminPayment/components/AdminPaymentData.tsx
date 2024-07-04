@@ -4,6 +4,7 @@ import { useGetRoomPaymentQuery } from "../../../../../services/room-service";
 import AdminPaymentTable from "./AdminPaymentTable";
 import { IoIosWarning } from "react-icons/io";
 import { MdVerified } from "react-icons/md";
+import { VerifyPaymentModal } from "./VerifyPaymentModal";
 
 const AdminPaymentData = () => {
   const { data: response, isLoading } = useGetRoomPaymentQuery();
@@ -92,6 +93,14 @@ const AdminPaymentData = () => {
       {
         Header: "Date Created",
         accessor: (row) => moment(row.createdAt).format("MMMM Do YYYY"),
+      },
+      {
+        Header: "Actions",
+        Cell: ({ row }) => (
+          <div className="flex gap-x-2">
+            <VerifyPaymentModal payment={row.original} />
+          </div>
+        ),
       },
     ],
     []

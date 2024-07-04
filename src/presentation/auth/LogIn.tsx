@@ -51,7 +51,7 @@ const LogIn = () => {
     }
   };
   return (
-    <div className="bg-white dark:dark:bg-slate-800">
+    <div className="bg-white dark:bg-slate-800">
       <div className="flex justify-center h-screen">
         <div
           className="hidden bg-cover lg:block lg:w-[60%]"
@@ -101,7 +101,7 @@ const LogIn = () => {
                     name="email"
                     placeholder="example@example.com"
                     onChange={handleFormChanged}
-                    className="block w-full px-4 py-3 mt-2 text-gray-700 dark:text-white placeholder-gray-400 bg-white rounded-lg dark:bg-slate-700  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full px-4 py-3 mt-2 text-gray-700  border-2 dark:text-white placeholder-gray-400 bg-white rounded-lg dark:bg-slate-700  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
 
@@ -120,7 +120,7 @@ const LogIn = () => {
                     name="password"
                     onChange={handleFormChanged}
                     placeholder="Your Password"
-                    className="block w-full px-4 py-3 mt-2 text-gray-700 dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full px-4 py-3 mt-2 text-gray-700  border-2 dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                   {showPassword ? (
                     <FiEyeOff

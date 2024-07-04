@@ -8,6 +8,18 @@ import ViewRoomLoader from "./components/ViewRoomLoader";
 
 const ViewRooms = () => {
   const { roomTypeId } = useParams();
+  const parseBoolean = (value) => {
+    return value === "true";
+  };
+
+  const [verify, setVerify] = useState(
+    parseBoolean(sessionStorage.getItem("isPaymentVerified"))
+  );
+
+  const [payRoomTypeId, setPayRoomTypeId] = useState(
+    sessionStorage.getItem("isRoomTypePresent")
+  );
+
   const [hostel, setHostel] = useState(sessionStorage.getItem("hostel"));
 
   const { data: response, isLoading } = useGetRoomsQuery({
@@ -16,6 +28,8 @@ const ViewRooms = () => {
   });
 
   const rooms = response?.data?.results || [];
+
+  console.log("verify", verify, payRoomTypeId, roomTypeId);
 
   if (isLoading) {
     return (
@@ -79,13 +93,15 @@ const ViewRooms = () => {
                     <div className="flex text-[14px] leading-4 py-2 text-[#53575A] dark:text-white items-center">
                       <p>{item.description || "NA"}</p>
                     </div>
-                    <Link
-                      to={`/rooms/room-details/${roomTypeId}/${item.id}`}
-                      className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
-                    >
-                      View and Apply
-                      <BsSendCheck className="ml-2" />
-                    </Link>
+                    {verify && payRoomTypeId === roomTypeId && (
+                      <Link
+                        to={`/rooms/room-details/${roomTypeId}/${item.id}`}
+                        className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                      >
+                        View and Apply
+                        <BsSendCheck className="ml-2" />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

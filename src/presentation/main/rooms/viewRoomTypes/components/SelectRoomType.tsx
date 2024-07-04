@@ -7,6 +7,7 @@ import {
   useGetAddInfoByUserIdQuery,
   useUpdateRoomTypeMutation,
 } from "../../../../../services/auth-service";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const SelectRoomType = ({ roomTypeId }) => {
   const [userID, setUserID] = useState<string | null>(
@@ -46,6 +47,20 @@ const SelectRoomType = ({ roomTypeId }) => {
   const { data: response, isLoading: getInfoLoading } =
     useGetAddInfoByUserIdQuery(userID || "");
   const checkRoomType = response?.data.roomType.id || [];
+  const isPaymentVerified = response?.data?.roomPayments?.some(
+    (payment) => payment.isVerified
+  );
+
+  const isRoomTypePresent = response?.data?.roomPayments?.map(
+    (payment) => payment.roomTypeId
+  )[0];
+
+  console.log(isRoomTypePresent);
+
+  sessionStorage.setItem("isPaymentVerified", isPaymentVerified);
+  sessionStorage.setItem("isRoomTypePresent", isRoomTypePresent);
+  console.log("isRoomTypePresent", isRoomTypePresent);
+  console.log("isPaymentVerified", isPaymentVerified);
 
   const handleNavigatePayment = () => {
     navigate("/rooms/payment", {
@@ -55,18 +70,25 @@ const SelectRoomType = ({ roomTypeId }) => {
 
   return (
     <div>
-      {roomTypeId === checkRoomType ? (
-        <button
-          onClick={handleNavigatePayment}
-          className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-teal-700 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
-        >
-          Make payment
-        </button>
+      {roomTypeId === isRoomTypePresent ? (
+        isPaymentVerified ? (
+          <button className="inline-flex cursor-not-allowed my-2 items-center justify-center rounded-full bg-teal-700 px-3 py-2 text-xs font-semibold text-white shadow-sm">
+            Paid
+            <IoCheckmarkCircleOutline className="ml-2" />
+          </button>
+        ) : (
+          <button
+            onClick={handleNavigatePayment}
+            className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-gray-700 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+          >
+            Make payment
+          </button>
+        )
       ) : (
         <button
           onClick={handleFormSubmit}
           disabled={selectLoading}
-          className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-teal-700 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+          className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-gray-700 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
         >
           Select
           <HiMiniPlus className="ml-2" />

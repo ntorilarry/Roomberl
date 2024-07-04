@@ -43,6 +43,12 @@ export interface paymentRequest{
   note: string;
   user: string;
   roomType: string;
-  
 
+}
+export interface updatePaymentRequest{
+  isVerified: boolean;
+}
+export interface paymentParams{
+  body: updatePaymentRequest;
+  id: string;
 }

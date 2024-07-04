@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
+  paymentParams,
   roomAmenityParams,
   roomAmenityRequest,
   roomTypeRequest,
@@ -128,6 +129,14 @@ export const roomService = createApi({
       }),
       providesTags: ["Room"],
     }),
+    verifyRoomPayment: build.mutation<BaseResponse<any>, paymentParams>({
+      query: ({body, id}: paymentParams) => ({
+        url: `/accounts/room-payment/${id}/`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
   }),
 });
 
@@ -144,5 +153,6 @@ export const {
   useEditRoomTypeMutation,
   useDeleteRoomTypeMutation,
   useMakeRoomPaymentMutation,
-  useGetRoomPaymentQuery
+  useGetRoomPaymentQuery,
+  useVerifyRoomPaymentMutation
 } = roomService;
