@@ -1,0 +1,14 @@
+/auth/login
+/auth/sign-up
+/auth/sign-up-additional
+/auth/questions-and-answers
+/dashboard
+/users
+/rooms/view-room-types
+/rooms/amenities
+/rooms/roomtypes
+/rooms/all-rooms
+/rooms/rooms/:roomTypeId
+/rooms/room-details/:roomTypeId/:roomId
+/payment
+/verify-payment

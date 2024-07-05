@@ -46,7 +46,6 @@ const AppRouter = () => {
           <Route path="payment" element={<UserPayment />} />
         </Route>
         <Route path="verify-payment" element={<AdminPayment />} />
-
       </Route>
     </Routes>
   );
