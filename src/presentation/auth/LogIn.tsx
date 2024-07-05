@@ -145,7 +145,7 @@ const LogIn = () => {
                 <div onClick={handleFormSubmit} className="mt-6">
                   <button
                     disabled={!loginData.email || !loginData.password}
-                    className="w-full px-4 py-3 tracking-wide rounded-full text-white transition-colors duration-200 transform bg-[#1B8ADB] hover:bg-[#125182] focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                    className="w-full px-4 py-3 tracking-wide rounded-full text-white transition-colors duration-200 transform bg-gray-800 hover:bg-gray-700 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                   >
                     {isLoading ? (
                       <span>
