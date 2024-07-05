@@ -52,3 +52,15 @@ export interface paymentParams{
   body: updatePaymentRequest;
   id: string;
 }
+
+
+export interface roomDataType {
+  name: string;
+  description: string;
+  images: File[];
+  floorPlan: File | null;
+  code: string;
+  roomType: string;
+  hostel: string;
+  roomAmenities: string[];
+}

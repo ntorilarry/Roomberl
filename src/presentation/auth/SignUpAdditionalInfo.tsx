@@ -26,7 +26,7 @@ const SignUpAdditionalInfo = () => {
     dateOfBirth: "",
     guardianPhone: "",
     studentIdNumber: "",
-    dateOfAdmission: "",
+    date_of_admission: "",
     user: userId,
   });
 
@@ -49,7 +49,9 @@ const SignUpAdditionalInfo = () => {
       const { status } = response["data"] as responseType;
       if (status === "success") {
         toast.success(status);
-        navigate("/auth/login");
+        navigate("/auth/questions-and-answers", {
+          state: { userId },
+        });
       } else {
         toast.error(status);
       }
@@ -304,13 +306,13 @@ const SignUpAdditionalInfo = () => {
                   id="af-account-phone"
                   type="date"
                   className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                  {...register("dateOfAdmission", {
+                  {...register("date_of_admission", {
                     required: "Date Of Admission is required",
                   })}
                   onChange={handleInputChange}
                 />
                 <p className="text-red-500 text-sm">
-                  {errors?.dateOfAdmission?.message?.toString()}
+                  {errors?.date_of_admission?.message?.toString()}
                 </p>
               </div>
             </div>
@@ -319,14 +321,14 @@ const SignUpAdditionalInfo = () => {
               <button
                 type="submit"
                 onClick={handleSubmit(handleFormSubmit)}
-                className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-full border border-transparent font-semibold bg-[#1B8ADB] text-white hover:bg-[#125182] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
+                className="py-3 px-8 inline-flex justify-center items-center gap-2 rounded-full border border-transparent bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
               >
                 {isLoading ? (
                   <span>
                     <Loader />
                   </span>
                 ) : (
-                  <span>Finish</span>
+                  <span>Submit and Continue</span>
                 )}
               </button>
             </div>

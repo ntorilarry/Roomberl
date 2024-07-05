@@ -26,7 +26,7 @@ export interface signUpAddInfoRequest {
   dateOfBirth: string;
   guardianPhone: string;
   studentIdNumber: string;
-  dateOfAdmission: string;
+  date_of_admission: string;
   user: string;
 }
 
@@ -38,5 +38,15 @@ export interface updateRoomTypeRequest {
 
 export interface UpdateRoomTypeParams {
   body: updateRoomTypeRequest;
+  userId: string;
+}
+
+export interface UpdateUserQuestionsRequest {
+  responses: any;
+
+}
+
+export interface UpdateUserQuestionsParams {
+  body: UpdateUserQuestionsRequest;
   userId: string;
 }

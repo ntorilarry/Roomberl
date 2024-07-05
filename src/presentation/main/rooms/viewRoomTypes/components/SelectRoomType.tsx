@@ -46,7 +46,7 @@ const SelectRoomType = ({ roomTypeId }) => {
 
   const { data: response, isLoading: getInfoLoading } =
     useGetAddInfoByUserIdQuery(userID || "");
-  const checkRoomType = response?.data.roomType.id || [];
+  const checkRoomType = response?.data?.roomType?.id || [];
   const isPaymentVerified = response?.data?.roomPayments?.some(
     (payment) => payment.isVerified
   );

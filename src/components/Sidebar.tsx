@@ -180,8 +180,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   className={({ isActive }) =>
                                     classNames(
                                       isActive
-                                        ? "bg-[#F9FAFB] dark:bg-slate-700 text-black dark:text-white"
-                                        : "text-gray-400 hover:text-black dark:hover:text-white hover:bg-[#F9FAFB] dark:hover:bg-slate-700",
+                                        ? "bg-gray-100 dark:bg-slate-700 text-black dark:text-white"
+                                        : "text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-700",
                                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium"
                                     )
                                   }
@@ -271,8 +271,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                   className={({ isActive }) =>
                                     classNames(
                                       isActive
-                                        ? " text-black dark:text-white bg-[#F9FAFB] dark:bg-slate-700"
-                                        : "text-gray-400  hover:text-black dark:hover:text-white hover:bg-[#F9FAFB] dark:hover:bg-slate-700",
+                                        ? " text-black dark:text-white bg-gray-100 dark:bg-slate-700"
+                                        : "text-gray-400  hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-700",
                                       "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium"
                                     )
                                   }
@@ -295,8 +295,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           className={({ isActive }) =>
                             classNames(
                               isActive
-                                ? "bg-[#F9FAFB] dark:bg-slate-700 text-black dark:text-white"
-                                : "text-gray-400 hover:text-black dark:hover:text-white hover:bg-[#F9FAFB] dark:hover:bg-slate-700",
+                                ? "bg-gray-100 dark:bg-slate-700 text-black dark:text-white"
+                                : "text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-700",
                               "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium"
                             )
                           }

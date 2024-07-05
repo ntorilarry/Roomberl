@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import Select from "react-select";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -25,7 +25,8 @@ export const AddRoom = () => {
     hostel: "",
     roomAmenities: [],
   });
-  const [images, setImages] = useState<FileList | null>(null);
+
+  const [images, setImages] = useState<File[]>([]);
   const [floorPlan, setFloorPlan] = useState<File | null>(null);
 
   const handleFormChanged = (
@@ -38,7 +39,7 @@ export const AddRoom = () => {
       e.target instanceof HTMLInputElement &&
       e.target.files
     ) {
-      setImages(e.target.files);
+      setImages(Array.from(e.target.files));
     } else if (
       name === "floorPlan" &&
       e.target instanceof HTMLInputElement &&
@@ -95,7 +96,7 @@ export const AddRoom = () => {
           hostel: "",
           roomAmenities: [],
         });
-        setImages(null);
+        setImages([]);
         setFloorPlan(null);
         setShowModal(false);
       } else {
@@ -299,7 +300,33 @@ export const AddRoom = () => {
                             accept="image/*"
                           />
                         </label>
+                        {images.length > 0 && (
+                          <div className="flex flex-wrap mt-2 gap-2">
+                            {images.map((image, index) => (
+                              <div
+                                key={index}
+                                className="relative w-24 h-24 bg-gray-200 rounded"
+                              >
+                                <img
+                                  src={URL.createObjectURL(image)}
+                                  alt={`Room ${index + 1}`}
+                                  className="w-full h-full object-cover rounded"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setImages(images.filter((_, i) => i !== index))
+                                  }
+                                  className="absolute top-0 right-0 p-1 bg-white rounded-bl focus:outline-none"
+                                >
+                                  <IoMdClose className="text-red-500" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
+                      
                       <div className="mb-4">
                         <label
                           htmlFor="dropzone-file-floorPlan"
@@ -327,6 +354,19 @@ export const AddRoom = () => {
                             accept="image/*"
                           />
                         </label>
+                        {floorPlan && (
+                          <div className="my-3 rounded-md bg-[#F5F7FB] dark:bg-slate-700 py-4 px-8">
+                            <div className="flex items-center justify-between">
+                              <span className="truncate pr-3 text-base font-medium text-[#07074D] dark:text-white">
+                                {floorPlan.name}
+                              </span>
+                              <IoMdClose
+                                className="text-[#07074D] dark:text-white cursor-pointer"
+                                onClick={() => setFloorPlan(null)}
+                              />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 dark:border-slate-500 rounded-b">

@@ -14,6 +14,7 @@ import Dashboard from "../presentation/main/dashboard/Dashboard";
 import UserPayment from "../presentation/main/payment/userPayment/UserPayment";
 import Users from "../presentation/main/users/Users";
 import AdminPayment from "../presentation/main/payment/adminPayment/AdminPayment";
+import QuestionAnswer from "../presentation/auth/QuestionAnswer";
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
         <Route path="sign-up" element={<SignUp />} />
         <Route path="login" element={<LogIn />} />
         <Route path="sign-up-additional" element={<SignUpAdditionalInfo />} />
+        <Route path="questions-and-answers" element={<QuestionAnswer />} />
       </Route>
 
       <Route path="/" element={<MainLayout />}>

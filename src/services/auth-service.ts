@@ -3,6 +3,7 @@ import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
   UpdateRoomTypeParams,
+  UpdateUserQuestionsParams,
   loginRequest,
   signUpAddInfoRequest,
   signUpRequest,
@@ -66,6 +67,21 @@ export const authService = createApi({
       }),
       providesTags: ["Auth"],
     }),
+    getQuestions: build.query<BaseResponse<any>, void>({
+      query: () => ({
+        url: "/question/question/",
+        method: "GET",
+      }),
+      providesTags: ["Auth"],
+    }),
+    updateUserQuestions: build.mutation<BaseResponse<any>, UpdateUserQuestionsParams>({
+      query: ({ body, userId }: UpdateUserQuestionsParams) => ({
+        url: `/accounts/user-additional-detail/${userId}/`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
   }),
 });
 
@@ -76,4 +92,6 @@ export const {
   useGetHostelsQuery,
   useUpdateRoomTypeMutation,
   useGetAddInfoByUserIdQuery,
+  useGetQuestionsQuery,
+  useUpdateUserQuestionsMutation
 } = authService;

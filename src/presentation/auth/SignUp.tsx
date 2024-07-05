@@ -128,7 +128,7 @@ const SignUp = () => {
                       })}
                       onChange={handleInputChange}
                       className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                      placeholder="Maria"
+                      placeholder="Eg. John"
                     />
                     <p className="text-red-500 text-sm">
                       {errors?.firstName?.message?.toString()}
@@ -138,7 +138,7 @@ const SignUp = () => {
                     <input
                       type="text"
                       className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                      placeholder="Boone"
+                     placeholder="Eg. Doe"
                       {...register("lastName", {
                         required: "Last name is required", // Updated the required rule
                         pattern: {
@@ -193,7 +193,7 @@ const SignUp = () => {
                   id="af-account-email"
                   type="email"
                   className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                  placeholder="maria@site.com"
+                  placeholder="example@example.com"
                   {...register("email", {
                     required: { value: true, message: "Email is required" },
 
@@ -368,13 +368,13 @@ const SignUp = () => {
                   {...register("address", {
                     required: {
                       value: true,
-                      message: "Phone number is required",
+                      message: "Address is required",
                     },
                   })}
                   onChange={handleInputChange}
                   rows={4}
                   className="py-3 px-3 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                  placeholder="Tell us about yourself"
+                  placeholder="Address"
                 ></textarea>
                 <p className="text-red-500 text-sm">
                   {errors?.address?.message?.toString()}
@@ -420,14 +420,14 @@ const SignUp = () => {
               <button
                 type="submit"
                 onClick={handleSubmit(handleFormSubmit)}
-                className="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-full border border-transparent font-semibold bg-[#1B8ADB] text-white hover:bg-[#125182] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
+                className="py-3 px-8 inline-flex justify-center items-center gap-2 rounded-full border border-transparent f bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
               >
                 {isLoading ? (
                   <span>
                     <Loader />
                   </span>
                 ) : (
-                  <span>Submit and continue</span>
+                  <span>Submit and Continue</span>
                 )}
               </button>
             </div>

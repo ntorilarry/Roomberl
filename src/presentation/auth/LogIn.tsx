@@ -28,9 +28,9 @@ const LogIn = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await userLogin(loginData);
+      const response = await userLogin(loginData)
       console.log(response);
-      const { status, data } = response["data"] as responseType;
+      const { status, data } = response["data"] as responseType
       if (status === "success") {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
@@ -43,7 +43,7 @@ const LogIn = () => {
         toast.success(status);
         navigate("/");
       } else {
-        toast.error(status);
+        toast.success(data);
       }
     } catch (error: any) {
       console.error("Error:", error);
