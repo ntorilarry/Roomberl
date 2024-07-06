@@ -4,11 +4,11 @@ import { responseType } from "../../../../models/response/base-response";
 import { useMakeRoomPaymentMutation } from "../../../../services/room-service";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UserPayment = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const [userID, setUserID] = useState<string | null>(
     sessionStorage.getItem("user_id")
   );
@@ -72,6 +72,7 @@ const UserPayment = () => {
       const { status } = response["data"];
       if (status === "success") {
         toast.success(status);
+        navigate("/payments/success");
       } else {
         toast.error(status);
       }

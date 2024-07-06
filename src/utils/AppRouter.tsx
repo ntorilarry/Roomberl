@@ -15,6 +15,7 @@ import UserPayment from "../presentation/main/payment/userPayment/UserPayment";
 import Users from "../presentation/main/users/Users";
 import AdminPayment from "../presentation/main/payment/adminPayment/AdminPayment";
 import QuestionAnswer from "../presentation/auth/QuestionAnswer";
+import UsersPaymentSuccess from "../presentation/main/payment/userPayment/UsersPaymentSuccess";
 
 const AppRouter = () => {
   return (
@@ -47,13 +48,10 @@ const AppRouter = () => {
         </Route>
 
         <Route path="payments">
-       
           <Route path="user" element={<UserPayment />} />
           <Route path="verify-payment" element={<AdminPayment />} />
-          <Route path="success" element={<RoomType />} />
-          
+          <Route path="success" element={<UsersPaymentSuccess />} />
         </Route>
-      
       </Route>
     </Routes>
   );

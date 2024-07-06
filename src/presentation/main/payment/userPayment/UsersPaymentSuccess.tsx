@@ -1,21 +1,15 @@
-import React, { ChangeEvent, useState } from "react";
-import toast from "react-hot-toast";
-import { responseType } from "../../../../models/response/base-response";
-import { useMakeRoomPaymentMutation } from "../../../../services/room-service";
-import { MdDriveFolderUpload } from "react-icons/md";
-import { IoMdClose } from "react-icons/io";
-import { useLocation } from "react-router-dom";
-
 const UsersPaymentSuccess = () => {
-  
   return (
     <div>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-2xl bg-white dark:bg-slate-800">
-          <h1 className="text-center pt-6 font-semibold text-2xl dark:text-white">
-            Upload payment proof to get a room
+          <h1 className="text-center py-3 font-semibold text-xl dark:text-white">
+            You have successfully submitted your payment proof
           </h1>
-       
+          <p className="text-base text-center dark:text-white py-3">
+            We've received your payment proof. Our team will now process it and
+            verify your payment. You'll be notified once it's complete.
+          </p>
         </div>
       </div>
     </div>
