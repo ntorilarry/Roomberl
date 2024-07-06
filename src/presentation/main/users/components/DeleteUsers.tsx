@@ -1,13 +1,11 @@
-import { ChangeEvent, Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { RiVerifiedBadgeLine } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
 import { IoCloseCircle } from "react-icons/io5";
-import { updatePaymentRequest } from "../../../../../models/request/room-request";
 import toast from "react-hot-toast";
-import { responseType } from "../../../../../models/response/base-response";
-import { useVerifyRoomPaymentMutation } from "../../../../../services/room-service";
+import { useDeleteUserMutation } from "../../../../services/user-service";
 
-export const VerifyPaymentModal = ({ payment }) => {
+export const DeleteUsers = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -17,57 +15,31 @@ export const VerifyPaymentModal = ({ payment }) => {
   function openModal() {
     setIsOpen(true);
   }
-  console.log("adminpayment", payment);
 
-  const [formData, setFormData] = useState<updatePaymentRequest>({
-    isVerified: true,
-  });
-
-  const handleFormChanged = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const [verifyPayment, { isLoading }] = useVerifyRoomPaymentMutation();
+  const [deleteRoom, { isLoading }] = useDeleteUserMutation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await verifyPayment({
-        body: formData,
-        id: payment.id,
-      });
+      const response = await deleteRoom(user.id);
       console.log(response);
-      const { status } = response["data"] as responseType;
-      if (status === "success") {
-        toast.success("Payment Verified");
-        setIsOpen(false);
-      } else {
-        toast.error(status);
-      }
+      toast.success("User deleted successfully");
+      setIsOpen(false);
     } catch (error: any) {
       console.error("Error:", error);
       toast.error(error.message || "An unexpected error occurred");
     }
   };
-
   return (
     <>
       <button
         type="button"
         className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-white dark:hover:bg-slate-700"
         onClick={openModal}
-        disabled={payment.isVerified === true}
       >
-        <RiVerifiedBadgeLine className="flex-shrink-0 size-3.5" />
-        Verify
+        <MdDelete className="flex-shrink-0 size-3.5" />
+        Delete
       </button>
-   
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" onClose={closeModal}>
@@ -110,13 +82,13 @@ export const VerifyPaymentModal = ({ payment }) => {
                     as="h3"
                     className="text-xl font-semibold dark:text-white"
                   >
-                    Verification
+                    Delete User
                   </Dialog.Title>
 
                   <hr className="border-hr border-gray-500 mt-4" />
 
                   <div className="flex-1  py-5 sm:py-6 dark:text-white">
-                    <p>Are you sure you want to verify this payment?</p>
+                    <p>Are you sure you want to delete this user?</p>
                   </div>
                 </div>
 
@@ -133,7 +105,7 @@ export const VerifyPaymentModal = ({ payment }) => {
                     onClick={handleFormSubmit}
                     className="inline-flex cursor-pointer items-center justify-center rounded-2xl  bg-[#1B8ADB] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
                   >
-                    Verify
+                    Delete
                   </button>
                 </div>
               </Dialog.Panel>

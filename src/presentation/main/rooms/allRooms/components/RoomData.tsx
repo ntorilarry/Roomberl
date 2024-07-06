@@ -4,6 +4,8 @@ import { useGetRoomsQuery } from "../../../../../services/room-service";
 import RoomsTables from "./RoomsTables";
 import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { EditRoom } from "./EditRoom";
+import { DeleteRoom } from "./DeleteRoom";
 
 const RoomData = () => {
   const [filterhostel, setFilterHostel] = useState("");
@@ -48,7 +50,7 @@ const RoomData = () => {
         accessor: "images",
         Cell: ({ value }) =>
           value && value.length > 0 ? (
-            <div className="grid gap-2 grid-cols-3">
+            <div className="grid gap-2 grid-cols-2">
               {value.map((image, index) => (
                 <div key={index}>
                   <img
@@ -72,6 +74,15 @@ const RoomData = () => {
       {
         Header: "Date Created",
         accessor: (row) => moment(row.createdAt).format("MMMM Do YYYY"),
+      },
+      {
+        Header: "Actions",
+        Cell: ({ row }) => (
+          <div className="flex gap-x-2">
+            <EditRoom room={row.original} />
+            <DeleteRoom room={row.original} />
+          </div>
+        ),
       },
     ],
     []

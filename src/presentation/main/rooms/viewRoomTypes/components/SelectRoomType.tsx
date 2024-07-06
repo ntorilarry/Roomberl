@@ -32,7 +32,7 @@ const SelectRoomType = ({ roomTypeId }) => {
       const { status } = response["data"] as responseType;
       if (status === "success") {
         toast.success(status);
-        navigate("/rooms/payment", {
+        navigate("/payments/user", {
           state: { roomTypeId },
         });
       } else {

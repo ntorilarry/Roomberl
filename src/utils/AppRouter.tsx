@@ -45,7 +45,15 @@ const AppRouter = () => {
           />
           <Route path="payment" element={<UserPayment />} />
         </Route>
-        <Route path="verify-payment" element={<AdminPayment />} />
+
+        <Route path="payments">
+       
+          <Route path="user" element={<UserPayment />} />
+          <Route path="verify-payment" element={<AdminPayment />} />
+          <Route path="success" element={<RoomType />} />
+          
+        </Route>
+      
       </Route>
     </Routes>
   );

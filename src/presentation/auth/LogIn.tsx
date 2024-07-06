@@ -101,7 +101,7 @@ const LogIn = () => {
                     name="email"
                     placeholder="example@example.com"
                     onChange={handleFormChanged}
-                    className="block w-full px-4 py-3 mt-2 text-gray-700  border-2 dark:text-white placeholder-gray-400 bg-white rounded-lg dark:bg-slate-700  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full px-4 py-3 mt-2 text-gray-700  dark:border-none dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
 
@@ -120,7 +120,7 @@ const LogIn = () => {
                     name="password"
                     onChange={handleFormChanged}
                     placeholder="Your Password"
-                    className="block w-full px-4 py-3 mt-2 text-gray-700  border-2 dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full px-4 py-3 mt-2 text-gray-700  border-2 dark:border-none dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg  focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                   {showPassword ? (
                     <FiEyeOff
@@ -145,7 +145,7 @@ const LogIn = () => {
                 <div onClick={handleFormSubmit} className="mt-6">
                   <button
                     disabled={!loginData.email || !loginData.password}
-                    className="w-full px-4 py-3 tracking-wide rounded-full text-white transition-colors duration-200 transform bg-gray-800 hover:bg-gray-700 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                    className="w-full px-4 py-3 tracking-wide rounded-full border dark:border-white text-white transition-colors duration-200 transform bg-gray-800 hover:bg-gray-700 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                   >
                     {isLoading ? (
                       <span>

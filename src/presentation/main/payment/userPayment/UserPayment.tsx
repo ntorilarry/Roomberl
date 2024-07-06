@@ -85,7 +85,7 @@ const UserPayment = () => {
     <div>
       <div className="flex items-center justify-center p-12">
         <div className="mx-auto w-full max-w-2xl bg-white dark:bg-slate-800">
-          <h1 className="text-center pt-6 font-semibold text-2xl">
+          <h1 className="text-center pt-6 font-semibold text-2xl dark:text-white">
             Upload payment proof to get a room
           </h1>
           <form
@@ -205,7 +205,7 @@ const UserPayment = () => {
             <div>
               <button
                 type="submit"
-                className="hover:shadow-form w-full rounded-full bg-gray-800 hover:bg-gray-700 py-3 px-8 text-center  text-white outline-none"
+                className="hover:shadow-form w-full dark:border darK:border-white rounded-full bg-gray-800 hover:bg-gray-700 py-3 px-8 text-center  text-white outline-none"
                 disabled={isLoading}
               >
                 Submit payment details

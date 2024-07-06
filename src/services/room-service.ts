@@ -7,6 +7,7 @@ import {
   roomAmenityRequest,
   roomTypeRequest,
   roomTypesParams,
+  UpdateRoomParams,
 } from "../models/request/room-request";
 
 export const roomService = createApi({
@@ -49,6 +50,21 @@ export const roomService = createApi({
         url: "/room/rooms/",
         method: "POST",
         body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    updateRoom: build.mutation<BaseResponse<any>, UpdateRoomParams>({
+      query: ({body, id}: UpdateRoomParams) => ({
+        url: `/room/rooms/${id}/`,
+        method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    deleteRoom: build.mutation<BaseResponse<any>, string>({
+      query: (id) => ({
+        url: `/room/rooms/${id}/`,
+        method: "DELETE",
       }),
       invalidatesTags: ["Room"],
     }),
@@ -154,5 +170,7 @@ export const {
   useDeleteRoomTypeMutation,
   useMakeRoomPaymentMutation,
   useGetRoomPaymentQuery,
-  useVerifyRoomPaymentMutation
+  useVerifyRoomPaymentMutation,
+  useUpdateRoomMutation,
+  useDeleteRoomMutation
 } = roomService;

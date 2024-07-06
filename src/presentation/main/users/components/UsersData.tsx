@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import moment from "moment";
 import UsersTable from "./UsersTable";
 import { useGetUsersByHostelIdQuery } from "../../../../services/user-service";
+import { DeleteUsers } from "./DeleteUsers";
 
 const UsersData = () => {
   const [filterValue, setFilterValue] = useState("");
@@ -56,6 +57,14 @@ const UsersData = () => {
       {
         Header: "Date Joined",
         accessor: (row) => moment(row.dateJoined).format("MMMM Do YYYY"),
+      },
+      {
+        Header: "Actions",
+        Cell: ({ row }) => (
+          <div className="flex gap-x-2">
+            <DeleteUsers user={row.original} />
+          </div>
+        ),
       },
     ],
     []

@@ -66,7 +66,7 @@ export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative inline-flex w-full transform flex-col  rounded-xl border-2 bg-white dark:bg-slate-700 dark:border-slate-600 text-left align-bottom transition-all sm:my-8 sm:max-w-md sm:align-middle">
+              <Dialog.Panel className="relative inline-flex w-full transform flex-col  rounded-xl border-2 bg-white dark:bg-slate-800 dark:border-slate-600 text-left align-bottom transition-all sm:my-8 sm:max-w-md sm:align-middle">
                 <div className="absolute top-4 right-5">
                   <button
                     type="button"
@@ -81,7 +81,7 @@ export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
                 <div className="flex-1 px-6 py-5 sm:py-6">
                   <Dialog.Title
                     as="h3"
-                    className="text-xl font-semibold dark:text-white"
+                    className="text-base font-semibold dark:text-white"
                   >
                     Filter Room
                   </Dialog.Title>

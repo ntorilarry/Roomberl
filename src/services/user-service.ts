@@ -24,10 +24,17 @@ export const userService = createApi({
       }),
       providesTags: ["Users"],
     }),
-   
+    deleteUser: build.mutation<BaseResponse<any>, string>({
+      query: (id) => ({
+        url: `/accounts/users/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
 export const {
-  useGetUsersByHostelIdQuery
+  useGetUsersByHostelIdQuery,
+  useDeleteUserMutation
 } = userService;

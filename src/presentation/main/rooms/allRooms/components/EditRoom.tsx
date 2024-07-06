@@ -1,29 +1,33 @@
-import React, { ChangeEvent, useState } from "react";
-import { IoMdAdd, IoMdClose } from "react-icons/io";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Select from "react-select";
+import { IoMdAdd, IoMdClose } from "react-icons/io";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { TbEditCircle } from "react-icons/tb";
 import { MdDriveFolderUpload } from "react-icons/md";
 import {
-  useAddRoomMutation,
+  useUpdateRoomMutation,
   useGetRoomAmenitiesQuery,
   useGetRoomTypeQuery,
 } from "../../../../../services/room-service";
 import { useGetHostelsQuery } from "../../../../../services/auth-service";
 import { responseType } from "../../../../../models/response/base-response";
+import { UpdateRoomParams } from "../../../../../models/request/room-request";
 
-export const AddRoom = () => {
+export const EditRoom = ({ room }) => {
+  const baseImageUrl = "https://cyrax1.pythonanywhere.com";
+
   const [showModal, setShowModal] = useState(false);
-  const [selectedHostelId, setSelectedHostelId] = useState("");
+  const [selectedHostelId, setSelectedHostelId] = useState(room.hostel.id);
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    images: [],
-    floorPlan: "",
-    code: "",
-    roomType: "",
-    hostel: "",
-    roomAmenities: [],
+    name: room.name,
+    description: room.description,
+    images: room.images || [],
+    floorPlan: room.floorPlan || "",
+    code: room.code,
+    roomType: room.roomType.id,
+    hostel: room.hostel.id,
+    roomAmenities: room.roomAmenities.map((amenity) => amenity.id),
   });
 
   const [images, setImages] = useState<File[]>([]);
@@ -58,7 +62,7 @@ export const AddRoom = () => {
     }
   };
 
-  const [addRoom, { isLoading }] = useAddRoomMutation();
+  const [updateRoom, { isLoading }] = useUpdateRoomMutation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -82,22 +86,15 @@ export const AddRoom = () => {
         });
       }
 
-      const response = (await addRoom(formDataToSend)) as responseType; // Pass FormData directly
+      const updateParams: UpdateRoomParams = {
+        id: room.id, // Assuming room.id is the correct id to use
+        body: formDataToSend,
+      };
+
+      const response = (await updateRoom(updateParams)) as responseType; // Pass FormData directly
       const { status } = response["data"];
       if (status === "success") {
         toast.success(status);
-        setFormData({
-          name: "",
-          description: "",
-          images: [],
-          floorPlan: "",
-          code: "",
-          roomType: "",
-          hostel: "",
-          roomAmenities: [],
-        });
-        setImages([]);
-        setFloorPlan(null);
         setShowModal(false);
       } else {
         toast.error(status);
@@ -107,6 +104,21 @@ export const AddRoom = () => {
       toast.error(error.message || "An unexpected error occurred");
     }
   };
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      name: room.name,
+      description: room.description,
+      images: room.images || [],
+      floorPlan: room.floorPlan || "",
+      code: room.code,
+      roomType: room.roomType.id,
+      hostel: room.hostel.id,
+      roomAmenities: room.roomAmenities.map((amenity) => amenity.id),
+    }));
+    setSelectedHostelId(room.hostel.id);
+  }, [room]);
 
   const { data: response } = useGetHostelsQuery();
   const Hostels = response?.data?.hostels || [];
@@ -130,6 +142,8 @@ export const AddRoom = () => {
     }));
   };
 
+  const getFullImageUrl = (path) => `${baseImageUrl}${path}`;
+
   return (
     <>
       <button
@@ -137,16 +151,16 @@ export const AddRoom = () => {
         className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-white dark:hover:bg-slate-800"
         onClick={() => setShowModal(true)}
       >
-        <IoMdAdd className="flex-shrink-0 size-3.5" />
-        Add Room
+        <TbEditCircle className="flex-shrink-0 size-3.5" />
+        Edit Room
       </button>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="dark:border-2 border-slate-700 rounded-lg shadow-lg relative flex flex-col w-full bg-white dark:bg-slate-800  outline-none focus:outline-none">
+              <div className="dark:border-2 border-slate-700 rounded-lg shadow-lg relative flex flex-col w-full bg-white dark:bg-slate-800 outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-3 dark:text-white border-b border-solid border-blueGray-200 dark:border-slate-500 rounded-t">
-                  <h3 className="text-base  font-semibold">Create Room</h3>
+                  <h3 className="text-base font-semibold">Edit Room</h3>
                   <IoCloseCircleOutline
                     className="h-6 w-6 text-2xl"
                     onClick={() => setShowModal(false)}
@@ -172,6 +186,7 @@ export const AddRoom = () => {
                           id="name"
                           className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                           placeholder="Name"
+                          value={formData.name}
                           onChange={handleFormChanged}
                           required
                         />
@@ -189,6 +204,7 @@ export const AddRoom = () => {
                           id="code"
                           className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                           placeholder="Code"
+                          value={formData.code}
                           onChange={handleFormChanged}
                         />
                       </div>
@@ -203,6 +219,7 @@ export const AddRoom = () => {
                           name="hostel"
                           id="hostel"
                           className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                          value={formData.hostel}
                           onChange={handleFormChanged}
                           required
                         >
@@ -227,6 +244,7 @@ export const AddRoom = () => {
                           name="roomType"
                           id="roomType"
                           className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                          value={formData.roomType}
                           onChange={handleFormChanged}
                           disabled={!selectedHostelId || isRoomTypeLoading}
                           required
@@ -253,6 +271,7 @@ export const AddRoom = () => {
                         placeholder="Description"
                         name="description"
                         id="description"
+                        value={formData.description}
                         onChange={handleFormChanged}
                         className="py-4 px-3 block w-full bg-[#f0efef] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                       />
@@ -269,6 +288,13 @@ export const AddRoom = () => {
                         name="roomAmenities"
                         isMulti
                         options={amenityOptions}
+                        value={
+                          formData.roomAmenities
+                            ? amenityOptions.filter((option) =>
+                                formData.roomAmenities.includes(option.value)
+                              )
+                            : []
+                        }
                         onChange={handleAmenitiesSelectChange}
                       />
                     </div>
@@ -287,7 +313,7 @@ export const AddRoom = () => {
                               images
                             </p>
                             <p className="text-xs text-gray-500 dark:text-white">
-                            PNG, JPG or JPEG
+                              PNG, JPG or JPEG
                             </p>
                           </div>
                           <input
@@ -300,33 +326,23 @@ export const AddRoom = () => {
                             accept="image/*"
                           />
                         </label>
-                        {images.length > 0 && (
-                          <div className="flex flex-wrap mt-2 gap-2">
-                            {images.map((image, index) => (
-                              <div
-                                key={index}
-                                className="relative w-24 h-24 bg-gray-200 rounded"
-                              >
-                                <img
-                                  src={URL.createObjectURL(image)}
-                                  alt={`Room ${index + 1}`}
-                                  className="w-full h-full object-cover rounded"
-                                />
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    setImages(images.filter((_, i) => i !== index))
-                                  }
-                                  className="absolute top-0 right-0 p-1 bg-white rounded-bl focus:outline-none"
-                                >
-                                  <IoMdClose className="text-red-500" />
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        )}
+
+                        <div className="flex flex-wrap mt-2 gap-2">
+                          {formData.images.map((data, index) => (
+                            <div
+                              key={index}
+                              className="relative w-24 h-24 bg-gray-200 rounded"
+                            >
+                              <img
+                                src={getFullImageUrl(data.image)}
+                                alt={`Room ${index + 1}`}
+                                className="w-full h-full object-cover rounded"
+                              />
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      
+
                       <div className="mb-4">
                         <label
                           htmlFor="dropzone-file-floorPlan"
@@ -342,7 +358,7 @@ export const AddRoom = () => {
                               a floor plan
                             </p>
                             <p className="text-xs text-gray-500 dark:text-white">
-                               PNG, JPG or JPEG
+                              PNG, JPG or JPEG
                             </p>
                           </div>
                           <input
@@ -354,20 +370,13 @@ export const AddRoom = () => {
                             accept="image/*"
                           />
                         </label>
-                        {floorPlan && (
+                        {formData.floorPlan && (
                           <div className="mt-2 relative inline-block bg-gray-200 rounded overflow-hidden">
                             <img
-                              src={URL.createObjectURL(floorPlan)}
+                              src={getFullImageUrl(formData.floorPlan)}
                               alt="floor_plan"
                               className="w-24 h-24 object-cover"
                             />
-                            <button
-                              type="button"
-                              className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-bl"
-                              onClick={() => setFloorPlan(null)}
-                            >
-                              <IoMdClose />
-                            </button>
                           </div>
                         )}
                       </div>
@@ -384,7 +393,7 @@ export const AddRoom = () => {
                         className="bg-blue-500 text-white  w-full  text-sm px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="submit"
                       >
-                        Create Room
+                        Update Room
                       </button>
                     </div>
                   </form>
@@ -392,6 +401,7 @@ export const AddRoom = () => {
               </div>
             </div>
           </div>
+          <div className="bg-opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
     </>

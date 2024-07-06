@@ -43,7 +43,7 @@ const navigation = [
       { name: "All Rooms", href: "/rooms/all-rooms", icon: SiGoogleclassroom },
     ],
   },
-  { name: "Payment", href: "/verify-payment", icon: MdOutlinePayments },
+  { name: "Payment", href: "/payments/verify-payment", icon: MdOutlinePayments },
   { name: "Users", href: "/users", icon: HiOutlineUsers },
 ];
 

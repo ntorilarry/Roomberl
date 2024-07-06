@@ -142,10 +142,10 @@ export const EditRoomType = ({ typeroom }) => {
                   </button>
                 </div>
 
-                <div className="flex-1 px-6 py-5 sm:py-6">
+                <div className="flex-1 px-6">
                   <Dialog.Title
                     as="h3"
-                    className="text-xl font-semibold dark:text-white"
+                    className="text-base pt-3 font-semibold dark:text-white"
                   >
                     Edit Room Type
                   </Dialog.Title>

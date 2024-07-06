@@ -62,7 +62,7 @@ const SignUpAdditionalInfo = () => {
   };
 
   return (
-    <div className="bg-[#F9FAFB]">
+    <div className="bg-[#F9FAFB] dark:bg-slate-800">
       <div className="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 mx-auto">
         <div className="flex flex-col justify-center sm:mx-auto sm:w-full sm:max-w-md">
           {/* Logo */}
@@ -70,7 +70,7 @@ const SignUpAdditionalInfo = () => {
             <img className="w-14" src={RoomBerlLogo} alt="" />
           </div>
 
-          <p className="mb-6 mt-3 text-center text-sm text-text">
+          <p className="mb-6 mt-3 text-center text-sm text-text dark:text-white">
             Have account?{" "}
             <Link
               to="/auth/login"
@@ -80,12 +80,12 @@ const SignUpAdditionalInfo = () => {
             </Link>
           </p>
         </div>
-        <div className="bg-white rounded-2xl border  p-4 sm:p-7 ">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl border-2 dark:border-slate-700  p-4 sm:p-7 ">
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 ">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
               Complete your registration
             </h2>
-            <p className="text-sm text-gray-600 ">
+            <p className="text-sm text-gray-600 dark:text-white">
               Manage your name, password and account settings.
             </p>
           </div>
@@ -95,7 +95,7 @@ const SignUpAdditionalInfo = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-email"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Other name
                 </label>
@@ -105,7 +105,7 @@ const SignUpAdditionalInfo = () => {
                 <input
                   id="af-account-email"
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="Other Name"
                   {...register("otherName", {
                     required: "Other name is required", // Updated the required rule
@@ -124,7 +124,7 @@ const SignUpAdditionalInfo = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-email"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 dark:text-white mt-2.5 "
                 >
                   Guardian FullName
                 </label>
@@ -133,7 +133,7 @@ const SignUpAdditionalInfo = () => {
               <div className="sm:col-span-9">
                 <input
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none dark:text-white dark:bg-slate-700 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="Guardian FullName"
                   {...register("guardianFullName", {
                     required: "Guardian FullName is required", // Updated the required rule
@@ -152,7 +152,7 @@ const SignUpAdditionalInfo = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-email"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Ghana Card Number
                 </label>
@@ -161,7 +161,7 @@ const SignUpAdditionalInfo = () => {
               <div className="sm:col-span-9">
                 <input
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none dark:text-white dark:bg-slate-700 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="GHA-xxxxxxxxx-x"
                   {...register("ghanaCardNumber", {
                     required: "Ghana Card Number is required",
@@ -181,7 +181,7 @@ const SignUpAdditionalInfo = () => {
                 <div className="inline-block">
                   <label
                     htmlFor="af-account-phone"
-                    className="inline-block text-sm text-gray-800 mt-2.5 "
+                    className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                   >
                     Date Of Birth
                   </label>
@@ -192,7 +192,7 @@ const SignUpAdditionalInfo = () => {
                 <input
                   id="af-account-phone"
                   type="date"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none dark:text-white dark:bg-slate-700 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   {...register("dateOfBirth", {
                     required: "Date of birth is required",
                   })}
@@ -207,7 +207,7 @@ const SignUpAdditionalInfo = () => {
                 <div className="inline-block">
                   <label
                     htmlFor="af-account-phone"
-                    className="inline-block text-sm text-gray-800 mt-2.5 "
+                    className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                   >
                     Guardian Phone
                   </label>
@@ -218,7 +218,7 @@ const SignUpAdditionalInfo = () => {
                 <input
                   id="af-account-phone"
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none dark:text-white dark:bg-slate-700 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="02xxxxxxxx or 05xxxxxxxx"
                   {...register("guardianPhone", {
                     required: {
@@ -240,7 +240,7 @@ const SignUpAdditionalInfo = () => {
                 <div className="inline-block">
                   <label
                     htmlFor="af-account-phone"
-                    className="inline-block text-sm text-gray-800 mt-2.5 "
+                    className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                   >
                     Student Id Number
                   </label>
@@ -251,7 +251,7 @@ const SignUpAdditionalInfo = () => {
                 <input
                   id="af-account-phone"
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none dark:text-white dark:bg-slate-700 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="School Student Id"
                   {...register("studentIdNumber", {
                     required: "Student Id number is required",
@@ -267,7 +267,7 @@ const SignUpAdditionalInfo = () => {
                 <div className="inline-block">
                   <label
                     htmlFor="af-account-phone"
-                    className="inline-block text-sm text-gray-800 mt-2.5 "
+                    className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                   >
                     Course of study
                   </label>
@@ -278,7 +278,7 @@ const SignUpAdditionalInfo = () => {
                 <input
                   id="af-account-phone"
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none dark:text-white dark:bg-slate-700 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="Course of study"
                   {...register("courseOfStudy", {
                     required: "courseOfStudy is required",
@@ -294,7 +294,7 @@ const SignUpAdditionalInfo = () => {
                 <div className="inline-block">
                   <label
                     htmlFor="af-account-phone"
-                    className="inline-block text-sm text-gray-800 mt-2.5 "
+                    className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                   >
                     Date Of Admission
                   </label>
@@ -305,7 +305,7 @@ const SignUpAdditionalInfo = () => {
                 <input
                   id="af-account-phone"
                   type="date"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none dark:text-white dark:bg-slate-700 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   {...register("date_of_admission", {
                     required: "Date Of Admission is required",
                   })}
@@ -321,7 +321,7 @@ const SignUpAdditionalInfo = () => {
               <button
                 type="submit"
                 onClick={handleSubmit(handleFormSubmit)}
-                className="py-3 px-8 inline-flex justify-center items-center gap-2 rounded-full border border-transparent bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
+                className="py-3 px-8 inline-flex justify-center items-center gap-2 rounded-full border dark:border-white bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
               >
                 {isLoading ? (
                   <span>

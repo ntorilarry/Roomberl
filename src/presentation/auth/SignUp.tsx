@@ -76,7 +76,7 @@ const SignUp = () => {
   const { data: response } = useGetHostelsQuery();
   const Hostels = response?.data?.hostels || [];
   return (
-    <div className="bg-[#F9FAFB]">
+    <div className="bg-[#F9FAFB] dark:bg-slate-800">
       <div className="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 mx-auto">
         <div className="flex flex-col justify-center sm:mx-auto sm:w-full sm:max-w-md">
           {/* Logo */}
@@ -84,7 +84,7 @@ const SignUp = () => {
             <img className="w-14" src={RoomBerlLogo} alt="" />
           </div>
 
-          <p className="mb-6 mt-3 text-center text-sm text-text">
+          <p className="mb-6 mt-3 text-center dark:text-white text-sm text-text">
             Have account?{" "}
             <Link
               to="/auth/login"
@@ -94,27 +94,27 @@ const SignUp = () => {
             </Link>
           </p>
         </div>
-        <div className="bg-white rounded-2xl border  p-4 sm:p-7 ">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 ">Register</h2>
-            <p className="text-sm text-gray-600 ">
+        <div className="bg-white  dark:bg-slate-800 rounded-2xl border-2 dark:border-slate-700  p-4 sm:p-7 ">
+          <div className="mb-8 ">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Register</h2>
+            <p className="text-sm text-gray-600 dark:text-white">
               Manage your name, password and account settings.
             </p>
           </div>
 
           <form>
-            <div className="grid sm:grid-cols-12 font-medium gap-2 sm:gap-6">
+            <div className="grid sm:grid-cols-12 font-medium gap-2 sm:gap-6 ">
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-full-name"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Full name
                 </label>
               </div>
 
               <div className="sm:col-span-9">
-                <div className="sm:grid sm:grid-cols-2 w-full">
+                <div className="sm:grid sm:grid-cols-2 gap-2 w-full">
                   <div className="">
                     <input
                       id="af-account-full-name"
@@ -127,8 +127,8 @@ const SignUp = () => {
                         },
                       })}
                       onChange={handleInputChange}
-                      className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                      placeholder="Eg. John"
+                      className="py-3 px-3 pe-11 block w-full border border-gray-300 dark:border-none rounded-lg dark:text-white dark:bg-slate-700 shadow-sm -mt-px -ms-px  sm:mt-0  text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                      placeholder="First name"
                     />
                     <p className="text-red-500 text-sm">
                       {errors?.firstName?.message?.toString()}
@@ -137,8 +137,8 @@ const SignUp = () => {
                   <div>
                     <input
                       type="text"
-                      className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                     placeholder="Eg. Doe"
+                      className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm -mt-px -ms-px rounded-lg dark:border-none dark:text-white dark:bg-slate-700 sm:mt-0 text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                     placeholder="Last name"
                       {...register("lastName", {
                         required: "Last name is required", // Updated the required rule
                         pattern: {
@@ -158,7 +158,7 @@ const SignUp = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-email"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Username
                 </label>
@@ -168,7 +168,7 @@ const SignUp = () => {
                 <input
                   id="af-account-email"
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="username"
                   {...register("username", {
                     required: "username is required", // Updated the required rule
@@ -183,7 +183,7 @@ const SignUp = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-email"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Email
                 </label>
@@ -192,7 +192,7 @@ const SignUp = () => {
                 <input
                   id="af-account-email"
                   type="email"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="example@example.com"
                   {...register("email", {
                     required: { value: true, message: "Email is required" },
@@ -212,7 +212,7 @@ const SignUp = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-password"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Password
                 </label>
@@ -224,7 +224,7 @@ const SignUp = () => {
                     <input
                       id="af-account-password"
                       type={showPassword ? "text" : "password"}
-                      className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                      className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                       placeholder="Enter  password"
                       {...register("password", {
                         required: "Password is required",
@@ -239,12 +239,12 @@ const SignUp = () => {
                     />
                     {showPassword ? (
                       <FiEyeOff
-                        className="absolute end-2.5 bottom-[0.95rem] text-lg"
+                        className="absolute end-2.5 dark:text-white bottom-[0.95rem] text-lg"
                         onClick={() => setShowPassword(!showPassword)}
                       />
                     ) : (
                       <FiEye
-                        className="absolute end-2.5 bottom-[0.95rem] text-lg"
+                        className="absolute end-2.5 dark:text-white bottom-[0.95rem] text-lg"
                         onClick={() => setShowPassword(!showPassword)}
                       />
                     )}
@@ -255,7 +255,7 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       type={showConfirmPassword ? "text" : "password"}
-                      className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                      className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                       placeholder="Confirm password"
                       {...register("password2", {
                         required: "Confirm Password is required",
@@ -267,14 +267,14 @@ const SignUp = () => {
                     />
                     {showConfirmPassword ? (
                       <FiEyeOff
-                        className="absolute end-2.5 bottom-[0.95rem] text-lg"
+                        className="absolute end-2.5 bottom-[0.95rem] dark:text-white text-lg"
                         onClick={() =>
                           setShowConfirmPassword(!showConfirmPassword)
                         }
                       />
                     ) : (
                       <FiEye
-                        className="absolute end-2.5 bottom-[0.95rem] text-lg"
+                        className="absolute end-2.5 bottom-[0.95rem] dark:text-white text-lg"
                         onClick={() =>
                           setShowConfirmPassword(!showConfirmPassword)
                         }
@@ -291,7 +291,7 @@ const SignUp = () => {
                 <div className="inline-block">
                   <label
                     htmlFor="af-account-phone"
-                    className="inline-block text-sm text-gray-800 mt-2.5 "
+                    className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                   >
                     Phone
                   </label>
@@ -302,7 +302,7 @@ const SignUp = () => {
                 <input
                   id="af-account-phone"
                   type="text"
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="02xxxxxxxx or 05xxxxxxxx"
                   {...register("mobile", {
                     required: {
@@ -324,7 +324,7 @@ const SignUp = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-country"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Gender
                 </label>
@@ -340,7 +340,7 @@ const SignUp = () => {
                     },
                   })}
                   onChange={handleInputChange}
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  dark:border-slate-700  dark:focus:ring-slate-600"
+                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  dark:border-slate-700  dark:focus:ring-slate-600"
                 >
                   <option value="" selected>
                     Choose gender
@@ -356,7 +356,7 @@ const SignUp = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-bio"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Address
                 </label>
@@ -373,7 +373,7 @@ const SignUp = () => {
                   })}
                   onChange={handleInputChange}
                   rows={4}
-                  className="py-3 px-3 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  className="py-3 px-3 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
                   placeholder="Address"
                 ></textarea>
                 <p className="text-red-500 text-sm">
@@ -383,7 +383,7 @@ const SignUp = () => {
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-country"
-                  className="inline-block text-sm text-gray-800 mt-2.5 "
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
                 >
                   Hostel
                 </label>
@@ -399,7 +399,7 @@ const SignUp = () => {
                     },
                   })}
                   onChange={handleInputChange}
-                  className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  dark:border-slate-700  dark:focus:ring-slate-600"
+                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  dark:border-slate-700  dark:focus:ring-slate-600"
                 >
                   <option value="" selected>
                     Choose hostel
@@ -420,7 +420,7 @@ const SignUp = () => {
               <button
                 type="submit"
                 onClick={handleSubmit(handleFormSubmit)}
-                className="py-3 px-8 inline-flex justify-center items-center gap-2 rounded-full border border-transparent f bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
+                className="py-3 px-8 inline-flex justify-center items-center gap-2 rounded-full border dark:border-white bg-gray-800 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm "
               >
                 {isLoading ? (
                   <span>

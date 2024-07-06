@@ -64,3 +64,9 @@ export interface roomDataType {
   hostel: string;
   roomAmenities: string[];
 }
+
+export interface UpdateRoomParams {
+  id: string;
+  body: FormData;
+}
+
