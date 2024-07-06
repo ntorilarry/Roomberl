@@ -205,7 +205,7 @@ const UserPayment = () => {
             <div>
               <button
                 type="submit"
-                className="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                className="hover:shadow-form w-full rounded-full bg-gray-800 hover:bg-gray-700 py-3 px-8 text-center  text-white outline-none"
                 disabled={isLoading}
               >
                 Submit payment details
