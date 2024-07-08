@@ -96,7 +96,9 @@ const SignUp = () => {
         </div>
         <div className="bg-white  dark:bg-slate-800 rounded-2xl border-2 dark:border-slate-700  p-4 sm:p-7 ">
           <div className="mb-8 ">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Register</h2>
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+              Register
+            </h2>
             <p className="text-sm text-gray-600 dark:text-white">
               Manage your name, password and account settings.
             </p>
@@ -138,7 +140,7 @@ const SignUp = () => {
                     <input
                       type="text"
                       className="py-3 px-3 pe-11 block w-full border border-gray-300 shadow-sm -mt-px -ms-px rounded-lg dark:border-none dark:text-white dark:bg-slate-700 sm:mt-0 text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                     placeholder="Last name"
+                      placeholder="Last name"
                       {...register("lastName", {
                         required: "Last name is required", // Updated the required rule
                         pattern: {
@@ -153,31 +155,6 @@ const SignUp = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="af-account-email"
-                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
-                >
-                  Username
-                </label>
-              </div>
-
-              <div className="sm:col-span-9">
-                <input
-                  id="af-account-email"
-                  type="text"
-                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                  placeholder="username"
-                  {...register("username", {
-                    required: "username is required", // Updated the required rule
-                  })}
-                  onChange={handleInputChange}
-                />
-                <p className="text-red-500 text-sm">
-                  {errors?.username?.message?.toString()}
-                </p>
               </div>
 
               <div className="sm:col-span-3">
@@ -207,84 +184,6 @@ const SignUp = () => {
                 <p className="text-red-500 text-sm">
                   {errors?.email?.message?.toString()}
                 </p>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="af-account-password"
-                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
-                >
-                  Password
-                </label>
-              </div>
-
-              <div className="sm:col-span-9">
-                <div className="space-y-2">
-                  <div className="relative">
-                    <input
-                      id="af-account-password"
-                      type={showPassword ? "text" : "password"}
-                      className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                      placeholder="Enter  password"
-                      {...register("password", {
-                        required: "Password is required",
-                        pattern: {
-                          value:
-                            /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?=.*[A-Za-z0-9]).{8,}$/,
-                          message:
-                            "It should have at least 8 characters and special character",
-                        },
-                      })}
-                      onChange={handleInputChange}
-                    />
-                    {showPassword ? (
-                      <FiEyeOff
-                        className="absolute end-2.5 dark:text-white bottom-[0.95rem] text-lg"
-                        onClick={() => setShowPassword(!showPassword)}
-                      />
-                    ) : (
-                      <FiEye
-                        className="absolute end-2.5 dark:text-white bottom-[0.95rem] text-lg"
-                        onClick={() => setShowPassword(!showPassword)}
-                      />
-                    )}
-                  </div>
-                  <p className="text-red-500 text-sm">
-                    {errors?.password?.message?.toString()}
-                  </p>
-                  <div className="relative">
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
-                      placeholder="Confirm password"
-                      {...register("password2", {
-                        required: "Confirm Password is required",
-                        validate: (value) =>
-                          value === getValues("password") ||
-                          "The passwords do not match",
-                      })}
-                      onChange={handleInputChange}
-                    />
-                    {showConfirmPassword ? (
-                      <FiEyeOff
-                        className="absolute end-2.5 bottom-[0.95rem] dark:text-white text-lg"
-                        onClick={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
-                        }
-                      />
-                    ) : (
-                      <FiEye
-                        className="absolute end-2.5 bottom-[0.95rem] dark:text-white text-lg"
-                        onClick={() =>
-                          setShowConfirmPassword(!showConfirmPassword)
-                        }
-                      />
-                    )}
-                  </div>
-                  <p className="text-red-500 text-sm">
-                    {errors?.password2?.message?.toString()}
-                  </p>
-                </div>
               </div>
 
               <div className="sm:col-span-3">
@@ -413,6 +312,83 @@ const SignUp = () => {
                 <p className="text-red-500 text-sm">
                   {errors?.hostel?.message?.toString()}
                 </p>
+              </div>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="af-account-password"
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
+                >
+                  Password
+                </label>
+              </div>
+
+              <div className="sm:col-span-9">
+                <div className="space-y-2">
+                  <div className="relative">
+                    <input
+                      id="af-account-password"
+                      type={showPassword ? "text" : "password"}
+                      className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                      placeholder="Enter  password"
+                      {...register("password", {
+                        required: "Password is required",
+                        pattern: {
+                          value:
+                            /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?=.*[A-Za-z0-9]).{8,}$/,
+                          message:
+                            "It should have at least 8 characters and special character",
+                        },
+                      })}
+                      onChange={handleInputChange}
+                    />
+                    {showPassword ? (
+                      <FiEyeOff
+                        className="absolute end-2.5 dark:text-white bottom-[0.95rem] text-lg"
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    ) : (
+                      <FiEye
+                        className="absolute end-2.5 dark:text-white bottom-[0.95rem] text-lg"
+                        onClick={() => setShowPassword(!showPassword)}
+                      />
+                    )}
+                  </div>
+                  <p className="text-red-500 text-sm">
+                    {errors?.password?.message?.toString()}
+                  </p>
+                  <div className="relative">
+                    <input
+                      type={showConfirmPassword ? "text" : "password"}
+                      className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                      placeholder="Confirm password"
+                      {...register("password2", {
+                        required: "Confirm Password is required",
+                        validate: (value) =>
+                          value === getValues("password") ||
+                          "The passwords do not match",
+                      })}
+                      onChange={handleInputChange}
+                    />
+                    {showConfirmPassword ? (
+                      <FiEyeOff
+                        className="absolute end-2.5 bottom-[0.95rem] dark:text-white text-lg"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      />
+                    ) : (
+                      <FiEye
+                        className="absolute end-2.5 bottom-[0.95rem] dark:text-white text-lg"
+                        onClick={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      />
+                    )}
+                  </div>
+                  <p className="text-red-500 text-sm">
+                    {errors?.password2?.message?.toString()}
+                  </p>
+                </div>
               </div>
             </div>
 

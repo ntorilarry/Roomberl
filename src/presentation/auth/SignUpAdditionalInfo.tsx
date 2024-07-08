@@ -20,6 +20,7 @@ const SignUpAdditionalInfo = () => {
   const userId = location.state?.id;
   const [infoData, setInfoData] = useState<signUpAddInfoRequest>({
     otherName: "",
+    nickname: "",
     guardianFullName: "",
     ghanaCardNumber: "",
     courseOfStudy: "",
@@ -109,6 +110,35 @@ const SignUpAdditionalInfo = () => {
                   placeholder="Other Name"
                   {...register("otherName", {
                     required: "Other name is required", // Updated the required rule
+                    pattern: {
+                      value: /^[A-Za-z0-9\- ]+$/,
+                      message: "Please enter only alphanumeric",
+                    },
+                  })}
+                  onChange={handleInputChange}
+                />
+                <p className="text-red-500 text-sm">
+                  {errors?.otherName?.message?.toString()}
+                </p>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="af-account-email"
+                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
+                >
+                  Nick name
+                </label>
+              </div>
+
+              <div className="sm:col-span-9">
+                <input
+                  id="af-account-email"
+                  type="text"
+                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "
+                  placeholder="Nick Name"
+                  {...register("nickname", {
+                    required: "Nick name is required", // Updated the required rule
                     pattern: {
                       value: /^[A-Za-z0-9\- ]+$/,
                       message: "Please enter only alphanumeric",

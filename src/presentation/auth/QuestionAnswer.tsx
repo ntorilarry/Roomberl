@@ -85,6 +85,9 @@ const QuestionAnswer = () => {
       </div>
     );
   }
+
+  const optionLabels = ["A", "B", "C", "D", "E", "F", "G"];
+
   return (
     <div>
       <section className="bg-white dark:bg-slate-800">
@@ -93,7 +96,7 @@ const QuestionAnswer = () => {
             Questions and Answers
           </h2>
           <form onSubmit={handleFormSubmit}>
-            {questions.map((item, key) => (
+            {questions.map((item) => (
               <div key={item.id}>
                 <h2 className="mb-2 text-xl tracking-tight font-semibold text-gray-900 dark:text-white">
                   {item.name}
@@ -106,7 +109,7 @@ const QuestionAnswer = () => {
                           {element.text}
                         </h3>
                         {element.option.length > 0 ? (
-                          element.option.map((data) => (
+                          element.option.map((data, index) => (
                             <div
                               className="flex items-center mb-4"
                               key={data.id}
@@ -116,6 +119,7 @@ const QuestionAnswer = () => {
                                 type="radio"
                                 value={data.text}
                                 name={`question-${element.id}`}
+                                required
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                 onChange={() =>
                                   handleInputChange(element.id, data.text)
@@ -125,7 +129,7 @@ const QuestionAnswer = () => {
                                 htmlFor={`option-${data.id}`}
                                 className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                               >
-                                {data.text}
+                                {`${optionLabels[index]}. ${data.text}`}
                               </label>
                             </div>
                           ))
@@ -133,6 +137,7 @@ const QuestionAnswer = () => {
                           <input
                             type="text"
                             placeholder="Your answer"
+                            required
                             className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                             onChange={(e) =>
                               handleInputChange(element.id, e.target.value)
@@ -146,13 +151,13 @@ const QuestionAnswer = () => {
               </div>
             ))}
             <div className="border-t border-gray-300  flex justify-end w-full">
-            <button
-              type="submit"
-              className="px-8 py-2 mt-2  bg-gray-800 text-white rounded-full hover:bg-gray-700"
-              disabled={selectLoading}
-            >
-              Finish
-            </button>
+              <button
+                type="submit"
+                className="px-8 py-2 mt-2  bg-gray-800 text-white rounded-full hover:bg-gray-700"
+                disabled={selectLoading}
+              >
+                Finish
+              </button>
             </div>
           </form>
         </div>

@@ -20,6 +20,7 @@ export interface loginRequest {
 
 export interface signUpAddInfoRequest {
   otherName: string;
+  nickname: string
   guardianFullName: string;
   ghanaCardNumber: string;
   courseOfStudy: string;
