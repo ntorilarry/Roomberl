@@ -28,18 +28,32 @@ const LogIn = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await userLogin(loginData)
+      const response = await userLogin(loginData);
       console.log(response);
-      const { status, data } = response["data"] as responseType
+      const { status, data } = response["data"] as responseType;
       if (status === "success") {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
-        const { id, firstName, lastName, email, hostel } = data.user;
+
+        const { id, firstName, lastName, email, hostel, additionalDetails, roomPayments } =
+          data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("hostel", hostel);
+
+        if (additionalDetails) {
+          const { room } = additionalDetails;
+          sessionStorage.setItem("RoomIdPresent", room?.id);
+        }
+
+        if (roomPayments && roomPayments.length > 0) {
+          const { roomTypeId, isVerified } = roomPayments[0];
+          sessionStorage.setItem("isRoomTypePresent", roomTypeId);
+          sessionStorage.setItem("isPaymentVerified", isVerified.toString());
+        }
+
         toast.success(status);
         navigate("/");
       } else {
@@ -50,6 +64,7 @@ const LogIn = () => {
       toast.error(error.message || "An unexpected error occurred");
     }
   };
+
   return (
     <div className="bg-white dark:bg-slate-800">
       <div className="flex justify-center h-screen">
@@ -101,7 +116,7 @@ const LogIn = () => {
                     name="email"
                     placeholder="example@example.com"
                     onChange={handleFormChanged}
-                    className="block w-full px-4 py-3 mt-2 text-gray-700  dark:border-none dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className="block w-full px-4 py-3 mt-2 text-gray-700 border-2 dark:border-none dark:text-white dark:bg-slate-700 placeholder-gray-400 bg-white rounded-lg focus:border-blue-400  focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
 

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useGetRoomsQuery } from "../../../../services/room-service";
 import { Link, useParams } from "react-router-dom";
 import { FaGamepad, FaRegStar } from "react-icons/fa6";
-import { HiOutlineBuildingOffice } from "react-icons/hi2";
+import { HiArrowRight, HiOutlineBuildingOffice } from "react-icons/hi2";
 import { BsSendCheck } from "react-icons/bs";
 import ViewRoomLoader from "./components/ViewRoomLoader";
+import UnselectRoom from "../roomDetails/components/UnselectRoom";
 
 const ViewRooms = () => {
   const { roomTypeId } = useParams();
@@ -18,6 +19,10 @@ const ViewRooms = () => {
 
   const [payRoomTypeId, setPayRoomTypeId] = useState(
     sessionStorage.getItem("isRoomTypePresent")
+  );
+
+  const [RoomIdPresent, setRoomIdPresent] = useState(
+    sessionStorage.getItem("RoomIdPresent")
   );
 
   const [hostel, setHostel] = useState(sessionStorage.getItem("hostel"));
@@ -94,13 +99,25 @@ const ViewRooms = () => {
                       <p>{item.description || "NA"}</p>
                     </div>
                     {verify && payRoomTypeId === roomTypeId && (
-                      <Link
-                        to={`/rooms/room-details/${roomTypeId}/${item.id}`}
-                        className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
-                      >
-                        View and Apply
-                        <BsSendCheck className="ml-2" />
-                      </Link>
+                      <>
+                        {RoomIdPresent === item.id ? (
+                          <Link
+                            to={`/rooms/room-details/${roomTypeId}/${item.id}`}
+                            className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-red-700 hover:bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                          >
+                            Unselect room
+                            <HiArrowRight className="ml-2" />
+                          </Link>
+                        ) : (
+                          <Link
+                            to={`/rooms/room-details/${roomTypeId}/${item.id}`}
+                            className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                          >
+                            Choose room
+                            <HiArrowRight className="ml-2" />
+                          </Link>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>

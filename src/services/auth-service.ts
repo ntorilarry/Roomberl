@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
+  UpdateChooseRoomParams,
   UpdateRoomTypeParams,
   UpdateUserQuestionsParams,
   loginRequest,
@@ -82,6 +83,14 @@ export const authService = createApi({
       }),
       invalidatesTags: ["Auth"],
     }),
+    ChooseRoom: build.mutation<BaseResponse<any>, UpdateChooseRoomParams>({
+      query: ({ body, userId }: UpdateChooseRoomParams) => ({
+        url: `/accounts/user-additional-detail/${userId}/`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Auth"],
+    }),
   }),
 });
 
@@ -93,5 +102,6 @@ export const {
   useUpdateRoomTypeMutation,
   useGetAddInfoByUserIdQuery,
   useGetQuestionsQuery,
-  useUpdateUserQuestionsMutation
+  useUpdateUserQuestionsMutation,
+  useChooseRoomMutation
 } = authService;

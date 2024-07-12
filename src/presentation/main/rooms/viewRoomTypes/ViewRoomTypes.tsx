@@ -13,6 +13,14 @@ const ViewRoomTypes = () => {
   const { data: response, isLoading } = useGetRoomTypeQuery(hostel || "");
 
   const roomType = response?.data.results || [];
+
+  const [payVerify, setPayVerify] = useState(
+    sessionStorage.getItem("isPaymentVerified")
+  );
+  const [presentRoomType, setPresentRoomType] = useState(
+    sessionStorage.getItem("isRoomTypePresent")
+  );
+
   if (isLoading) {
     return (
       <div>
@@ -20,6 +28,16 @@ const ViewRoomTypes = () => {
       </div>
     );
   }
+
+  const filteredRoomTypes = roomType.filter((item) => {
+    if (payVerify === 'true' && item.id === presentRoomType) {
+      return true;
+    } else if (payVerify !== 'true') {
+      return true;
+    }
+    return false;
+  });
+
   return (
     <div>
       <div className="sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
@@ -27,7 +45,7 @@ const ViewRoomTypes = () => {
           Select room type
         </h2>
         <div className="grid gap-4 row-gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {roomType.map((item, key) => (
+          {filteredRoomTypes.map((item, key) => (
             <div
               key={key}
               className="bg-white dark:bg-slate-800 rounded-lg flex flex-col justify-between p-4 border dark:border-none"

@@ -51,3 +51,12 @@ export interface UpdateUserQuestionsParams {
   body: UpdateUserQuestionsRequest;
   userId: string;
 }
+
+export interface UpdateChooseRoom {
+  room: any;
+
+}
+export interface UpdateChooseRoomParams {
+  body: UpdateChooseRoom;
+  userId: string;
+}

@@ -287,7 +287,7 @@ export const AddRoom = () => {
                               images
                             </p>
                             <p className="text-xs text-gray-500 dark:text-white">
-                            PNG, JPG or JPEG
+                              PNG, JPG or JPEG
                             </p>
                           </div>
                           <input
@@ -315,7 +315,9 @@ export const AddRoom = () => {
                                 <button
                                   type="button"
                                   onClick={() =>
-                                    setImages(images.filter((_, i) => i !== index))
+                                    setImages(
+                                      images.filter((_, i) => i !== index)
+                                    )
                                   }
                                   className="absolute top-0 right-0 p-1 bg-white rounded-bl focus:outline-none"
                                 >
@@ -326,7 +328,7 @@ export const AddRoom = () => {
                           </div>
                         )}
                       </div>
-                      
+
                       <div className="mb-4">
                         <label
                           htmlFor="dropzone-file-floorPlan"
@@ -342,7 +344,7 @@ export const AddRoom = () => {
                               a floor plan
                             </p>
                             <p className="text-xs text-gray-500 dark:text-white">
-                               PNG, JPG or JPEG
+                              PNG, JPG or JPEG
                             </p>
                           </div>
                           <input
