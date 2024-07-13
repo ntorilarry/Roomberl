@@ -16,6 +16,8 @@ import Users from "../presentation/main/users/Users";
 import AdminPayment from "../presentation/main/payment/adminPayment/AdminPayment";
 import QuestionAnswer from "../presentation/auth/QuestionAnswer";
 import UsersPaymentSuccess from "../presentation/main/payment/userPayment/UsersPaymentSuccess";
+import ChooseRoomSuccess from "../presentation/main/rooms/roomDetails/components/ChooseRoomSuccess";
+import UnselectRoomSuccess from "../presentation/main/rooms/roomDetails/components/UnselectRoomSuccess";
 
 const AppRouter = () => {
   return (
@@ -43,6 +45,14 @@ const AppRouter = () => {
           <Route
             path="room-details/:roomTypeId/:roomId"
             element={<RoomDetails />}
+          />
+          <Route
+            path="room-details/choose-room/success"
+            element={<ChooseRoomSuccess />}
+          />
+            <Route
+            path="room-details/leave-room/success"
+            element={<UnselectRoomSuccess />}
           />
           <Route path="payment" element={<UserPayment />} />
         </Route>

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import RoomTypeData from "./components/RoomTypeData";
 
 const RoomType = () => {

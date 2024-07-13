@@ -35,24 +35,18 @@ const LogIn = () => {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
 
-        const { id, firstName, lastName, email, hostel, additionalDetails, roomPayments } =
-          data.user;
+        const {
+          id,
+          firstName,
+          lastName,
+          email,
+          hostel,
+        } = data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("hostel", hostel);
-
-        if (additionalDetails) {
-          const { room } = additionalDetails;
-          sessionStorage.setItem("RoomIdPresent", room?.id);
-        }
-
-        if (roomPayments && roomPayments.length > 0) {
-          const { roomTypeId, isVerified } = roomPayments[0];
-          sessionStorage.setItem("isRoomTypePresent", roomTypeId);
-          sessionStorage.setItem("isPaymentVerified", isVerified.toString());
-        }
 
         toast.success(status);
         navigate("/");

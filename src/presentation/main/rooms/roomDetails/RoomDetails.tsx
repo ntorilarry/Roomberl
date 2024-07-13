@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetRoomsByIdQuery } from "../../../../services/room-service";
 import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -14,6 +14,7 @@ const RoomDetails = () => {
   const [RoomIdPresent, setRoomIdPresent] = useState(
     sessionStorage.getItem("RoomIdPresent")
   );
+
 
   const { data: response, isLoading } = useGetRoomsByIdQuery({
     hostelId: hostel || "",

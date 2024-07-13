@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
 import ProtectedRoutes from "../presentation/auth/utils/ProtectedRoutes";
+import UserAdditionalDetails from "../presentation/auth/UserAdditionalDetails";
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,6 +15,7 @@ const MainLayout = () => {
         <Header setSidebarOpen={setSidebarOpen} />
         <main className="py-10 dark:bg-slate-900 bg-gray-100">
           <div className="px-4 sm:px-6 lg:px-8">
+            <UserAdditionalDetails/>
             <Outlet />
           </div>
         </main>
