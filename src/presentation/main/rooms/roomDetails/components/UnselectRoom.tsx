@@ -28,7 +28,7 @@ const UnselectRoom = () => {
       const { status } = response["data"] as responseType;
       if (status === "success") {
         toast.success(status);
-        navigate("rooms/room-details/leave-room/success");
+        navigate("/rooms/room-details/leave-room/success");
       } else {
         toast.error(status);
       }

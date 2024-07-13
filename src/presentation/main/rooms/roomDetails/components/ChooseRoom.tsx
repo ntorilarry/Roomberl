@@ -28,7 +28,7 @@ const ChooseRoom = ({ roomID }) => {
       const { status } = response["data"] as responseType;
       if (status === "success") {
         toast.success(status);
-        navigate("rooms/room-details/choose-room/success");
+        navigate("/rooms/room-details/choose-room/success");
       } else {
         toast.error(status);
       }
