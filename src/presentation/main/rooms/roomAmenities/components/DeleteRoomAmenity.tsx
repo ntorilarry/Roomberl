@@ -3,7 +3,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { MdDelete } from "react-icons/md";
 import { IoCloseCircle } from "react-icons/io5";
 import toast from "react-hot-toast";
-import { responseType } from "../../../../../models/response/base-response";
+
 import { useDeleteRoomAmenitiesMutation } from "../../../../../services/room-service";
 
 export const DeleteRoomAmenity = ({ amenity }) => {

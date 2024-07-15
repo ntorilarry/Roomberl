@@ -1,15 +1,12 @@
-import { ChangeEvent, Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { MdDelete } from "react-icons/md";
 import { IoCloseCircle } from "react-icons/io5";
-import { TbEditCircle } from "react-icons/tb";
-import { roomAmenityRequest } from "../../../../../models/request/room-request";
-
 import toast from "react-hot-toast";
-import { useUpdateRoomAmenitiesMutation } from "../../../../../services/room-service";
+import { useDeleteUserMutation } from "../../../../services/user-service";
 
-export const EditRoomAmenity = ({ amenity }) => {
+export const DisableUsers = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("amenity hyuu", amenity);
 
   function closeModal() {
     setIsOpen(false);
@@ -19,54 +16,20 @@ export const EditRoomAmenity = ({ amenity }) => {
     setIsOpen(true);
   }
 
-  const [formData, setFormData] = useState<roomAmenityRequest>({
-    name: amenity.name,
-    description: amenity.description,
-  });
-
-  const handleFormChanged = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const [updateRoomAmenities, { isLoading }] = useUpdateRoomAmenitiesMutation();
+  const [deleteRoom, { isLoading }] = useDeleteUserMutation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await updateRoomAmenities({
-        body: formData,
-        id: amenity.id,
-      });
+      const response = await deleteRoom(user.id);
       console.log(response);
-      const { status, data } = response.error
-        ? response.error["data"]
-        : response["data"];
-      if (status === "success") {
-        toast.success("Amenity updated successfully");
-        setIsOpen(false);
-      } else {
-        toast.error("Failed to update amenity");
-      }
+      toast.success("User deleted successfully");
+      setIsOpen(false);
     } catch (error: any) {
       console.error("Error:", error);
       toast.error(error.message || "An unexpected error occurred");
     }
   };
-
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      name: amenity.name,
-      description: amenity.description,
-    }));
-  }, [amenity]);
-
   return (
     <>
       <button
@@ -74,8 +37,8 @@ export const EditRoomAmenity = ({ amenity }) => {
         className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-white dark:hover:bg-slate-700"
         onClick={openModal}
       >
-        <TbEditCircle className="flex-shrink-0 size-3.5" />
-        Edit
+        <MdDelete className="flex-shrink-0 size-3.5" />
+        Disable
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -119,44 +82,14 @@ export const EditRoomAmenity = ({ amenity }) => {
                     as="h3"
                     className="text-xl font-semibold dark:text-white"
                   >
-                    Edit Amenity
+                    Disable User
                   </Dialog.Title>
+
                   <hr className="border-hr border-gray-500 mt-4" />
-                  <form>
-                    <div className="my-3">
-                      <label
-                        htmlFor="hs-feedback-post-comment-name-1"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        id="amenity-name"
-                        value={formData.name}
-                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
-                        placeholder="Name"
-                        onChange={handleFormChanged}
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="hs-feedback-post-comment-name-1"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Description
-                      </label>
-                      <textarea
-                        placeholder="Description"
-                        name="description"
-                        id="amenity-description"
-                        value={formData.description}
-                        onChange={handleFormChanged}
-                        className="py-4 px-3 block w-full  bg-[#f0efef] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
-                      />
-                    </div>
-                  </form>
+
+                  <div className="flex-1  py-5 sm:py-6 dark:text-white">
+                    <p>Are you sure you want to delete this user?</p>
+                  </div>
                 </div>
 
                 <div className="flex h-16 flex-shrink-0 items-center justify-end space-x-2 bg-layer-3 px-6 shadow-lg">
@@ -170,10 +103,9 @@ export const EditRoomAmenity = ({ amenity }) => {
                   <button
                     type="button"
                     onClick={handleFormSubmit}
-                    disabled={!formData.name}
                     className="inline-flex cursor-pointer items-center justify-center rounded-2xl  bg-[#1B8ADB] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
                   >
-                    Save
+                    Disable
                   </button>
                 </div>
               </Dialog.Panel>

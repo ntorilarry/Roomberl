@@ -11,7 +11,7 @@ import {
   useGetRoomTypeQuery,
 } from "../../../../../services/room-service";
 import { useGetHostelsQuery } from "../../../../../services/auth-service";
-import { responseType } from "../../../../../models/response/base-response";
+
 import { UpdateRoomParams } from "../../../../../models/request/room-request";
 
 export const EditRoom = ({ room }) => {
@@ -91,13 +91,27 @@ export const EditRoom = ({ room }) => {
         body: formDataToSend,
       };
 
-      const response = (await updateRoom(updateParams)) as responseType; // Pass FormData directly
-      const { status } = response["data"];
+      const response = await updateRoom(updateParams); // Pass FormData directly
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         setShowModal(false);
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

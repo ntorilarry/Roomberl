@@ -4,7 +4,7 @@ import {
   useUpdateUserQuestionsMutation,
 } from "../../services/auth-service";
 import Loader from "../../components/Loader";
-import { responseType } from "../../models/response/base-response";
+
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -65,12 +65,26 @@ const QuestionAnswer = () => {
         userId: QuserId || "",
       });
       console.log(response);
-      const { status } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         navigate("/auth/login");
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

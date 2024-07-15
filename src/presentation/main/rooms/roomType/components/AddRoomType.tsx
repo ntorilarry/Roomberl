@@ -7,7 +7,7 @@ import {
   useAddRoomTypeMutation,
   useGetRoomAmenitiesQuery,
 } from "../../../../../services/room-service";
-import { responseType } from "../../../../../models/response/base-response";
+
 import toast from "react-hot-toast";
 import { useGetHostelsQuery } from "../../../../../services/auth-service";
 import Select from "react-select";
@@ -49,7 +49,9 @@ export const AddRoomType = () => {
     try {
       const response = await addRoomType(formData);
       console.log(response);
-      const { status } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         setFormData({
@@ -62,7 +64,19 @@ export const AddRoomType = () => {
         });
         setIsOpen(false);
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

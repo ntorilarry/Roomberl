@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HiArrowRight } from "react-icons/hi2";
-import { responseType } from "../../../../../models/response/base-response";
+
 import { useChooseRoomMutation } from "../../../../../services/auth-service";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -25,12 +25,26 @@ const UnselectRoom = () => {
         userId: userID || "",
       });
       console.log(response);
-      const { status } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         navigate("/rooms/room-details/leave-room/success");
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

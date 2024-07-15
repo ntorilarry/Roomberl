@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
+import { EnableUserParams } from "../models/request/user-request";
 
 export const userService = createApi({
   reducerPath: "userService",
@@ -31,10 +32,20 @@ export const userService = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    
+    enableUser: build.mutation<BaseResponse<any>, EnableUserParams>({
+      query: ({ body, userId }: EnableUserParams) => ({
+        url: `/accounts/users/${userId}/`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
 export const {
   useGetUsersByHostelIdQuery,
-  useDeleteUserMutation
+  useDeleteUserMutation,
+  useEnableUserMutation,
 } = userService;

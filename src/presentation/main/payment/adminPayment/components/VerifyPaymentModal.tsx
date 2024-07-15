@@ -4,7 +4,7 @@ import { RiVerifiedBadgeLine } from "react-icons/ri";
 import { IoCloseCircle } from "react-icons/io5";
 import { updatePaymentRequest } from "../../../../../models/request/room-request";
 import toast from "react-hot-toast";
-import { responseType } from "../../../../../models/response/base-response";
+
 import { useVerifyRoomPaymentMutation } from "../../../../../services/room-service";
 
 export const VerifyPaymentModal = ({ payment }) => {
@@ -43,12 +43,26 @@ export const VerifyPaymentModal = ({ payment }) => {
         id: payment.id,
       });
       console.log(response);
-      const { status } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success("Payment Verified");
         setIsOpen(false);
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);
@@ -67,7 +81,6 @@ export const VerifyPaymentModal = ({ payment }) => {
         <RiVerifiedBadgeLine className="flex-shrink-0 size-3.5" />
         Verify
       </button>
-   
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" onClose={closeModal}>

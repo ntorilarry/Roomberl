@@ -10,7 +10,6 @@ import {
   useGetRoomTypeQuery,
 } from "../../../../../services/room-service";
 import { useGetHostelsQuery } from "../../../../../services/auth-service";
-import { responseType } from "../../../../../models/response/base-response";
 
 export const AddRoom = () => {
   const [showModal, setShowModal] = useState(false);
@@ -82,8 +81,11 @@ export const AddRoom = () => {
         });
       }
 
-      const response = (await addRoom(formDataToSend)) as responseType; // Pass FormData directly
-      const { status } = response["data"];
+      const response = await addRoom(formDataToSend);
+      console.log("add room", response);
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         setFormData({
@@ -99,8 +101,16 @@ export const AddRoom = () => {
         setImages([]);
         setFloorPlan(null);
         setShowModal(false);
-      } else {
-        toast.error(status);
+      }else {
+        const errorMessages = Object.entries(data)
+          .map(([key, value]) => {
+            if (Array.isArray(value)) {
+              return `${key}: ${value.join(", ")}`;
+            }
+            return `${key}: ${value}`;
+          })
+          .join(", ");
+        toast.error(errorMessages);
       }
     } catch (error: any) {
       console.error("Error:", error);

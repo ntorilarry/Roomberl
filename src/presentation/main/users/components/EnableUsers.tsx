@@ -1,11 +1,11 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { MdDelete } from "react-icons/md";
+import { LuUserPlus } from "react-icons/lu";
 import { IoCloseCircle } from "react-icons/io5";
 import toast from "react-hot-toast";
-import { useDeleteUserMutation } from "../../../../services/user-service";
+import { useEnableUserMutation } from "../../../../services/user-service";
 
-export const DeleteUsers = ({ user }) => {
+export const EnableUsers = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -16,15 +16,40 @@ export const DeleteUsers = ({ user }) => {
     setIsOpen(true);
   }
 
-  const [deleteRoom, { isLoading }] = useDeleteUserMutation();
+  const [enableUser, { isLoading }] = useEnableUserMutation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await deleteRoom(user.id);
+      const enableRoomRequest = {
+        isActive: true as true,
+      };
+
+      const response = await enableUser({
+        body: enableRoomRequest,
+        userId: user.id || "",
+      });
       console.log(response);
-      toast.success("User deleted successfully");
-      setIsOpen(false);
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
+      if (status === "success") {
+        toast.success(status);
+      } else {
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
+      }
     } catch (error: any) {
       console.error("Error:", error);
       toast.error(error.message || "An unexpected error occurred");
@@ -37,8 +62,8 @@ export const DeleteUsers = ({ user }) => {
         className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-white dark:hover:bg-slate-700"
         onClick={openModal}
       >
-        <MdDelete className="flex-shrink-0 size-3.5" />
-        Delete
+        <LuUserPlus className="flex-shrink-0 size-3.5" />
+        Enable
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -82,13 +107,13 @@ export const DeleteUsers = ({ user }) => {
                     as="h3"
                     className="text-xl font-semibold dark:text-white"
                   >
-                    Delete User
+                    Enable User
                   </Dialog.Title>
 
                   <hr className="border-hr border-gray-500 mt-4" />
 
                   <div className="flex-1  py-5 sm:py-6 dark:text-white">
-                    <p>Are you sure you want to delete this user?</p>
+                    <p>Are you sure you want to enable this user?</p>
                   </div>
                 </div>
 
@@ -105,7 +130,7 @@ export const DeleteUsers = ({ user }) => {
                     onClick={handleFormSubmit}
                     className="inline-flex cursor-pointer items-center justify-center rounded-2xl  bg-[#1B8ADB] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent focus:outline-none focus:ring-2 focus:ring-orange-400/80 focus:ring-offset-0 disabled:opacity-30 disabled:hover:border-primary disabled:hover:bg-primary disabled:hover:text-white dark:focus:ring-white/80"
                   >
-                    Delete
+                    Enable
                   </button>
                 </div>
               </Dialog.Panel>

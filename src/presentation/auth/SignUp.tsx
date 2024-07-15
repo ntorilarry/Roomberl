@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RoomBerlLogo } from "../../assets";
 import toast from "react-hot-toast";
-import { responseType } from "../../models/response/base-response";
+
 import { signUpRequest } from "../../models/request/auth-request";
 import {
   useGetHostelsQuery,
@@ -53,7 +53,9 @@ const SignUp = () => {
   const handleFormSubmit = async () => {
     try {
       const response = await userSignup(signUpData);
-      const { status, data } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         const { id } = data.user;
         toast.success(status);
@@ -61,11 +63,19 @@ const SignUp = () => {
           state: { id },
         });
       } else {
-        Object.keys(data).forEach((key) => {
-          data[key].forEach((message) => {
-            toast.error(message);
-          });
-        });
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

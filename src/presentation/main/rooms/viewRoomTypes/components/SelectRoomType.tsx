@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HiMiniPlus } from "react-icons/hi2";
-import { responseType } from "../../../../../models/response/base-response";
+
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -41,14 +41,28 @@ const SelectRoomType = ({ roomTypeId }) => {
         userId: userID || "",
       });
       console.log(response);
-      const { status } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         navigate("/payments/user", {
           state: { roomTypeId },
         });
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

@@ -4,7 +4,7 @@ import { IoCloseCircle } from "react-icons/io5";
 import { IoMdAdd } from "react-icons/io";
 import { roomAmenityRequest } from "../../../../../models/request/room-request";
 import { useAddRoomAmenitiesMutation } from "../../../../../services/room-service";
-import { responseType } from "../../../../../models/response/base-response";
+
 import toast from "react-hot-toast";
 
 export const AddRoomAmenity = () => {
@@ -40,7 +40,9 @@ export const AddRoomAmenity = () => {
     try {
       const response = await addRoomAmenities(formData);
       console.log(response);
-      const { status } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         setFormData({
@@ -49,7 +51,19 @@ export const AddRoomAmenity = () => {
         });
         setIsOpen(false);
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

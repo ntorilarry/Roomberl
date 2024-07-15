@@ -5,12 +5,7 @@ export interface BaseResponse<T> {
 }
 
 interface BaseError {
-  errorCode: number;
-  errorMessage?: string;
-  url?: string;
+  status: string;
+  data: any;
 }
 
-export interface responseType {
-  status: string;
-  data?: any;
-}

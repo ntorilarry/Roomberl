@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import moment from "moment";
 import UsersTable from "./UsersTable";
 import { useGetUsersByHostelIdQuery } from "../../../../services/user-service";
-import { DeleteUsers } from "./DeleteUsers";
+import { DisableUsers } from "./DisableUsers";
+import { EnableUsers } from "./EnableUsers";
 
 const UsersData = () => {
   const [filterValue, setFilterValue] = useState("");
@@ -29,10 +30,7 @@ const UsersData = () => {
           );
         },
       },
-      // {
-      //   Header: "Full Name",
-      //   accessor: (row) => `${row.firstName} ${row.lastName}`,
-      // },
+
       {
         Header: "Username",
         accessor: "username",
@@ -53,6 +51,17 @@ const UsersData = () => {
         Header: "Address",
         accessor: "address",
       },
+      {
+        Header: "Status",
+        accessor: "isActive",
+        Cell: ({ value }) => (value ? "Active" : "Inactive"),
+      },
+
+      {
+        Header: "Group Permission",
+        accessor: (row) =>
+          row.groups.map((item) => item?.name),
+      },
 
       {
         Header: "Date Joined",
@@ -62,7 +71,11 @@ const UsersData = () => {
         Header: "Actions",
         Cell: ({ row }) => (
           <div className="flex gap-x-2">
-            <DeleteUsers user={row.original} />
+            {row.original.isActive ? (
+              <DisableUsers user={row.original} />
+            ) : (
+              <EnableUsers user={row.original} />
+            )}
           </div>
         ),
       },

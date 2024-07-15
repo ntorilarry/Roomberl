@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RoomBerlLogo } from "../../assets";
 import toast from "react-hot-toast";
-import { responseType } from "../../models/response/base-response";
+
 import { signUpAddInfoRequest } from "../../models/request/auth-request";
 import { useSignUpAddInfoMutation } from "../../services/auth-service";
 import { useForm } from "react-hook-form";
@@ -47,14 +47,28 @@ const SignUpAdditionalInfo = () => {
     // e.preventDefault();
     try {
       const response = await additionalSignup(infoData);
-      const { status } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         navigate("/auth/questions-and-answers", {
           state: { userId },
         });
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

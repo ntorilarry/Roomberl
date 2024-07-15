@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { responseType } from "../../../../models/response/base-response";
+
 import { useMakeRoomPaymentMutation } from "../../../../services/room-service";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
@@ -68,13 +68,27 @@ const UserPayment = () => {
         formDataToSend.append("secondReceipt", secondReceipt);
       }
 
-      const response = (await makePayment(formDataToSend)) as responseType;
-      const { status } = response["data"];
+      const response = await makePayment(formDataToSend);
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         toast.success(status);
         navigate("/payments/success");
       } else {
-        toast.error(status);
+        if (typeof data === "object" && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);

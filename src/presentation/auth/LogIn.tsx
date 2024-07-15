@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginRequest } from "../../models/request/auth-request";
 import { useLoginMutation } from "../../services/auth-service";
 import toast from "react-hot-toast";
-import { responseType } from "../../models/response/base-response";
+
 import Loader from "../../components/Loader";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
@@ -30,18 +30,14 @@ const LogIn = () => {
     try {
       const response = await userLogin(loginData);
       console.log(response);
-      const { status, data } = response["data"] as responseType;
+      const { status, data } = response.error
+        ? response.error["data"]
+        : response["data"];
       if (status === "success") {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
 
-        const {
-          id,
-          firstName,
-          lastName,
-          email,
-          hostel,
-        } = data.user;
+        const { id, firstName, lastName, email, hostel } = data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
@@ -51,7 +47,19 @@ const LogIn = () => {
         toast.success(status);
         navigate("/");
       } else {
-        toast.success(data);
+        if (typeof data === 'object' && data !== null) {
+          const errorMessages = Object.entries(data)
+            .map(([key, value]) => {
+              if (Array.isArray(value)) {
+                return `${key}: ${value.join(", ")}`;
+              }
+              return `${key}: ${value}`;
+            })
+            .join(", ");
+          toast.error(errorMessages);
+        } else {
+          toast.error(data);
+        }
       }
     } catch (error: any) {
       console.error("Error:", error);
