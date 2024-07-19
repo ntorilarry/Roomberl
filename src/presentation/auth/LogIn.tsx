@@ -37,17 +37,21 @@ const LogIn = () => {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
 
-        const { id, firstName, lastName, email, hostel } = data.user;
+        const { id, firstName, lastName, email, hostel, groups } = data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("hostel", hostel);
 
+        if (groups && groups.length > 0) {
+          sessionStorage.setItem("roles", groups[0].name);
+        }
+
         toast.success(status);
         navigate("/");
       } else {
-        if (typeof data === 'object' && data !== null) {
+        if (typeof data === "object" && data !== null) {
           const errorMessages = Object.entries(data)
             .map(([key, value]) => {
               if (Array.isArray(value)) {

@@ -5,6 +5,7 @@ import { useMakeRoomPaymentMutation } from "../../../../services/room-service";
 import { MdDriveFolderUpload } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
+import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
 
 const UserPayment = () => {
   const location = useLocation();
@@ -233,4 +234,6 @@ const UserPayment = () => {
   );
 };
 
-export default UserPayment;
+export default ProtectedRoutes(UserPayment, {
+  allowedRoles: ["Student"],
+});

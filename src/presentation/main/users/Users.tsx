@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import UsersData from "./components/UsersData";
-
+import ProtectedRoutes from "../../auth/utils/ProtectedRoutes";
 
 const Users = () => {
   return (
@@ -10,4 +9,6 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default ProtectedRoutes(Users, {
+  allowedRoles: ["Administrator"],
+});

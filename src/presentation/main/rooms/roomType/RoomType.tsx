@@ -1,3 +1,4 @@
+import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
 import RoomTypeData from "./components/RoomTypeData";
 
 const RoomType = () => {
@@ -9,4 +10,6 @@ const RoomType = () => {
   );
 };
 
-export default RoomType;
+export default ProtectedRoutes(RoomType, {
+  allowedRoles: ["Administrator", "Hotel_manager"],
+});

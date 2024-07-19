@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
-import { EnableUserParams } from "../models/request/user-request";
+import { EnableUserParams, UpdateRoleParams } from "../models/request/user-request";
 
 export const userService = createApi({
   reducerPath: "userService",
@@ -41,6 +41,21 @@ export const userService = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
+    getGroups: build.query<BaseResponse<any>, void>({
+      query: () => ({
+        url: "/accounts/groups/",
+        method: "GET",
+      }),
+      providesTags: ["Users"],
+    }),
+    UpdateUserPermissions: build.mutation<BaseResponse<any>, UpdateRoleParams>({
+      query: ({ body, userId }: UpdateRoleParams) => ({
+        url: `/accounts/users/${userId}/`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
@@ -48,4 +63,6 @@ export const {
   useGetUsersByHostelIdQuery,
   useDeleteUserMutation,
   useEnableUserMutation,
+  useGetGroupsQuery,
+  useUpdateUserPermissionsMutation
 } = userService;

@@ -274,12 +274,6 @@ const SignUp = () => {
               <div className="sm:col-span-9">
                 <textarea
                   id="af-account-bio"
-                  {...register("address", {
-                    required: {
-                      value: true,
-                      message: "Address is required",
-                    },
-                  })}
                   onChange={handleInputChange}
                   rows={4}
                   className="py-3 px-3 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  "

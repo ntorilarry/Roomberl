@@ -3,9 +3,8 @@ import { useGetRoomsQuery } from "../../../../services/room-service";
 import { Link, useParams } from "react-router-dom";
 import { FaGamepad, FaRegStar } from "react-icons/fa6";
 import { HiArrowRight, HiOutlineBuildingOffice } from "react-icons/hi2";
-import { BsSendCheck } from "react-icons/bs";
 import ViewRoomLoader from "./components/ViewRoomLoader";
-import UnselectRoom from "../roomDetails/components/UnselectRoom";
+import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
 
 const ViewRooms = () => {
   const { roomTypeId } = useParams();
@@ -130,4 +129,6 @@ const ViewRooms = () => {
   );
 };
 
-export default ViewRooms;
+export default ProtectedRoutes(ViewRooms, {
+  allowedRoles: ["Student"],
+});

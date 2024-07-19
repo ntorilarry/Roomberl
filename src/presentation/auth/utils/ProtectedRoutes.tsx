@@ -1,10 +1,18 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProtectedRoutes = (WrappedComponent: React.ComponentType<any>) => {
+interface ProtectedRoutesProps {
+  allowedRoles: string[];
+}
+
+const ProtectedRoutes = (
+  WrappedComponent: React.ComponentType<any>,
+  { allowedRoles }: ProtectedRoutesProps
+) => {
   const AuthGuard: React.FC = (props) => {
     const navigate = useNavigate();
     const isAuthenticated = sessionStorage.getItem("access_token"); // Check if user is authenticated
+    const roles = sessionStorage.getItem("roles");
 
     useEffect(() => {
       const verifyToken = async () => {
@@ -14,6 +22,15 @@ const ProtectedRoutes = (WrappedComponent: React.ComponentType<any>) => {
             navigate("/auth/login");
             return;
           }
+
+          // Authorization check
+          if (
+            allowedRoles &&
+            roles?.includes &&
+            !allowedRoles.includes(roles)
+          ) {
+            navigate("/auth/unauthorized");
+          }
         } catch (error) {
           console.error("Token verification error:", error);
           // Handle any verification errors, e.g., log out the user
@@ -22,7 +39,7 @@ const ProtectedRoutes = (WrappedComponent: React.ComponentType<any>) => {
       };
 
       verifyToken();
-    }, [navigate, isAuthenticated]);
+    }, [navigate, isAuthenticated, allowedRoles, roles]);
 
     // Render the wrapped component if authenticated
     return isAuthenticated ? <WrappedComponent {...props} /> : null;

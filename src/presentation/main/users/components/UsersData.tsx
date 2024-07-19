@@ -4,6 +4,7 @@ import UsersTable from "./UsersTable";
 import { useGetUsersByHostelIdQuery } from "../../../../services/user-service";
 import { DisableUsers } from "./DisableUsers";
 import { EnableUsers } from "./EnableUsers";
+import { GroupPermission } from "./GroupPermission";
 
 const UsersData = () => {
   const [filterValue, setFilterValue] = useState("");
@@ -59,8 +60,7 @@ const UsersData = () => {
 
       {
         Header: "Group Permission",
-        accessor: (row) =>
-          row.groups.map((item) => item?.name),
+        accessor: (row) => row.groupsObj.map((item) => item?.name),
       },
 
       {
@@ -71,11 +71,17 @@ const UsersData = () => {
         Header: "Actions",
         Cell: ({ row }) => (
           <div className="flex gap-x-2">
-            {row.original.isActive ? (
-              <DisableUsers user={row.original} />
-            ) : (
-              <EnableUsers user={row.original} />
-            )}
+            <div>
+              {" "}
+              {row.original.isActive ? (
+                <DisableUsers user={row.original} />
+              ) : (
+                <EnableUsers user={row.original} />
+              )}
+            </div>
+            <div>
+              <GroupPermission user={row.original}/>
+            </div>
           </div>
         ),
       },

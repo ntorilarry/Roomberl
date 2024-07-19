@@ -18,6 +18,7 @@ import QuestionAnswer from "../presentation/auth/QuestionAnswer";
 import UsersPaymentSuccess from "../presentation/main/payment/userPayment/UsersPaymentSuccess";
 import ChooseRoomSuccess from "../presentation/main/rooms/roomDetails/components/ChooseRoomSuccess";
 import UnselectRoomSuccess from "../presentation/main/rooms/roomDetails/components/UnselectRoomSuccess";
+import UnauthorizedPage from "../presentation/auth/Unauthorized";
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,7 @@ const AppRouter = () => {
         <Route path="login" element={<LogIn />} />
         <Route path="sign-up-additional" element={<SignUpAdditionalInfo />} />
         <Route path="questions-and-answers" element={<QuestionAnswer />} />
+        <Route path="unauthorized" element={<UnauthorizedPage />} />
       </Route>
 
       <Route path="/" element={<MainLayout />}>

@@ -43,7 +43,11 @@ const navigation = [
       { name: "All Rooms", href: "/rooms/all-rooms", icon: SiGoogleclassroom },
     ],
   },
-  { name: "Payment", href: "/payments/verify-payment", icon: MdOutlinePayments },
+  {
+    name: "Payment",
+    href: "/payments/verify-payment",
+    icon: MdOutlinePayments,
+  },
   { name: "Users", href: "/users", icon: HiOutlineUsers },
 ];
 
@@ -52,6 +56,47 @@ function classNames(...classes) {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const roles = sessionStorage.getItem("roles");
+  const isAdmin = roles && roles.includes("Administrator");
+  const isStudent = roles && roles.includes("Student");
+  const isHotelManager = roles && roles.includes("Hostel_manager");
+
+  const filteredNavigation = navigation
+    .filter((item) => {
+      if (isStudent) {
+        return (
+          item.name === "Dashboard" ||
+          (item.name === "Rooms" &&
+            item.subItems &&
+            item.subItems.some((subItem) => subItem.name === "View Room Types"))
+        );
+      }
+      if (isAdmin) {
+        return item.name !== "View Room Types";
+      }
+      if (isHotelManager) {
+        return item.name !== "View Room Types" && item.name !== "Users";
+      }
+      return true;
+    })
+    .map((item) => {
+      if (item.subItems) {
+        return {
+          ...item,
+          subItems: item.subItems.filter((subItem) => {
+            if (isStudent) {
+              return subItem.name === "View Room Types";
+            }
+            if (isAdmin || isHotelManager) {
+              return subItem.name !== "View Room Types";
+            }
+            return true;
+          }),
+        };
+      }
+      return item;
+    });
+
   return (
     <>
       <Transition show={sidebarOpen}>
@@ -118,7 +163,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <ul role="list" className="flex flex-1 flex-col gap-y-7">
                       <li>
                         <ul role="list" className="-mx-2 space-y-1">
-                          {navigation.map((item) =>
+                          {filteredNavigation.map((item) =>
                             item.subItems ? (
                               <Disclosure key={item.name}>
                                 {({ open }) => (
@@ -126,7 +171,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                     <Disclosure.Button
                                       className={classNames(
                                         "text-gray-400 hover:text-black dark:hover:text-white hover:bg-[#F9FAFB] dark:hover:bg-slate-700",
-                                        "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium w-full justify-between"
+                                        "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-medium w-full justify-between"
                                       )}
                                     >
                                       <div className="flex items-center gap-x-3">
@@ -158,7 +203,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                               isActive
                                                 ? "bg-white dark:bg-slate-800 text-black dark:text-white"
                                                 : "text-gray-400 hover:text-black dark:hover:text-white hover:bg-[#F9FAFB] dark:hover:bg-slate-700",
-                                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium"
+                                              "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-medium"
                                             )
                                           }
                                         >
@@ -182,7 +227,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                       isActive
                                         ? "bg-gray-100 dark:bg-slate-700 text-black dark:text-white"
                                         : "text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-700",
-                                      "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium"
+                                      "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-medium"
                                     )
                                   }
                                 >
@@ -201,7 +246,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       <li className="mt-auto">
                         <a
                           href="#"
-                          className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                          className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                         >
                           <HiOutlineCog6Tooth
                             className="h-6 w-6 shrink-0"
@@ -233,7 +278,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
-                  {navigation.map((item) =>
+                  {filteredNavigation.map((item) =>
                     item.subItems ? (
                       <Disclosure key={item.name}>
                         {({ open }) => (
@@ -241,7 +286,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             <Disclosure.Button
                               className={classNames(
                                 "text-gray-400 hover:text-black dark:hover:text-white hover:bg-[#F9FAFB] dark:hover:bg-slate-700",
-                                "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium w-full justify-between"
+                                "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-medium w-full justify-between"
                               )}
                             >
                               <div className="flex items-center gap-x-3">
@@ -273,7 +318,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                       isActive
                                         ? " text-black dark:text-white bg-gray-100 dark:bg-slate-700"
                                         : "text-gray-400  hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-700",
-                                      "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium"
+                                      "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-medium"
                                     )
                                   }
                                 >
@@ -297,7 +342,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               isActive
                                 ? "bg-gray-100 dark:bg-slate-700 text-black dark:text-white"
                                 : "text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-slate-700",
-                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium"
+                              "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-medium"
                             )
                           }
                         >
@@ -316,7 +361,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li className="mt-auto">
                 <a
                   href="#"
-                  className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                  className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                 >
                   <HiOutlineCog6Tooth
                     className="h-6 w-6 shrink-0"

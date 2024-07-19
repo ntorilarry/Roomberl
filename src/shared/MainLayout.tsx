@@ -2,7 +2,6 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
-import ProtectedRoutes from "../presentation/auth/utils/ProtectedRoutes";
 import UserAdditionalDetails from "../presentation/auth/UserAdditionalDetails";
 
 const MainLayout = () => {
@@ -24,4 +23,4 @@ const MainLayout = () => {
   );
 };
 
-export default ProtectedRoutes(MainLayout);
+export default MainLayout;

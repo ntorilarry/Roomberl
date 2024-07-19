@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetRoomsByIdQuery } from "../../../../services/room-service";
-import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { HiArrowRight } from "react-icons/hi";
 import ChooseRoom from "./components/ChooseRoom";
 import UnselectRoom from "./components/UnselectRoom";
+import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
 
 const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
   const [show, setShow] = useState(false);
-  const [hostel, setHostel] = useState(sessionStorage.getItem("hostel"));
-  const [RoomIdPresent, setRoomIdPresent] = useState(
+  const [hostel] = useState(sessionStorage.getItem("hostel"));
+  const [RoomIdPresent] = useState(
     sessionStorage.getItem("RoomIdPresent")
   );
 
@@ -155,57 +155,14 @@ const RoomDetails = () => {
               </div>
             </div>
           </div>
-          {/* <div>
-            <div className="border-b py-4 border-gray-200">
-              <div
-                onClick={() => setShow2(!show2)}
-                className="flex justify-between items-center cursor-pointer"
-              >
-                <p className="text-base leading-4 text-gray-800">Contact us</p>
-                <button
-                  className="
-									cursor-pointer
-									focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400
-									rounded
-								"
-                  aria-label="show or hide"
-                >
-                  <svg
-                    className={
-                      "transform " + (show2 ? "rotate-180" : "rotate-0")
-                    }
-                    width="10"
-                    height="6"
-                    viewBox="0 0 10 6"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 1L5 5L1 1"
-                      stroke="#4B5563"
-                      strokeWidth="1.25"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div
-                className={
-                  "pt-4 text-base leading-normal pr-12 mt-4 text-gray-600 " +
-                  (show2 ? "block" : "hidden")
-                }
-                id="sect"
-              >
-                If you have any questions on how to return your item to us,
-                contact us.
-              </div>
-            </div>
-          </div> */}
+         
         </div>
       </div>
     </div>
   );
 };
 
-export default RoomDetails;
+export default ProtectedRoutes(RoomDetails, {
+  allowedRoles: ["Student"],
+});
+

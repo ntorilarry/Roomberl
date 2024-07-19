@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useGetRoomTypeQuery } from "../../../../../services/room-service";
 import RoomTypeTable from "./RoomTypeTable.tsx";
-import { EditRoomType } from "./EditRoomType";
 import { DeleteRoomType } from "./DeleteRoomType";
+import { EditRoomType } from "./EditRoomType";
 
 const RoomTypeData = () => {
   const [filterValue, setFilterValue] = useState("");
