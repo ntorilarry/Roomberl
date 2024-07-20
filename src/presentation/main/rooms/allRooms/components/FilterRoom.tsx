@@ -5,10 +5,15 @@ import { FaFilter } from "react-icons/fa";
 import { useGetHostelsQuery } from "../../../../../services/auth-service";
 import { useGetRoomTypeQuery } from "../../../../../services/room-service";
 
-export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
+export const FilterRoom = ({
+  setFilterHostel,
+  setFilterRoomType,
+  setFilterGender,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHostel, setSelectedHostel] = useState("");
   const [selectedRoomType, setSelectedRoomType] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
@@ -23,6 +28,7 @@ export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
   const applyFilter = () => {
     setFilterHostel(selectedHostel);
     setFilterRoomType(selectedRoomType);
+    setFilterGender(selectedGender);
     closeModal();
   };
 
@@ -132,6 +138,27 @@ export const FilterRoom = ({ setFilterHostel, setFilterRoomType }) => {
                             {data.name}
                           </option>
                         ))}
+                      </select>
+                    </div>
+                    <div className="my-2">
+                      <label
+                        htmlFor="roomType"
+                        className="block mb-2 text-sm font-medium dark:text-white"
+                      >
+                        Room Gender
+                      </label>
+                      <select
+                        id="roomType"
+                        value={selectedGender}
+                        onChange={(e) => setSelectedGender(e.target.value)}
+                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                      >
+                        <option value="" selected disabled>
+                          Choose room gender
+                        </option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </form>

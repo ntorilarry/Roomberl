@@ -12,23 +12,18 @@ const ViewRooms = () => {
     return value === "true";
   };
 
-  const [verify, setVerify] = useState(
+  const [verify] = useState(
     parseBoolean(sessionStorage.getItem("isPaymentVerified"))
   );
-
-  const [payRoomTypeId, setPayRoomTypeId] = useState(
-    sessionStorage.getItem("isRoomTypePresent")
-  );
-
-  const [RoomIdPresent, setRoomIdPresent] = useState(
-    sessionStorage.getItem("RoomIdPresent")
-  );
-
-  const [hostel, setHostel] = useState(sessionStorage.getItem("hostel"));
+  const [roomGender] = useState(sessionStorage.getItem("gender"));
+  const [payRoomTypeId] = useState(sessionStorage.getItem("isRoomTypePresent"));
+  const [RoomIdPresent] = useState(sessionStorage.getItem("RoomIdPresent"));
+  const [hostel] = useState(sessionStorage.getItem("hostel"));
 
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: hostel || "",
     roomTypeId: roomTypeId || "",
+    gender: roomGender || "",
   });
 
   const rooms = response?.data?.results || [];

@@ -27,10 +27,10 @@ export const roomService = createApi({
   endpoints: (build) => ({
     getRooms: build.query<
       BaseResponse<any>,
-      { roomTypeId: string; hostelId: string }
+      { roomTypeId: string; hostelId: string; gender: string }
     >({
-      query: ({ roomTypeId, hostelId }) => ({
-        url: `/room/rooms/?room_type=${roomTypeId}&hostel=${hostelId}`,
+      query: ({ roomTypeId, hostelId, gender }) => ({
+        url: `/room/rooms/?room_type=${roomTypeId}&hostel=${hostelId}&gender=${gender}`,
         method: "GET",
       }),
       providesTags: ["Room"],

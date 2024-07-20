@@ -37,12 +37,13 @@ const LogIn = () => {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
 
-        const { id, firstName, lastName, email, hostel, groups } = data.user;
+        const { id, firstName, lastName, email, hostel, groups, gender } = data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("hostel", hostel);
+        sessionStorage.setItem("gender", gender);
 
         if (groups && groups.length > 0) {
           sessionStorage.setItem("roles", groups[0].name);

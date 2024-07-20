@@ -55,6 +55,7 @@ const RoomsTables = ({
   isLoading,
   setFilterHostel,
   setFilterRoomType,
+  setFilterGender
 }) => {
   const {
     getTableProps,
@@ -85,6 +86,7 @@ const RoomsTables = ({
                         <FilterRoom
                           setFilterHostel={setFilterHostel}
                           setFilterRoomType={setFilterRoomType}
+                          setFilterGender={setFilterGender}
                         />
                         <AddRoom />
                       </div>

@@ -10,9 +10,11 @@ import { DeleteRoom } from "./DeleteRoom";
 const RoomData = () => {
   const [filterhostel, setFilterHostel] = useState("");
   const [filterRoomType, setFilterRoomType] = useState("");
+  const [filterGender, setFilterGender] = useState("");
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: filterhostel,
     roomTypeId: filterRoomType,
+    gender: filterGender
   });
 
   const Rooms = response?.data.results || [];
@@ -111,6 +113,7 @@ const RoomData = () => {
         isLoading={isLoading}
         setFilterHostel={setFilterHostel}
         setFilterRoomType={setFilterRoomType}
+        setFilterGender={setFilterGender}
       />
     </div>
   );

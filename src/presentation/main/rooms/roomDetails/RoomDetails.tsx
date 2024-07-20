@@ -6,15 +6,14 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import ChooseRoom from "./components/ChooseRoom";
 import UnselectRoom from "./components/UnselectRoom";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
+import { useGetMatchingUsersQuery } from "../../../../services/user-service";
 
 const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
-  const [show, setShow] = useState(false);
+  const [showAmenities, setShowAmenities] = useState(false);
+  const [showMatchingUsers, setShowMatchingUsers] = useState(false);
   const [hostel] = useState(sessionStorage.getItem("hostel"));
-  const [RoomIdPresent] = useState(
-    sessionStorage.getItem("RoomIdPresent")
-  );
-
+  const [RoomIdPresent] = useState(sessionStorage.getItem("RoomIdPresent"));
 
   const { data: response, isLoading } = useGetRoomsByIdQuery({
     hostelId: hostel || "",
@@ -24,9 +23,13 @@ const RoomDetails = () => {
 
   const roomDetails = response?.data?.results[0] || [];
 
+  const { data: matchResponse, isLoading: matchLoading } =
+    useGetMatchingUsersQuery();
+  const matchUsers = matchResponse?.data?.results;
+
   return (
     <div className="bg-white dark:bg-slate-800">
-      <div className="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
+      <div className="md:flex items-start justify-center py-12 md:px-6 px-4">
         <div className="xl:w-2/6 lg:w-2/5 w-80 md:block hidden">
           <Swiper
             spaceBetween={30}
@@ -111,20 +114,20 @@ const RoomDetails = () => {
           <div>
             <div className="border-t border-b py-4 mt-7 border-gray-200 dark:border-gray-500">
               <div
-                onClick={() => setShow(!show)}
+                onClick={() => setShowAmenities(!showAmenities)}
                 className="flex justify-between items-center cursor-pointer"
               >
                 <p className="text-base leading-4 text-gray-800 dark:text-white">
                   Room Amenities
                 </p>
                 <button
-                  className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400	rounded"
+                  className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 rounded"
                   aria-label="show or hide"
                 >
                   <svg
                     className={
                       "transform dark:fill-white" +
-                      (show ? "rotate-180" : "rotate-0")
+                      (showAmenities ? "rotate-180" : "rotate-0")
                     }
                     width="10"
                     height="6"
@@ -145,7 +148,7 @@ const RoomDetails = () => {
               <div
                 className={
                   "pt-4 text-base leading-normal pr-12 mt-4 text-gray-600 dark:text-white " +
-                  (show ? "block" : "hidden")
+                  (showAmenities ? "block" : "hidden")
                 }
                 id="sect"
               >
@@ -154,8 +157,81 @@ const RoomDetails = () => {
                   .join(", ")}
               </div>
             </div>
+            <div className="border-b py-4 border-gray-200 dark:border-gray-500">
+              <div
+                onClick={() => setShowMatchingUsers(!showMatchingUsers)}
+                className="flex justify-between items-center cursor-pointer"
+              >
+                <p className="text-base leading-4 text-gray-800 dark:text-white">
+                  Matching Users
+                </p>
+                <button
+                  className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 rounded"
+                  aria-label="show or hide"
+                >
+                  <svg
+                    className={
+                      "transform dark:fill-white" +
+                      (showMatchingUsers ? "rotate-180" : "rotate-0")
+                    }
+                    width="10"
+                    height="6"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 1L5 5L1 1"
+                      stroke="#4B5563"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+                className={
+                  "pt-4 text-base leading-normal text-gray-600 dark:text-white " +
+                  (showMatchingUsers ? "block" : "hidden")
+                }
+                id="sect"
+              >
+                <div className="w-full px-4 py-5 mx-auto">
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    {matchUsers?.map((item, key) => (
+                      <div
+                        key={key}
+                        className="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-transparent dark:border-white"
+                      >
+                        <div className="p-3">
+                          <div className="flex">
+                            <img
+                              src={`https://ui-avatars.com/api/?name=${item.nickname}&background=random&size=30`}
+                              alt="Avatar"
+                              className="rounded-full"
+                            />
+
+                            <div className="grow ms-5">
+                              <h3 className="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-neutral-400 dark:text-neutral-200">
+                                {item.nickname || "NA"}
+                              </h3>
+                              <p className="text-sm text-gray-600 dark:text-white">
+                                {item.courseOfStudy}
+                              </p>
+                              <p className="text-sm text-gray-600 dark:text-white">
+                               Match: {item.matchPercentage}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-         
         </div>
       </div>
     </div>
@@ -165,4 +241,3 @@ const RoomDetails = () => {
 export default ProtectedRoutes(RoomDetails, {
   allowedRoles: ["Student"],
 });
-

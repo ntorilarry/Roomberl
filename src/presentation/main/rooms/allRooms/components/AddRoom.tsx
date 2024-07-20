@@ -22,6 +22,7 @@ export const AddRoom = () => {
     code: "",
     roomType: "",
     hostel: "",
+    gender:"",
     roomAmenities: [],
   });
 
@@ -68,6 +69,7 @@ export const AddRoom = () => {
       formDataToSend.append("code", formData.code);
       formDataToSend.append("roomType", formData.roomType);
       formDataToSend.append("hostel", formData.hostel);
+      formDataToSend.append("gender", formData.gender);
       if (floorPlan) {
         formDataToSend.append("floorPlan", floorPlan);
       }
@@ -96,12 +98,13 @@ export const AddRoom = () => {
           code: "",
           roomType: "",
           hostel: "",
+          gender: "",
           roomAmenities: [],
         });
         setImages([]);
         setFloorPlan(null);
         setShowModal(false);
-      }else {
+      } else {
         const errorMessages = Object.entries(data)
           .map(([key, value]) => {
             if (Array.isArray(value)) {
@@ -267,20 +270,43 @@ export const AddRoom = () => {
                         className="py-4 px-3 block w-full bg-[#f0efef] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                       />
                     </div>
-                    <div className="mb-2">
-                      <label
-                        htmlFor="roomAmenities"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Room Amenities
-                      </label>
-                      <Select
-                        id="roomAmenities"
-                        name="roomAmenities"
-                        isMulti
-                        options={amenityOptions}
-                        onChange={handleAmenitiesSelectChange}
-                      />
+                    <div className="grid lg:grid-cols-2 gap-6">
+                      <div className="mb-2">
+                        <label
+                          htmlFor="gender"
+                          className="block mb-2 text-sm font-medium dark:text-white"
+                        >
+                          Gender
+                        </label>
+                        <select
+                          name="gender"
+                          className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                          onChange={handleFormChanged}
+                          required
+                        >
+                          <option value="" disabled selected>
+                            Choose Gender
+                          </option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="roomAmenities"
+                          className="block mb-2 text-sm font-medium dark:text-white"
+                        >
+                          Room Amenities
+                        </label>
+                        <Select
+                          id="roomAmenities"
+                          name="roomAmenities"
+                          isMulti
+                          options={amenityOptions}
+                          onChange={handleAmenitiesSelectChange}
+                        />
+                      </div>
                     </div>
                     <div className="grid lg:grid-cols-2 gap-6 pt-6">
                       <div className="mb-4">
@@ -392,7 +418,7 @@ export const AddRoom = () => {
                       >
                         Close
                       </button>
-                      <button
+                      <button 
                         className="bg-blue-500 text-white  w-full  text-sm px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="submit"
                       >
