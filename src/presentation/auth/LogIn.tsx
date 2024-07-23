@@ -1,7 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { loginRequest } from "../../models/request/auth-request";
-import { useLoginMutation } from "../../services/auth-service";
+import {
+  useGetHostelByCodeNameQuery,
+  useLoginMutation,
+} from "../../services/auth-service";
 import toast from "react-hot-toast";
 
 import Loader from "../../components/Loader";
@@ -37,7 +40,8 @@ const LogIn = () => {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
 
-        const { id, firstName, lastName, email, hostel, groups, gender } = data.user;
+        const { id, firstName, lastName, email, hostel, groups, gender } =
+          data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
@@ -72,20 +76,33 @@ const LogIn = () => {
     }
   };
 
+  const { code_name } = useParams<{ code_name?: string }>();
+
+  const { data: response } = useGetHostelByCodeNameQuery(code_name ?? "");
+  const Hostels = response?.data || [];
+
+  const hostelName = Hostels.map((hostel) => hostel.name);
+  const hostelImage = Hostels.map((hostel) => hostel.image);
+  const hostelID = Hostels.map((hostel) => hostel.id);
+  sessionStorage.setItem("hostelID", hostelID);
+  sessionStorage.setItem("code_name", code_name ?? "");
   return (
     <div className="bg-white dark:bg-slate-800">
       <div className="flex justify-center h-screen">
         <div
           className="hidden bg-cover lg:block lg:w-[60%]"
           style={{
-            backgroundImage:
-              "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
+            backgroundImage: `url(https://cyrax1.pythonanywhere.com/media/${hostelImage})`,
           }}
+          // style={{
+          //   backgroundImage:
+          //     "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
+          // }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
               <h2 className="text-4xl font-bold text-white dark:text-white">
-                Welcome to RoomBerl
+                Welcome to {hostelName || "Roomberl"}
               </h2>
 
               <p className="max-w-xl mt-3 text-gray-300 dark:text-white">

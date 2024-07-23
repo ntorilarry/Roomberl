@@ -26,7 +26,7 @@ const AppRouter = () => {
       <Route path="/auth">
         <Route index element={<Navigate replace to="login" />} />
         <Route path="sign-up" element={<SignUp />} />
-        <Route path="login" element={<LogIn />} />
+        <Route path="login/:code_name" element={<LogIn />} />
         <Route path="sign-up-additional" element={<SignUpAdditionalInfo />} />
         <Route path="questions-and-answers" element={<QuestionAnswer />} />
         <Route path="unauthorized" element={<UnauthorizedPage />} />

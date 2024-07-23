@@ -13,6 +13,9 @@ import { useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const SignUp = () => {
+  const [hostelID, setHostelID] = useState<string | null>(
+    sessionStorage.getItem("hostelID")
+  );
   const navigate = useNavigate();
   const {
     register,
@@ -33,7 +36,7 @@ const SignUp = () => {
     mobile: "",
     address: "",
     gender: "",
-    hostel: "",
+    hostel: hostelID || "",
     groups: [],
     userPermissions: [],
   });
@@ -283,40 +286,35 @@ const SignUp = () => {
                   {errors?.address?.message?.toString()}
                 </p>
               </div>
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="af-account-country"
-                  className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
-                >
-                  Hostel
-                </label>
-              </div>
+              {!hostelID && (
+                <>
+                  <div className="sm:col-span-3">
+                    <label
+                      htmlFor="af-account-country"
+                      className="inline-block text-sm text-gray-800 mt-2.5 dark:text-white"
+                    >
+                      Hostel
+                    </label>
+                  </div>
 
-              <div className="sm:col-span-9">
-                <select
-                  id="af-account-country"
-                  {...register("hostel", {
-                    required: {
-                      value: true,
-                      message: "Hostel is required",
-                    },
-                  })}
-                  onChange={handleInputChange}
-                  className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  dark:border-slate-700  dark:focus:ring-slate-600"
-                >
-                  <option value="" selected>
-                    Choose hostel
-                  </option>
-                  {Hostels.map((data, index) => (
-                    <option key={index} value={data.id}>
-                      {data.name}
-                    </option>
-                  ))}
-                </select>
-                <p className="text-red-500 text-sm">
-                  {errors?.hostel?.message?.toString()}
-                </p>
-              </div>
+                  <div className="sm:col-span-9">
+                    <select
+                      name="hostel"
+                      onChange={handleInputChange}
+                      className="py-3 px-3 pe-11 block w-full border dark:border-none dark:text-white dark:bg-slate-700 border-gray-300 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none  dark:border-slate-700  dark:focus:ring-slate-600"
+                    >
+                      <option value="" selected>
+                        Choose hostel
+                      </option>
+                      {Hostels.map((data, index) => (
+                        <option key={index} value={data.id}>
+                          {data.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </>
+              )}
               <div className="sm:col-span-3">
                 <label
                   htmlFor="af-account-password"

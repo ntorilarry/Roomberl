@@ -68,6 +68,13 @@ export const authService = createApi({
       }),
       providesTags: ["Auth"],
     }),
+    getHostelByCodeName: build.query<BaseResponse<any>, string>({
+      query: (code_name) => ({
+        url: `/literals/hostel/${code_name}/`,
+        method: "GET",
+      }),
+      providesTags: ["Auth"],
+    }),
     getQuestions: build.query<BaseResponse<any>, void>({
       query: () => ({
         url: "/question/question/",
@@ -103,5 +110,6 @@ export const {
   useGetAddInfoByUserIdQuery,
   useGetQuestionsQuery,
   useUpdateUserQuestionsMutation,
-  useChooseRoomMutation
+  useChooseRoomMutation,
+  useGetHostelByCodeNameQuery
 } = authService;

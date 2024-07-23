@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ProtectedRoutesProps {
@@ -13,13 +13,16 @@ const ProtectedRoutes = (
     const navigate = useNavigate();
     const isAuthenticated = sessionStorage.getItem("access_token"); // Check if user is authenticated
     const roles = sessionStorage.getItem("roles");
+    const [code_name, setCode_name] = useState<string | null>(
+      sessionStorage.getItem("code_name")
+    );
 
     useEffect(() => {
       const verifyToken = async () => {
         try {
           // Redirect to login page if user is not authenticated
           if (!isAuthenticated) {
-            navigate("/auth/login");
+            navigate(`/auth/login/${code_name}`);
             return;
           }
 
@@ -34,7 +37,7 @@ const ProtectedRoutes = (
         } catch (error) {
           console.error("Token verification error:", error);
           // Handle any verification errors, e.g., log out the user
-          navigate("/auth/login");
+          navigate(`/auth/login/${code_name}`);
         }
       };
 
