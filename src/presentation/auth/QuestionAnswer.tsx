@@ -103,14 +103,29 @@ const QuestionAnswer = () => {
     );
   }
 
-  const optionLabels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
+  const optionLabels = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+  ];
 
   return (
     <div>
       <section className="bg-white dark:bg-slate-800">
         <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6">
           <h2 className="mb-8 text-2xl tracking-tight font-bold text-gray-900 dark:text-white">
-            Questions and Answers
+            Personality Profile Completion
           </h2>
           <form onSubmit={handleFormSubmit}>
             {questions.map((item) => (
@@ -142,6 +157,7 @@ const QuestionAnswer = () => {
                                   handleInputChange(element.id, data.text)
                                 }
                               />
+
                               <label
                                 htmlFor={`option-${data.id}`}
                                 className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -151,14 +167,23 @@ const QuestionAnswer = () => {
                             </div>
                           ))
                         ) : (
-                          <input
-                            type="text"
+                          // <input
+                          //   type="text"
+                          //   placeholder="Your answer"
+                          //   required
+                          //   className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                          //   onChange={(e) =>
+                          //     handleInputChange(element.id, e.target.value)
+                          //   }
+                          // />
+                          <textarea
                             placeholder="Your answer"
                             required
-                            className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                            id="description"
                             onChange={(e) =>
                               handleInputChange(element.id, e.target.value)
                             }
+                            className="py-4 px-3 block w-full bg-[#f0efef] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                           />
                         )}
                       </div>
