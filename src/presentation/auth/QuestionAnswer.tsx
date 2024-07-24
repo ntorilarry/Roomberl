@@ -103,7 +103,7 @@ const QuestionAnswer = () => {
     );
   }
 
-  const optionLabels = ["A", "B", "C", "D", "E", "F", "G"];
+  const optionLabels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N"];
 
   return (
     <div>
