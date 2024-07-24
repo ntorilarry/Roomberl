@@ -24,38 +24,41 @@ const Dashboard = () => {
             Matching Users
           </p>
         </div>
-        <div className="grid gap-10 mx-auto sm:grid-cols-2 lg:grid-cols-4 lg:max-w-screen-lg">
-          {matchUsers?.map((item, key) => (
-            <div key={key}>
-              <div className="relative pb-56 mb-4 rounded shadow lg:pb-64">
-                <img
-                  className="absolute object-cover w-full h-full rounded-xl"
-                  src={`https://ui-avatars.com/api/?name=${item.nickname}&background=random`}
-                  alt="Person"
-                />
+        {matchUsers && matchUsers.length > 0 ? (
+          <div className="grid gap-10 mx-auto sm:grid-cols-2 lg:grid-cols-4 lg:max-w-screen-lg">
+            {matchUsers.map((item, key) => (
+              <div key={key}>
+                <div className="relative pb-56 mb-4 rounded shadow lg:pb-64">
+                  <img
+                    className="absolute object-cover w-full h-full rounded-xl"
+                    src={`https://ui-avatars.com/api/?name=${item.nickname}&background=random`}
+                    alt="Person"
+                  />
+                </div>
+                <div className="flex flex-col sm:text-center">
+                  <p className="text-lg font-bold dark:text-white">
+                    {item.nickname || "NA"}
+                  </p>
+                  <p className=" text-sm text-gray-800 dark:text-white">
+                    {item.courseOfStudy}
+                  </p>
+                  <p className="mb-5 text-sm text-gray-800 dark:text-white">
+                    Match percentage: {item.matchPercentage}
+                  </p>
+                </div>
               </div>
-              <div className="flex flex-col sm:text-center">
-                <p className="text-lg font-bold dark:text-white">
-                  {" "}
-                  {item.nickname || "NA"}
-                </p>
-                <p className=" text-sm text-gray-800 dark:text-white">
-                  {" "}
-                  {item.courseOfStudy}
-                </p>
-                <p className="mb-5 text-sm text-gray-800 dark:text-white">
-                  {" "}
-                  Match percentage: {item.matchPercentage}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-lg text-gray-800 dark:text-white">
+            No matching users found.
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default ProtectedRoutes(Dashboard, {
-  allowedRoles: ["Administrator", "Student", "Hotel_manager"],
+  allowedRoles: ["Student"],
 });

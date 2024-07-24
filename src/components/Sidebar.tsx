@@ -72,10 +72,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         );
       }
       if (isAdmin) {
-        return item.name !== "View Room Types";
+        return item.name !== "View Room Types" && item.name !== "Dashboard";
       }
       if (isHotelManager) {
-        return item.name !== "View Room Types" && item.name !== "Users";
+        return item.name !== "View Room Types" && item.name !== "Users" && item.name !== "Dashboard";
       }
       return true;
     })
