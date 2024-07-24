@@ -16,6 +16,9 @@ const SignUp = () => {
   const [hostelID, setHostelID] = useState<string | null>(
     sessionStorage.getItem("hostelID")
   );
+  const [code_name, setCode_name] = useState<string | null>(
+    sessionStorage.getItem("code_name")
+  );
   const navigate = useNavigate();
   const {
     register,
@@ -100,7 +103,7 @@ const SignUp = () => {
           <p className="mb-6 mt-3 text-center dark:text-white text-sm text-text">
             Have account?{" "}
             <Link
-              to="/auth/login"
+              to={`/auth/login/${code_name}`}
               className="font-semibold text-primary hover:text-primary-accent"
             >
               Sign in

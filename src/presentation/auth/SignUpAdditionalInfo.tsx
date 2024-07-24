@@ -9,6 +9,9 @@ import { useForm } from "react-hook-form";
 import Loader from "../../components/Loader";
 
 const SignUpAdditionalInfo = () => {
+  const [code_name, setCode_name] = useState<string | null>(
+    sessionStorage.getItem("code_name")
+  );
   const navigate = useNavigate();
   const location = useLocation();
   const {
@@ -88,7 +91,7 @@ const SignUpAdditionalInfo = () => {
           <p className="mb-6 mt-3 text-center text-sm text-text dark:text-white">
             Have account?{" "}
             <Link
-              to="/auth/login"
+              to={`/auth/login/${code_name}`}
               className="font-semibold text-primary hover:text-primary-accent"
             >
               Sign in

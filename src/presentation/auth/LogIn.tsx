@@ -94,10 +94,6 @@ const LogIn = () => {
           style={{
             backgroundImage: `url(https://cyrax1.pythonanywhere.com/media/${hostelImage})`,
           }}
-          // style={{
-          //   backgroundImage:
-          //     "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)",
-          // }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
@@ -106,9 +102,7 @@ const LogIn = () => {
               </h2>
 
               <p className="max-w-xl mt-3 text-gray-300 dark:text-white">
-                More than ever, we believe that perfect student accommodation
-                combined with the right roommates create an exciting university
-                experience.
+                Book your room with ease and choose your roommates seamlessly
               </p>
             </div>
           </div>

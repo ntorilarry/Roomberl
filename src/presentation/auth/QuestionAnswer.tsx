@@ -10,6 +10,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const QuestionAnswer = () => {
   const navigate = useNavigate();
+  const [code_name, setCode_name] = useState<string | null>(
+    sessionStorage.getItem("code_name")
+  );
   const location = useLocation();
   const { data: response, isLoading } = useGetQuestionsQuery();
 
@@ -70,7 +73,7 @@ const QuestionAnswer = () => {
         : response["data"];
       if (status === "success") {
         toast.success(status);
-        navigate("/auth/login");
+        navigate(`/auth/login/${code_name}`);
       } else {
         if (typeof data === "object" && data !== null) {
           const errorMessages = Object.entries(data)
