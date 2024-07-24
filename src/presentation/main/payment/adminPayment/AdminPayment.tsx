@@ -11,5 +11,5 @@ const AdminPayment = () => {
 };
 
 export default ProtectedRoutes(AdminPayment, {
-  allowedRoles: ["Administrator", "Hotel_manager"],
+  allowedRoles: ["Administrator", "Hostel_manager"],
 });

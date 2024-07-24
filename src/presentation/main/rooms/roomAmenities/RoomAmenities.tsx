@@ -11,5 +11,5 @@ const RoomAmenities = () => {
 };
 
 export default ProtectedRoutes(RoomAmenities, {
-  allowedRoles: ["Administrator", "Hotel_manager"],
+  allowedRoles: ["Administrator", "Hostel_manager"],
 });

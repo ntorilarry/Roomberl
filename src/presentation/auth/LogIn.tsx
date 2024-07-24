@@ -105,9 +105,9 @@ const LogIn = () => {
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
-              <h2 className="text-4xl font-bold text-white dark:text-white">
+              {/* <h2 className="text-4xl font-bold text-white dark:text-white">
                 Welcome to {hostelName || "Roomberl"}
-              </h2>
+              </h2> */}
 
               <p className="max-w-xl mt-3 text-gray-300 dark:text-white">
                 Book your room with ease and choose your roommates seamlessly

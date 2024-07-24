@@ -15,7 +15,7 @@ const MainLayout = () => {
         <Header setSidebarOpen={setSidebarOpen} />
         <main className="py-10 dark:bg-slate-900 bg-gray-100">
           <div className="px-4 sm:px-6 lg:px-8">
-            <UserAdditionalDetails/>
+            <UserAdditionalDetails />
             <Outlet />
           </div>
         </main>
@@ -25,5 +25,5 @@ const MainLayout = () => {
 };
 
 export default ProtectedRoutes(MainLayout, {
-  allowedRoles: ["Administrator", "Student", "Hotel_manager"],
+  allowedRoles: ["Administrator", "Student", "Hostel_manager"],
 });
