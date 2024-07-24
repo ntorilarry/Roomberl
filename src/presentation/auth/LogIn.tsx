@@ -56,14 +56,13 @@ const LogIn = () => {
             navigate("/");
           } else if (
             userRole === "Administrator" ||
-            userRole === "Hotel_manager"
+            userRole === "Hostel_manager"
           ) {
             navigate("/rooms/amenities");
           }
         }
 
         toast.success(status);
-        navigate("/");
       } else {
         if (typeof data === "object" && data !== null) {
           const errorMessages = Object.entries(data)

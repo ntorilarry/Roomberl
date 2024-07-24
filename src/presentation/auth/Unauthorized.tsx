@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./utils/AuthContext";
 
 const UnauthorizedPage = () => {
+  const [code_name, setCode_name] = useState<string | null>(
+    sessionStorage.getItem("code_name")
+  );
   const { logout } = useContext(AuthContext);
   let navigate = useNavigate();
   const handleLogout = () => {
     logout();
-    navigate("/auth/login");
+    navigate(`/auth/login/${code_name}`);
   };
   return (
     <div className="grid h-screen place-content-center max-w-4xl mx-auto bg-white px-4">
