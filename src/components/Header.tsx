@@ -20,13 +20,17 @@ const Header = ({ setSidebarOpen }) => {
   const [firstName, setFirstName] = useState(
     sessionStorage.getItem("first_name")
   );
+
+  const [code_name, setCode_name] = useState<string | null>(
+    sessionStorage.getItem("code_name")
+  );
   const [lastName, setLastName] = useState(sessionStorage.getItem("last_name"));
   const [email, setEmail] = useState(sessionStorage.getItem("email"));
   const { logout } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate(`/auth/login/${code_name}`);
   };
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 bg-white dark:bg-slate-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
