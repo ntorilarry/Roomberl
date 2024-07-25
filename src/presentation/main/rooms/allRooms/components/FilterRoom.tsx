@@ -10,10 +10,20 @@ export const FilterRoom = ({
   setFilterRoomType,
   setFilterGender,
 }) => {
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID, setHostelID] = useState(
+    sessionStorage.getItem("hostel") || ""
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHostel, setSelectedHostel] = useState("");
   const [selectedRoomType, setSelectedRoomType] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
+
+  useEffect(() => {
+    if (roles === "Hostel_manager") {
+      setSelectedHostel(hostelID);
+    }
+  }, [roles, hostelID]);
 
   const closeModal = () => setIsOpen(false);
   const openModal = () => setIsOpen(true);
@@ -93,6 +103,7 @@ export const FilterRoom = ({
                   </Dialog.Title>
                   <hr className="border-hr border-gray-500 mt-4" />
                   <form className="mt-5">
+                  {roles !== "Hostel_manager" && (
                     <div className="my-2">
                       <label
                         htmlFor="hostel"
@@ -116,6 +127,7 @@ export const FilterRoom = ({
                         ))}
                       </select>
                     </div>
+                  )}
                     <div className="my-2">
                       <label
                         htmlFor="roomType"

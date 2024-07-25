@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
 import toast from "react-hot-toast";
 import Select from "react-select";
@@ -12,8 +12,19 @@ import {
 import { useGetHostelsQuery } from "../../../../../services/auth-service";
 
 export const AddRoom = () => {
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID, setHostelID] = useState(
+    sessionStorage.getItem("hostel") || ""
+  );
   const [showModal, setShowModal] = useState(false);
   const [selectedHostelId, setSelectedHostelId] = useState("");
+
+  useEffect(() => {
+    if (roles === "Hostel_manager") {
+      setSelectedHostelId(hostelID);
+    }
+  }, [roles, hostelID]);
+
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -21,7 +32,7 @@ export const AddRoom = () => {
     floorPlan: "",
     code: "",
     roomType: "",
-    hostel: "",
+    hostel: roles === "Hostel_manager" ? hostelID : "",
     gender:"",
     roomAmenities: [],
   });
@@ -97,7 +108,7 @@ export const AddRoom = () => {
           floorPlan: "",
           code: "",
           roomType: "",
-          hostel: "",
+          hostel: roles === "Hostel_manager" ? hostelID : "",
           gender: "",
           roomAmenities: [],
         });
@@ -205,6 +216,7 @@ export const AddRoom = () => {
                           onChange={handleFormChanged}
                         />
                       </div>
+                      {roles !== "Hostel_manager" && (
                       <div className="mb-2">
                         <label
                           htmlFor="hostel"
@@ -229,6 +241,7 @@ export const AddRoom = () => {
                           ))}
                         </select>
                       </div>
+                      )}
                       <div className="mb-2">
                         <label
                           htmlFor="roomType"

@@ -14,7 +14,7 @@ const RoomData = () => {
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: filterhostel,
     roomTypeId: filterRoomType,
-    gender: filterGender
+    gender: filterGender,
   });
 
   const Rooms = response?.data.results || [];

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
 import Pagination from "../../../../../components/Pagination";
@@ -65,6 +65,8 @@ const RoomAmenityTable = ({
     preGlobalFilteredRows,
     setGlobalFilter,
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
   return (
     <div>
       <div className="max-w-[85rem] mx-auto">
@@ -81,7 +83,9 @@ const RoomAmenityTable = ({
                   <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className="gap-x-2 relative inline-flex">
-                        <FilterRoomType setFilterValue={setFilterValue} />
+                        {roles !== "Hostel_manager" && (
+                          <FilterRoomType setFilterValue={setFilterValue} />
+                        )}
                         <AddRoomType />
                       </div>
                     </div>

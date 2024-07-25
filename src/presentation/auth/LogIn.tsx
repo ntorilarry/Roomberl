@@ -109,7 +109,7 @@ const LogIn = () => {
                 Welcome to {hostelName || "Roomberl"}
               </h2> */}
 
-              <p className="max-w-xl mt-3 text-gray-300 dark:text-white">
+              <p className="max-w-xl mt-3 text-gray-300 font-bold text-3xl dark:text-white">
                 Book your room with ease and choose your roommates seamlessly
               </p>
             </div>
@@ -165,12 +165,12 @@ const LogIn = () => {
                   />
                   {showPassword ? (
                     <FiEyeOff
-                      className="absolute end-2.5 bottom-[0.95rem] text-lg"
+                      className="absolute end-2.5 bottom-[0.95rem] text-lg dark:text-white"
                       onClick={() => setShowPassword(!showPassword)}
                     />
                   ) : (
                     <FiEye
-                      className="absolute end-2.5 bottom-[0.95rem] text-lg"
+                      className="absolute end-2.5 bottom-[0.95rem] text-lg dark:text-white"
                       onClick={() => setShowPassword(!showPassword)}
                     />
                   )}

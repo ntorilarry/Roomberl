@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   useGetQuestionsQuery,
+  useGetUserTokenQuery,
   useUpdateUserQuestionsMutation,
 } from "../../services/auth-service";
 import Loader from "../../components/Loader";
@@ -9,16 +10,25 @@ import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const QuestionAnswer = () => {
-  const navigate = useNavigate();
-  const [code_name, setCode_name] = useState<string | null>(
-    sessionStorage.getItem("code_name")
-  );
   const location = useLocation();
-  const { data: response, isLoading } = useGetQuestionsQuery();
-
-  const questions = response?.data || [];
-
+  const navigate = useNavigate();
   const QuserId = location.state?.userId;
+  const { data: userTokenResponse } = useGetUserTokenQuery(QuserId);
+  const userToken = userTokenResponse?.data;
+  if (userToken?.user) {
+    const { id, firstName, lastName, email, hostel, gender, groups } = userToken.user;
+    sessionStorage.setItem("user_id", id);
+    sessionStorage.setItem("first_name", firstName);
+    sessionStorage.setItem("last_name", lastName);
+    sessionStorage.setItem("email", email);
+    sessionStorage.setItem("hostel", hostel);
+    sessionStorage.setItem("gender", gender);
+    sessionStorage.setItem("roles", groups[0].name)
+    const { access } = userToken.token;
+    sessionStorage.setItem("access_token", access);
+  }
+  const { data: response, isLoading } = useGetQuestionsQuery();
+  const questions = response?.data || [];
 
   const [updateQuestion, { isLoading: selectLoading }] =
     useUpdateUserQuestionsMutation();
@@ -73,7 +83,7 @@ const QuestionAnswer = () => {
         : response["data"];
       if (status === "success") {
         toast.success(status);
-        navigate(`/auth/login/${code_name}`);
+        navigate("/rooms/view-room-types");
       } else {
         if (typeof data === "object" && data !== null) {
           const errorMessages = Object.entries(data)
@@ -195,7 +205,7 @@ const QuestionAnswer = () => {
             <div className="border-t border-gray-300  flex justify-end w-full">
               <button
                 type="submit"
-                className="px-8 py-2 mt-2  bg-gray-800 text-white rounded-full hover:bg-gray-700"
+                className="px-8 py-2 mt-2 border dark:border-white bg-gray-800 text-white rounded-full hover:bg-gray-700"
                 disabled={selectLoading}
               >
                 Finish

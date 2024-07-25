@@ -6,17 +6,21 @@ import { DeleteRoomType } from "./DeleteRoomType";
 import { EditRoomType } from "./EditRoomType";
 
 const RoomTypeData = () => {
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID, setHostelID] = useState(sessionStorage.getItem("hostel") || "");
   const [filterValue, setFilterValue] = useState("");
   const { data: response, isLoading } = useGetRoomTypeQuery(filterValue);
+
+  useEffect(() => {
+    if (roles === "Hostel_manager") {
+      setFilterValue(hostelID);
+    }
+  }, [roles, hostelID]);
 
   const RoomAmenity = response?.data.results || [];
 
   const columns = React.useMemo(
     () => [
-      // {
-      //   Header: "Id",
-      //   accessor: "id",
-      // },
       {
         Header: "Name",
         accessor: "name",

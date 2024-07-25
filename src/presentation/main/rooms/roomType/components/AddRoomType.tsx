@@ -13,6 +13,10 @@ import { useGetHostelsQuery } from "../../../../../services/auth-service";
 import Select from "react-select";
 
 export const AddRoomType = () => {
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID, setHostelID] = useState(
+    sessionStorage.getItem("hostel") || ""
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -28,7 +32,7 @@ export const AddRoomType = () => {
     description: "",
     price: 0,
     numOccupancy: 0,
-    hostel: "",
+    hostel: roles === "Hostel_manager" ? hostelID : "",
     roomAmenities: [],
   });
 
@@ -59,7 +63,7 @@ export const AddRoomType = () => {
           description: "",
           price: 0,
           numOccupancy: 0,
-          hostel: "",
+          hostel: roles === "Hostel_manager" ? hostelID : "",
           roomAmenities: [],
         });
         setIsOpen(false);
@@ -220,29 +224,31 @@ export const AddRoomType = () => {
                         onChange={handleFormChanged}
                       />
                     </div>
-                    <div className="mb-2">
-                      <label
-                        htmlFor="hs-feedback-post-comment-name-1"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Hostel
-                      </label>
-                      <select
-                        name="hostel"
-                        id="hs-feedback-post-comment-name-1"
-                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
-                        onChange={handleFormChanged}
-                      >
-                        <option value="" selected>
-                          Choose hostel
-                        </option>
-                        {Hostels.map((data, index) => (
-                          <option key={index} value={data.id}>
-                            {data.name}
+                    {roles !== "Hostel_manager" && (
+                      <div className="mb-2">
+                        <label
+                          htmlFor="hs-feedback-post-comment-name-1"
+                          className="block mb-2 text-sm font-medium dark:text-white"
+                        >
+                          Hostel
+                        </label>
+                        <select
+                          name="hostel"
+                          id="hs-feedback-post-comment-name-1"
+                          className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
+                          onChange={handleFormChanged}
+                        >
+                          <option value="" selected>
+                            Choose hostel
                           </option>
-                        ))}
-                      </select>
-                    </div>
+                          {Hostels.map((data, index) => (
+                            <option key={index} value={data.id}>
+                              {data.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                     <div className="mb-2">
                       <label
                         htmlFor="hs-feedback-post-comment-name-1"

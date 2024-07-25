@@ -16,9 +16,15 @@ import { UpdateRoomParams } from "../../../../../models/request/room-request";
 
 export const EditRoom = ({ room }) => {
   const baseImageUrl = "https://cyrax1.pythonanywhere.com";
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID, setHostelID] = useState(
+    sessionStorage.getItem("hostel") || ""
+  );
 
   const [showModal, setShowModal] = useState(false);
-  const [selectedHostelId, setSelectedHostelId] = useState(room.hostel.id);
+  const [selectedHostelId, setSelectedHostelId] = useState(
+    room.hostel.id || hostelID
+  );
   const [formData, setFormData] = useState({
     name: room.name,
     description: room.description,
@@ -26,7 +32,7 @@ export const EditRoom = ({ room }) => {
     floorPlan: room.floorPlan || "",
     code: room.code,
     roomType: room.roomType.id,
-    hostel: room.hostel.id,
+    hostel: roles === "Hostel_manager" ? hostelID : room.hostel.id,
     roomAmenities: room.roomAmenities.map((amenity) => amenity.id),
   });
 
@@ -128,7 +134,7 @@ export const EditRoom = ({ room }) => {
       floorPlan: room.floorPlan || "",
       code: room.code,
       roomType: room.roomType.id,
-      hostel: room.hostel.id,
+      hostel: roles === "Hostel_manager" ? hostelID : room.hostel.id,
       roomAmenities: room.roomAmenities.map((amenity) => amenity.id),
     }));
     setSelectedHostelId(room.hostel.id);
@@ -222,31 +228,33 @@ export const EditRoom = ({ room }) => {
                           onChange={handleFormChanged}
                         />
                       </div>
-                      <div className="mb-2">
-                        <label
-                          htmlFor="hostel"
-                          className="block mb-2 text-sm font-medium dark:text-white"
-                        >
-                          Hostel
-                        </label>
-                        <select
-                          name="hostel"
-                          id="hostel"
-                          className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
-                          value={formData.hostel}
-                          onChange={handleFormChanged}
-                          required
-                        >
-                          <option value="" disabled selected>
-                            Choose hostel
-                          </option>
-                          {Hostels.map((data, index) => (
-                            <option key={index} value={data.id}>
-                              {data.name}
+                      {roles !== "Hostel_manager" && (
+                        <div className="mb-2">
+                          <label
+                            htmlFor="hostel"
+                            className="block mb-2 text-sm font-medium dark:text-white"
+                          >
+                            Hostel
+                          </label>
+                          <select
+                            name="hostel"
+                            id="hostel"
+                            className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                            value={formData.hostel}
+                            onChange={handleFormChanged}
+                            required
+                          >
+                            <option value="" disabled selected>
+                              Choose hostel
                             </option>
-                          ))}
-                        </select>
-                      </div>
+                            {Hostels.map((data, index) => (
+                              <option key={index} value={data.id}>
+                                {data.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
                       <div className="mb-2">
                         <label
                           htmlFor="roomType"

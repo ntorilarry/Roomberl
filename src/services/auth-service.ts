@@ -98,6 +98,13 @@ export const authService = createApi({
       }),
       invalidatesTags: ["Auth"],
     }),
+    getUserToken: build.query<BaseResponse<any>, string>({
+      query: (userId) => ({
+        url: `/accounts/get-user-token/${userId}/`,
+        method: "GET",
+      }),
+      providesTags: ["Auth"],
+    }),
   }),
 });
 
@@ -111,5 +118,6 @@ export const {
   useGetQuestionsQuery,
   useUpdateUserQuestionsMutation,
   useChooseRoomMutation,
-  useGetHostelByCodeNameQuery
+  useGetHostelByCodeNameQuery,
+  useGetUserTokenQuery
 } = authService;

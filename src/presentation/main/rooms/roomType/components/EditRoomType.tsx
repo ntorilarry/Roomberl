@@ -13,6 +13,10 @@ import Select from "react-select";
 import { TbEditCircle } from "react-icons/tb";
 
 export const EditRoomType = ({ typeroom }) => {
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID, setHostelID] = useState(
+    sessionStorage.getItem("hostel") || ""
+  );
   const [isOpen, setIsOpen] = useState(false);
   console.log("typeroom", typeroom);
   function closeModal() {
@@ -28,7 +32,7 @@ export const EditRoomType = ({ typeroom }) => {
     description: typeroom.description,
     price: typeroom.price,
     numOccupancy: typeroom.numOccupancy,
-    hostel: typeroom.hostel.id,
+    hostel: roles === "Hostel_manager" ? hostelID : typeroom.hostel.id,
     roomAmenities: typeroom.roomAmenities.map((amenity) => amenity.id),
   });
 
@@ -104,7 +108,7 @@ export const EditRoomType = ({ typeroom }) => {
       description: typeroom.description,
       price: typeroom.price,
       numOccupancy: typeroom.numOccupancy,
-      hostel: typeroom.hostel.id,
+      hostel: roles === "Hostel_manager" ? hostelID : typeroom.hostel.id,
       roomAmenities: typeroom.roomAmenities.map((amenity) => amenity.id),
     }));
   }, [typeroom]);
@@ -231,6 +235,7 @@ export const EditRoomType = ({ typeroom }) => {
                         onChange={handleFormChanged}
                       />
                     </div>
+                    {roles !== "Hostel_manager" && (
                     <div className="mb-2">
                       <label
                         htmlFor="hs-feedback-post-comment-name-1"
@@ -255,6 +260,7 @@ export const EditRoomType = ({ typeroom }) => {
                         ))}
                       </select>
                     </div>
+                    )}
                     <div className="mb-2">
                       <label
                         htmlFor="hs-feedback-post-comment-name-1"
