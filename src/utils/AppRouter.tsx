@@ -10,7 +10,7 @@ import RoomType from "../presentation/main/rooms/roomType/RoomType";
 import AllRooms from "../presentation/main/rooms/allRooms/AllRooms";
 import RoomDetails from "../presentation/main/rooms/roomDetails/RoomDetails";
 import ViewRooms from "../presentation/main/rooms/viewRooms/ViewRooms";
-import Dashboard from "../presentation/main/dashboard/Dashboard";
+import Members from "../presentation/main/members/Members";
 import UserPayment from "../presentation/main/payment/userPayment/UserPayment";
 import Users from "../presentation/main/users/Users";
 import AdminPayment from "../presentation/main/payment/adminPayment/AdminPayment";
@@ -33,8 +33,8 @@ const AppRouter = () => {
       </Route>
 
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<Navigate replace to="dashboard" />} />
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route index element={<Navigate replace to="members" />} />
+        <Route path="members" element={<Members />} />
         <Route path="users" element={<Users />} />
 
         <Route path="rooms">

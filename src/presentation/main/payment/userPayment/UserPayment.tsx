@@ -222,7 +222,7 @@ const UserPayment = () => {
               <button
                 type="submit"
                 className="hover:shadow-form w-full dark:border darK:border-white rounded-full bg-gray-800 hover:bg-gray-700 py-3 px-8 text-center  text-white outline-none"
-                disabled={isLoading}
+                disabled={!formData.amountPayed}
               >
                 Submit payment details
               </button>

@@ -20,7 +20,6 @@ import { RoomBerlLogo } from "../assets";
 import { NavLink } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: GoHome },
   {
     name: "Rooms",
     icon: HiOutlineFolder,
@@ -43,6 +42,7 @@ const navigation = [
       { name: "All Rooms", href: "/rooms/all-rooms", icon: SiGoogleclassroom },
     ],
   },
+  { name: "Members", href: "/members", icon: GoHome },
   {
     name: "Payment",
     href: "/payments/verify-payment",
@@ -65,17 +65,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     .filter((item) => {
       if (isStudent) {
         return (
-          item.name === "Dashboard" ||
+          item.name === "Members" ||
           (item.name === "Rooms" &&
             item.subItems &&
             item.subItems.some((subItem) => subItem.name === "View Room Types"))
         );
       }
       if (isAdmin) {
-        return item.name !== "View Room Types" && item.name !== "Dashboard";
+        return item.name !== "View Room Types" && item.name !== "Members";
       }
       if (isHotelManager) {
-        return item.name !== "View Room Types" && item.name !== "Users" && item.name !== "Dashboard";
+        return (
+          item.name !== "View Room Types" &&
+          item.name !== "Users" &&
+          item.name !== "Members"
+        );
       }
       return true;
     })

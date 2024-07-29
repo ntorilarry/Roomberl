@@ -4,27 +4,18 @@ import { HiMiniPlus } from "react-icons/hi2";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import {
-  useGetAddInfoByUserIdQuery,
   useUpdateRoomTypeMutation,
 } from "../../../../../services/auth-service";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { useGlobalState } from "../../../../../utils/GlobalStateContext";
 
 const SelectRoomType = ({ roomTypeId }) => {
   const [userID, setUserID] = useState<string | null>(
     sessionStorage.getItem("user_id")
   );
 
-  const [payRoomTypeId, setPayRoomTypeId] = useState(
-    sessionStorage.getItem("isRoomTypePresent")
-  );
-
-  const parseBoolean = (value) => {
-    return value === "true";
-  };
-
-  const [verify, setVerify] = useState(
-    parseBoolean(sessionStorage.getItem("isPaymentVerified"))
-  );
+  const { state } = useGlobalState();
+  const { isRoomTypePresent, isPaymentVerified } = state;
   const navigate = useNavigate();
   const [selectRoomType, { isLoading: selectLoading }] =
     useUpdateRoomTypeMutation();
@@ -78,8 +69,8 @@ const SelectRoomType = ({ roomTypeId }) => {
 
   return (
     <div>
-      {roomTypeId === payRoomTypeId ? (
-        verify ? (
+      {roomTypeId === isRoomTypePresent ? (
+        isPaymentVerified ? (
           <button className="inline-flex cursor-not-allowed my-2 items-center justify-center rounded-full bg-teal-700 px-3 py-2 text-xs font-semibold text-white shadow-sm">
             Paid
             <IoCheckmarkCircleOutline className="ml-2" />

@@ -53,7 +53,7 @@ const LogIn = () => {
           sessionStorage.setItem("roles", groups[0].name);
           const userRole = groups[0].name;
           if (userRole === "Student") {
-            navigate("/");
+            navigate("/rooms/view-room-types");
           } else if (
             userRole === "Administrator" ||
             userRole === "Hostel_manager"

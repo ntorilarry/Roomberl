@@ -3,7 +3,7 @@ import ProtectedRoutes from "../../auth/utils/ProtectedRoutes";
 import { useGetMatchingUsersQuery } from "../../../services/user-service";
 import Loader from "../../../components/Loader";
 
-const Dashboard = () => {
+const Members = () => {
   const { data: matchResponse, isLoading: matchLoading } =
     useGetMatchingUsersQuery();
   const matchUsers = matchResponse?.data?.results;
@@ -59,6 +59,6 @@ const Dashboard = () => {
   );
 };
 
-export default ProtectedRoutes(Dashboard, {
+export default ProtectedRoutes(Members, {
   allowedRoles: ["Student"],
 });

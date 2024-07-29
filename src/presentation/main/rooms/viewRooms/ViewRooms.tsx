@@ -5,20 +5,14 @@ import { FaGamepad, FaRegStar } from "react-icons/fa6";
 import { HiArrowRight, HiOutlineBuildingOffice } from "react-icons/hi2";
 import ViewRoomLoader from "./components/ViewRoomLoader";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
+import { useGlobalState } from "../../../../utils/GlobalStateContext";
 
 const ViewRooms = () => {
   const { roomTypeId } = useParams();
-  const parseBoolean = (value) => {
-    return value === "true";
-  };
-
-  const [verify] = useState(
-    parseBoolean(sessionStorage.getItem("isPaymentVerified"))
-  );
   const [roomGender] = useState(sessionStorage.getItem("gender"));
-  const [payRoomTypeId] = useState(sessionStorage.getItem("isRoomTypePresent"));
-  const [RoomIdPresent] = useState(sessionStorage.getItem("RoomIdPresent"));
   const [hostel] = useState(sessionStorage.getItem("hostel"));
+  const { state } = useGlobalState();
+  const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } = state;
 
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: hostel || "",
@@ -28,7 +22,7 @@ const ViewRooms = () => {
 
   const rooms = response?.data?.results || [];
 
-  console.log("verify", verify, payRoomTypeId, roomTypeId);
+
 
   if (isLoading) {
     return (
@@ -92,7 +86,7 @@ const ViewRooms = () => {
                     <div className="flex text-[14px] leading-4 py-2 text-[#53575A] dark:text-white items-center">
                       <p>{item.description || "NA"}</p>
                     </div>
-                    {verify && payRoomTypeId === roomTypeId && (
+                    {isPaymentVerified && isRoomTypePresent === roomTypeId && (
                       <>
                         {RoomIdPresent === item.id ? (
                           <Link

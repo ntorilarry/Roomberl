@@ -8,19 +8,16 @@ import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import ViewRoomTypesLoader from "./components/ViewRoomTypesLoader";
 import SelectRoomType from "./components/SelectRoomType";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
+import { useGlobalState } from "../../../../utils/GlobalStateContext";
 
 const ViewRoomTypes = () => {
-  const [hostel, setHostel] = useState(sessionStorage.getItem("hostel"));
+  const [hostel] = useState(sessionStorage.getItem("hostel"));
   const { data: response, isLoading } = useGetRoomTypeQuery(hostel || "");
 
   const roomType = response?.data.results || [];
 
-  const [payVerify, setPayVerify] = useState(
-    sessionStorage.getItem("isPaymentVerified")
-  );
-  const [presentRoomType, setPresentRoomType] = useState(
-    sessionStorage.getItem("isRoomTypePresent")
-  );
+  const { state } = useGlobalState();
+  const { isPaymentVerified, isRoomTypePresent } = state;
 
   if (isLoading) {
     return (
@@ -31,9 +28,9 @@ const ViewRoomTypes = () => {
   }
 
   const filteredRoomTypes = roomType.filter((item) => {
-    if (payVerify === 'true' && item.id === presentRoomType) {
+    if (isPaymentVerified === true && item.id === isRoomTypePresent) {
       return true;
-    } else if (payVerify !== 'true') {
+    } else if (isPaymentVerified !== true) {
       return true;
     }
     return false;

@@ -1,12 +1,13 @@
 import React from "react";
 import "./App.css";
 import Startup from "./utils/Startup";
+import { GlobalStateProvider } from "./utils/GlobalStateContext";
 
 const App = () => {
   return (
-    <div className="App">
+    <GlobalStateProvider>
       <Startup />
-    </div>
+    </GlobalStateProvider>
   );
 };
 

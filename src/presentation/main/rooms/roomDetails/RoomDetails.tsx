@@ -7,13 +7,16 @@ import ChooseRoom from "./components/ChooseRoom";
 import UnselectRoom from "./components/UnselectRoom";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
 import { useGetMatchingUsersQuery } from "../../../../services/user-service";
+import { useGlobalState } from "../../../../utils/GlobalStateContext";
 
 const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
   const [showAmenities, setShowAmenities] = useState(false);
   const [showMatchingUsers, setShowMatchingUsers] = useState(false);
   const [hostel] = useState(sessionStorage.getItem("hostel"));
-  const [RoomIdPresent] = useState(sessionStorage.getItem("RoomIdPresent"));
+
+  const { state } = useGlobalState();
+  const { RoomIdPresent } = state;
 
   const { data: response, isLoading } = useGetRoomsByIdQuery({
     hostelId: hostel || "",
@@ -220,7 +223,7 @@ const RoomDetails = () => {
                                 {item.courseOfStudy}
                               </p>
                               <p className="text-sm text-gray-600 dark:text-white">
-                               Match: {item.matchPercentage}
+                                Match: {item.matchPercentage}
                               </p>
                             </div>
                           </div>
