@@ -82,11 +82,11 @@ const Chat = () => {
             className="w-10 h-11"
           />
         </div>
-        <div className="w-full pl-3 pr-1 py-1 rounded-3xl border border-gray-500 dark:border-gray-200 items-center gap-2 inline-flex justify-between">
-          <div className="flex items-center gap-2">
+        <div className="w-full pl-3 pr-1 py-1 rounded-3xl bg-white dark:bg-slate-700 border border-gray-500 dark:border-gray-200 items-center gap-2 inline-flex justify-between">
+          <div className="flex items-center w-full gap-2 ">
             <FaRegUserCircle className="text-2xl text-[#4F46E5]" />
             <input
-              className="grow w-full relative shrink basis-0 text-black text-xs font-medium leading-4 focus:outline-none"
+              className="grow w-full relative shrink basis-0 text-black dark:text-white dark:bg-slate-700 text-sm font-medium leading-4 py-4 focus:outline-none"
               placeholder="Type here..."
             />
           </div>

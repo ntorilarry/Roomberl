@@ -1,12 +1,12 @@
 import { HiMiniBars4, HiOutlineBell, HiMiniChevronDown } from "react-icons/hi2";
 import { Menu, Transition } from "@headlessui/react";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../presentation/auth/utils/AuthContext";
 import DarkModeToggle from "./DarkModeToggle";
 
 const userNavigation = [
-  { name: "Your profile", href: "/profile" },
+  { name: "Your profile", href: "/my-profile" },
   { name: "Sign out", href: "#" },
 ];
 
@@ -123,8 +123,8 @@ const Header = ({ setSidebarOpen }) => {
                 {userNavigation.map((item) => (
                   <Menu.Item key={item.name}>
                     {({ active }) => (
-                      <a
-                        href={item.href}
+                      <Link
+                        to={item.href}
                         onClick={
                           item.name === "Sign out" ? handleLogout : undefined
                         }
@@ -134,7 +134,7 @@ const Header = ({ setSidebarOpen }) => {
                         )}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     )}
                   </Menu.Item>
                 ))}

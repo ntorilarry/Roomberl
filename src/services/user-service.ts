@@ -63,6 +63,13 @@ export const userService = createApi({
       }),
       providesTags: ["Users"],
     }),
+    getUserProfile: build.query<BaseResponse<any>, string>({
+      query: (userid ) => ({
+        url: `/accounts/users/${userid}/`,
+        method: "GET",
+      }),
+      providesTags: ["Users"],
+    }),
   }),
 });
 
@@ -72,5 +79,6 @@ export const {
   useEnableUserMutation,
   useGetGroupsQuery,
   useUpdateUserPermissionsMutation,
-  useGetMatchingUsersQuery
+  useGetMatchingUsersQuery,
+  useGetUserProfileQuery
 } = userService;

@@ -21,6 +21,7 @@ import UnselectRoomSuccess from "../presentation/main/rooms/roomDetails/componen
 import UnauthorizedPage from "../presentation/auth/Unauthorized";
 import Message from "../presentation/main/messages/Message";
 import Chat from "../presentation/main/messages/Chat";
+import MyProfile from "../presentation/main/Profile/MyProfile";
 
 const AppRouter = () => {
   return (
@@ -38,6 +39,7 @@ const AppRouter = () => {
         <Route index element={<Navigate replace to="members" />} />
         <Route path="members" element={<Members />} />
         <Route path="users" element={<Users />} />
+        <Route path="my-profile" element={<MyProfile />} />
 
         <Route path="rooms">
           <Route index element={<Navigate replace to="view-room-types" />} />

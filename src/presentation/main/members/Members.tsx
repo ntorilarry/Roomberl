@@ -3,6 +3,7 @@ import ProtectedRoutes from "../../auth/utils/ProtectedRoutes";
 import { useGetMatchingUsersQuery } from "../../../services/user-service";
 import Loader from "../../../components/Loader";
 import { HiArrowRight } from "react-icons/hi2";
+import { StartMessageModal } from "../messages/components/StartMessageModal";
 
 const Members = () => {
   const { data: matchResponse, isLoading: matchLoading } =
@@ -62,36 +63,38 @@ const Members = () => {
             {" "}
             Matching Users
           </h1>
+          {matchUsers && matchUsers.length > 0 ? (
+            <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-4">
+              {matchUsers.map((item, key) => (
+                <div
+                  key={key}
+                  className="flex bg-white dark:bg-slate-800 flex-col items-center p-8 transition-colors duration-300 transform border cursor-pointer rounded-xl dark:border-gray-700"
+                >
+                  <img
+                    className="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300"
+                    src={`https://ui-avatars.com/api/?name=${item.nickname}&background=random`}
+                    alt=""
+                  />
 
-          <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-4">
-            {matchUsers.map((item, key) => (
-              <div
-                key={key}
-                className="flex bg-white dark:bg-slate-800 flex-col items-center p-8 transition-colors duration-300 transform border cursor-pointer rounded-xl dark:border-gray-700"
-              >
-                <img
-                  className="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300"
-                  src={`https://ui-avatars.com/api/?name=${item.nickname}&background=random`}
-                  alt=""
-                />
+                  <h1 className="mt-4 text-base font-semibold text-gray-700 capitalize dark:text-white">
+                    {item.nickname || "NA"}
+                  </h1>
 
-                <h1 className="mt-4 text-base font-semibold text-gray-700 capitalize dark:text-white">
-                  {item.nickname || "NA"}
-                </h1>
-
-                <p className="text-gray-600 text-sm capitalize dark:text-gray-300">
-                  {item.courseOfStudy}
-                </p>
-                <p className="text-gray-500 text-sm capitalize dark:text-gray-300">
-                  Match percentage: {item.matchPercentage}
-                </p>
-                <button className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent">
-                  Send message
-                  <HiArrowRight className="ml-2" />
-                </button>
-              </div>
-            ))}
-          </div>
+                  <p className="text-gray-600 text-sm capitalize dark:text-gray-300">
+                    {item.courseOfStudy}
+                  </p>
+                  <p className="text-gray-500 text-sm capitalize dark:text-gray-300">
+                    Match percentage: {item.matchPercentage}
+                  </p>
+                  <StartMessageModal objectID={item.user.id} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center text-lg text-gray-800 dark:text-white">
+              No matching users found.
+            </div>
+          )}
         </div>
       </section>
     </div>
