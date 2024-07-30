@@ -16,14 +16,15 @@ const QuestionAnswer = () => {
   const { data: userTokenResponse } = useGetUserTokenQuery(QuserId);
   const userToken = userTokenResponse?.data;
   if (userToken?.user) {
-    const { id, firstName, lastName, email, hostel, gender, groups } = userToken.user;
+    const { id, firstName, lastName, email, hostel, gender, groups } =
+      userToken.user;
     sessionStorage.setItem("user_id", id);
     sessionStorage.setItem("first_name", firstName);
     sessionStorage.setItem("last_name", lastName);
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("hostel", hostel);
     sessionStorage.setItem("gender", gender);
-    sessionStorage.setItem("roles", groups[0]?.name)
+    sessionStorage.setItem("roles", groups.length > 0 ? groups[0]?.name : "Student");
     const { access } = userToken.token;
     sessionStorage.setItem("access_token", access);
   }

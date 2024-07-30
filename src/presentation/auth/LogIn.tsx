@@ -49,17 +49,19 @@ const LogIn = () => {
         sessionStorage.setItem("hostel", hostel);
         sessionStorage.setItem("gender", gender);
 
+        let userRole = "Student"; // Default role if groups are empty or undefined
         if (groups && groups.length > 0) {
-          sessionStorage.setItem("roles", groups[0].name);
-          const userRole = groups[0].name;
-          if (userRole === "Student") {
-            navigate("/rooms/view-room-types");
-          } else if (
-            userRole === "Administrator" ||
-            userRole === "Hostel_manager"
-          ) {
-            navigate("/rooms/amenities");
-          }
+          userRole = groups[0].name;
+        }
+
+        sessionStorage.setItem("roles", userRole);
+        if (userRole === "Student") {
+          navigate("/rooms/view-room-types");
+        } else if (
+          userRole === "Administrator" ||
+          userRole === "Hostel_manager"
+        ) {
+          navigate("/rooms/amenities");
         }
 
         toast.success(status);
