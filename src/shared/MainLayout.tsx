@@ -23,23 +23,31 @@ const MainLayout = () => {
   };
 
   return (
-    <div className=" dark:bg-slate-900  h-screen bg-gray-100 ">
+    <div className="dark:bg-slate-900 h-screen bg-gray-100">
       {shouldRenderSidebar() && isPaymentVerified !== null && (
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
-      <div
-        className={`lg:pl-[280px] ${
-          (!shouldRenderSidebar() || isPaymentVerified === null) && "lg:pl-0"
-        }`}
-      >
-        <Header setSidebarOpen={setSidebarOpen} />
-        <main className="py-10 dark:bg-slate-900 bg-gray-100">
-          <div className="px-4 sm:px-6 lg:px-8">
-            <UserAdditionalDetails />
-            <Outlet />
-          </div>
-        </main>
-      </div>
+      {shouldRenderSidebar() && isPaymentVerified !== null ? (
+        <div className="lg:pl-[280px]">
+          <Header setSidebarOpen={setSidebarOpen} />
+          <main className="py-10 dark:bg-slate-900 bg-gray-100">
+            <div className="px-4 sm:px-6 lg:px-8">
+              <UserAdditionalDetails />
+              <Outlet />
+            </div>
+          </main>
+        </div>
+      ) : (
+        <div className="lg:pl-0">
+          <Header setSidebarOpen={setSidebarOpen} />
+          <main className="py-10 dark:bg-slate-900 bg-gray-100">
+            <div className="px-4 sm:px-6 lg:px-8">
+              <UserAdditionalDetails />
+              <Outlet />
+            </div>
+          </main>
+        </div>
+      )}
     </div>
   );
 };
