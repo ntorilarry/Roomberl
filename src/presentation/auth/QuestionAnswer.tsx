@@ -23,7 +23,7 @@ const QuestionAnswer = () => {
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("hostel", hostel);
     sessionStorage.setItem("gender", gender);
-    sessionStorage.setItem("roles", groups[0].name)
+    sessionStorage.setItem("roles", groups[0]?.name)
     const { access } = userToken.token;
     sessionStorage.setItem("access_token", access);
   }

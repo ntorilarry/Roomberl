@@ -24,12 +24,12 @@ const MainLayout = () => {
 
   return (
     <div className=" dark:bg-slate-900  h-screen bg-gray-100 ">
-      {shouldRenderSidebar() && (
+      {shouldRenderSidebar() && isPaymentVerified !== null && (
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
       <div
-        className={`lg:pl-[280px]  ${
-          !shouldRenderSidebar() && "lg:pl-0"
+        className={`lg:pl-[280px] ${
+          (!shouldRenderSidebar() || isPaymentVerified === null) && "lg:pl-0"
         }`}
       >
         <Header setSidebarOpen={setSidebarOpen} />

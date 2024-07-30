@@ -18,6 +18,7 @@ import { SiGoogleclassroom } from "react-icons/si";
 import { GoHome } from "react-icons/go";
 import { RoomBerlLogo } from "../assets";
 import { NavLink } from "react-router-dom";
+import { LuMessagesSquare } from "react-icons/lu";
 
 const navigation = [
   {
@@ -49,6 +50,7 @@ const navigation = [
     icon: MdOutlinePayments,
   },
   { name: "Users", href: "/users", icon: HiOutlineUsers },
+  { name: "Messages", href: "/message/history", icon: LuMessagesSquare},
 ];
 
 function classNames(...classes) {
@@ -65,20 +67,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     .filter((item) => {
       if (isStudent) {
         return (
-          item.name === "Members" ||
+          item.name === "Members" || item.name === "Messages" ||
           (item.name === "Rooms" &&
             item.subItems &&
             item.subItems.some((subItem) => subItem.name === "View Room Types"))
         );
       }
       if (isAdmin) {
-        return item.name !== "View Room Types" && item.name !== "Members";
+        return item.name !== "View Room Types" && item.name !== "Members" && item.name !== "Messages";
       }
       if (isHotelManager) {
         return (
           item.name !== "View Room Types" &&
           item.name !== "Users" &&
-          item.name !== "Members"
+          item.name !== "Members" && item.name !== "Messages"
         );
       }
       return true;

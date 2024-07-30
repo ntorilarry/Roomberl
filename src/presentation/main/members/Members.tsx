@@ -2,6 +2,7 @@ import React from "react";
 import ProtectedRoutes from "../../auth/utils/ProtectedRoutes";
 import { useGetMatchingUsersQuery } from "../../../services/user-service";
 import Loader from "../../../components/Loader";
+import { HiArrowRight } from "react-icons/hi2";
 
 const Members = () => {
   const { data: matchResponse, isLoading: matchLoading } =
@@ -18,7 +19,7 @@ const Members = () => {
 
   return (
     <div>
-      <div className="px-4 py-6 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl bg-white dark:bg-slate-800">
+      {/* <div className="px-4 py-6 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl bg-white dark:bg-slate-800">
         <div className="mx-auto mb-6 lg:max-w-xl sm:text-center">
           <p className="inline-block px-3 text-lg font-semibold text-gray-900 dark:text-white mb-4 rounded-full ">
             Matching Users
@@ -54,7 +55,45 @@ const Members = () => {
             No matching users found.
           </div>
         )}
-      </div>
+      </div> */}
+      <section className="">
+        <div className="container px-6 mx-auto">
+          <h1 className="text-xl font-semibold text-center text-gray-800 capitalize lg:text-2xl dark:text-white">
+            {" "}
+            Matching Users
+          </h1>
+
+          <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-4">
+            {matchUsers.map((item, key) => (
+              <div
+                key={key}
+                className="flex bg-white dark:bg-slate-800 flex-col items-center p-8 transition-colors duration-300 transform border cursor-pointer rounded-xl dark:border-gray-700"
+              >
+                <img
+                  className="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300"
+                  src={`https://ui-avatars.com/api/?name=${item.nickname}&background=random`}
+                  alt=""
+                />
+
+                <h1 className="mt-4 text-base font-semibold text-gray-700 capitalize dark:text-white">
+                  {item.nickname || "NA"}
+                </h1>
+
+                <p className="text-gray-600 text-sm capitalize dark:text-gray-300">
+                  {item.courseOfStudy}
+                </p>
+                <p className="text-gray-500 text-sm capitalize dark:text-gray-300">
+                  Match percentage: {item.matchPercentage}
+                </p>
+                <button className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent">
+                  Send message
+                  <HiArrowRight className="ml-2" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

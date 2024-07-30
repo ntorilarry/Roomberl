@@ -19,6 +19,8 @@ import UsersPaymentSuccess from "../presentation/main/payment/userPayment/UsersP
 import ChooseRoomSuccess from "../presentation/main/rooms/roomDetails/components/ChooseRoomSuccess";
 import UnselectRoomSuccess from "../presentation/main/rooms/roomDetails/components/UnselectRoomSuccess";
 import UnauthorizedPage from "../presentation/auth/Unauthorized";
+import Message from "../presentation/main/messages/Message";
+import Chat from "../presentation/main/messages/Chat";
 
 const AppRouter = () => {
   return (
@@ -52,7 +54,7 @@ const AppRouter = () => {
             path="room-details/choose-room/success"
             element={<ChooseRoomSuccess />}
           />
-            <Route
+          <Route
             path="room-details/leave-room/success"
             element={<UnselectRoomSuccess />}
           />
@@ -63,6 +65,11 @@ const AppRouter = () => {
           <Route path="user" element={<UserPayment />} />
           <Route path="verify-payment" element={<AdminPayment />} />
           <Route path="success" element={<UsersPaymentSuccess />} />
+        </Route>
+
+        <Route path="message">
+          <Route path="history" element={<Message />} />
+          <Route path="chat" element={<Chat />} />
         </Route>
       </Route>
     </Routes>

@@ -3,6 +3,7 @@ import { authService } from "../services/auth-service";
 import { literalsService } from "../services/literals-service";
 import { roomService } from "../services/room-service";
 import { userService } from "../services/user-service";
+import { messageService } from "../services/message-service";
 
 export const store = configureStore({
   reducer: {
@@ -10,13 +11,15 @@ export const store = configureStore({
     [literalsService.reducerPath]: literalsService.reducer,
     [roomService.reducerPath]: roomService.reducer,
     [userService.reducerPath]: userService.reducer,
+    [messageService.reducerPath]: messageService.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authService.middleware,
       literalsService.middleware,
       roomService.middleware,
-      userService.middleware
+      userService.middleware,
+      messageService.middleware,
     ),
 });
 
