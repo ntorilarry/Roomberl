@@ -2,16 +2,9 @@ import { useState } from "react";
 import { useGetHostelByCodeNameQuery } from "../../../../services/auth-service";
 
 const ProfileDetails = ({ profile }) => {
-  const [code_name, setCode_name] = useState<string | null>(
-    sessionStorage.getItem("code_name")
-  );
+  const [hostelName] = useState(sessionStorage.getItem("hostelName"));
 
   const [roles] = useState(sessionStorage.getItem("roles") || "");
-
-  const { data: hostelResponse } = useGetHostelByCodeNameQuery(code_name ?? "");
-  const Hostels = hostelResponse?.data || [];
-
-  const hostelName = Hostels.map((hostel) => hostel.name);
 
   return (
     <div className="flex justify-center">

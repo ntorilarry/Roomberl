@@ -12,9 +12,7 @@ const UserAdditionalDetails = () => {
 
   useEffect(() => {
     if (response) {
-      // const isPaymentVerified = String(
-      //   response?.data?.roomPayments?.map((payment) => payment.isVerified)[0]
-      // );
+
       const isPaymentVerified = response?.data?.roomPayments?.map(
         (payment) => payment.isVerified
       )[0];

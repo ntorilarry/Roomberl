@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useGetRoomPaymentQuery } from "../../../../../services/room-service";
 import AdminPaymentTable from "./AdminPaymentTable";
@@ -7,8 +7,17 @@ import { MdVerified } from "react-icons/md";
 import { VerifyPaymentModal } from "./VerifyPaymentModal";
 
 const AdminPaymentData = () => {
-  const { data: response, isLoading } = useGetRoomPaymentQuery();
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID, setHostelID] = useState(sessionStorage.getItem("hostel") || "");
+  const [filterValue, setFilterValue] = useState("");
+  const { data: response, isLoading } = useGetRoomPaymentQuery(filterValue);
 
+  useEffect(() => {
+    if (roles === "Hostel_manager") {
+      setFilterValue(hostelID);
+    }
+  }, [roles, hostelID]);
+  
   const RoomPayment = response?.data.results || [];
 
   const columns = React.useMemo(
@@ -127,6 +136,7 @@ const AdminPaymentData = () => {
         currentPage={currentPage}
         onPageChange={setCurrentPage}
         isLoading={isLoading}
+        setFilterValue={setFilterValue}
       />
     </div>
   );

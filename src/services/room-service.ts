@@ -138,9 +138,9 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomPayment: build.query<BaseResponse<any>, void>({
-      query: () => ({
-        url: "/accounts/room-payment/",
+    getRoomPayment: build.query<BaseResponse<any>, string>({
+      query: (hostelId) => ({
+        url: `/accounts/room-payment/?hostel=${hostelId}`,
         method: "GET",
       }),
       providesTags: ["Room"],

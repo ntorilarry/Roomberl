@@ -46,7 +46,8 @@ const LogIn = () => {
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
         sessionStorage.setItem("email", email);
-        sessionStorage.setItem("hostel", hostel);
+        sessionStorage.setItem("hostel", hostel[0].id);
+        sessionStorage.setItem("hostelName", hostel[0].name);
         sessionStorage.setItem("gender", gender);
 
         let userRole = "Student"; // Default role if groups are empty or undefined

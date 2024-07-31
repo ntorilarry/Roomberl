@@ -22,7 +22,8 @@ const QuestionAnswer = () => {
     sessionStorage.setItem("first_name", firstName);
     sessionStorage.setItem("last_name", lastName);
     sessionStorage.setItem("email", email);
-    sessionStorage.setItem("hostel", hostel);
+    sessionStorage.setItem("hostel", hostel[0].id);
+    sessionStorage.setItem("hostelName", hostel[0].name);
     sessionStorage.setItem("gender", gender);
     sessionStorage.setItem("roles", groups.length > 0 ? groups[0]?.name : "Student");
     const { access } = userToken.token;

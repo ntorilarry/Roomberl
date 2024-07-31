@@ -56,12 +56,12 @@ const ViewRoomTypes = () => {
                   <FaCediSign className="text-[16px] " />
                   <h1 className="text-[14px] pl-2 font-normal">{item.price}</h1>
                 </div>
-                <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
+                {/* <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
                   <HiOutlineBuildingOffice className="text-[16px] " />
                   <h1 className="text-[14px] pl-2 font-normal">
                     {item.numOccupancy} rooms available
                   </h1>
-                </div>
+                </div> */}
                 <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
                   <FaRegStar className="text-[16px] " />
                   <h1 className="text-[14px] pl-2 font-normal">

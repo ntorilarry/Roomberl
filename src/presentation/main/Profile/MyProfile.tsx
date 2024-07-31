@@ -1,14 +1,29 @@
 import React, { useState } from "react";
 import ProfileTabs from "./components/ProfileTabs";
 import { useGetUserProfileQuery } from "../../../services/user-service";
+import Loader from "../../../components/Loader";
+import { useGetAddInfoByUserIdQuery } from "../../../services/auth-service";
 
 const MyProfile = () => {
   const [userID] = useState<string | null>(sessionStorage.getItem("user_id"));
-  const { data: response, isLoading: getInfoLoading } = useGetUserProfileQuery(
+  const { data: profileResponse, isLoading: getProfileLoading } = useGetUserProfileQuery(
     userID || ""
   );
 
-  const profile = response?.data;
+  const profile = profileResponse?.data;
+
+  const { data: detailsResponse, isLoading: getInfoLoading } =
+  useGetAddInfoByUserIdQuery(userID || "");
+
+  if (getProfileLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
+
+
   return (
     <div>
       <section className="relative pt-16 pb-24 bg-white dark:bg-slate-800">
@@ -32,7 +47,7 @@ const MyProfile = () => {
           <p className="font-normal text-base leading-7 text-gray-500 text-center mb-8">
             A social media influencers and singer
           </p> */}
-          <ProfileTabs profile={profile}/>
+          <ProfileTabs profile={profile} />
         </div>
       </section>
     </div>

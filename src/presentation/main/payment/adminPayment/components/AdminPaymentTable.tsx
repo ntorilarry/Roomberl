@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
 import Pagination from "../../../../../components/Pagination";
 import { FiSearch } from "react-icons/fi";
+import { FilterPayments } from "./FilterPayments";
 
 const GlobalFilter = ({
   preGlobalFilteredRows,
@@ -51,6 +52,7 @@ const AdminPaymentTable = ({
   currentPage,
   onPageChange,
   isLoading,
+  setFilterValue
 }) => {
   const {
     getTableProps,
@@ -62,6 +64,8 @@ const AdminPaymentTable = ({
     preGlobalFilteredRows,
     setGlobalFilter,
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+  
+  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
   return (
     <div>
       <div className="max-w-[85rem] mx-auto">
@@ -75,13 +79,15 @@ const AdminPaymentTable = ({
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
                   />
-                  {/* <div className="sm:col-span-2 md:grow">
+                  <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className=" relative inline-block">
-                        <AddRoomAmenity />
+                      {roles !== "Hostel_manager" && (
+                        <FilterPayments setFilterValue={setFilterValue}/>
+                      )}
                       </div>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
 
                 <table
