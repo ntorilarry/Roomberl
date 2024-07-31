@@ -12,7 +12,16 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const LogIn = () => {
   const navigate = useNavigate();
-  const [storedHostelID] = useState(sessionStorage.getItem("hostelID"));
+  const { code_name } = useParams<{ code_name?: string }>();
+
+  const { data: response } = useGetHostelByCodeNameQuery(code_name ?? "");
+  const hostelName = response?.data[0]?.name;
+  const hostelImage = response?.data[0]?.image;
+  const hostelID = response?.data[0]?.id;
+  sessionStorage.setItem("hostelID", hostelID);
+  sessionStorage.setItem("code_name", code_name ?? "");
+
+  const [storedHostelName] = useState(sessionStorage.getItem("hostelName"));
   const [storedCodeName] = useState(sessionStorage.getItem("code_name"));
 
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +69,8 @@ const LogIn = () => {
 
         sessionStorage.setItem("roles", userRole);
 
-        if (hostel[0].id !== storedHostelID) {
+        if (hostel[0].id !== hostelID) {
+          console.log("hostel validation", hostel[0].name, storedHostelName)
           toast.error("You do not belong in this hostel");
           navigate(`/auth/login/${storedCodeName}`);
           return;
@@ -97,16 +107,7 @@ const LogIn = () => {
     }
   };
 
-  const { code_name } = useParams<{ code_name?: string }>();
 
-  const { data: response } = useGetHostelByCodeNameQuery(code_name ?? "");
-  const Hostels = response?.data || [];
-
-  const hostelName = Hostels.map((hostel) => hostel.name);
-  const hostelImage = Hostels.map((hostel) => hostel.image);
-  const hostelID = Hostels.map((hostel) => hostel.id);
-  sessionStorage.setItem("hostelID", hostelID);
-  sessionStorage.setItem("code_name", code_name ?? "");
   return (
     <div className="bg-white dark:bg-slate-800">
       <div className="flex justify-center h-screen">
