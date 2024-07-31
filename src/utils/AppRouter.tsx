@@ -71,7 +71,7 @@ const AppRouter = () => {
 
         <Route path="message">
           <Route path="history" element={<Message />} />
-          <Route path="chat" element={<Chat />} />
+          <Route path="chat/:roomid" element={<Chat />} />
         </Route>
       </Route>
     </Routes>

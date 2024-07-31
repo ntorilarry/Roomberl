@@ -13,9 +13,13 @@ const UserPayment = () => {
   const [userID, setUserID] = useState<string | null>(
     sessionStorage.getItem("user_id")
   );
+  const [hostelID, setHostelID] = useState(
+    sessionStorage.getItem("hostel") || ""
+  );
   const { roomTypeId } = location.state || {};
   const [formData, setFormData] = useState({
     amountPayed: "",
+    hostel: hostelID,
     firstReceipt: "",
     secondReceipt: "",
     user: userID || "",
@@ -59,6 +63,7 @@ const UserPayment = () => {
       const formDataToSend = new FormData();
       formDataToSend.append("amountPayed", formData.amountPayed);
       formDataToSend.append("user", formData.user);
+      formDataToSend.append("hostel", formData.hostel);
       formDataToSend.append("note", formData.note);
       formDataToSend.append("roomType", formData.roomType);
 

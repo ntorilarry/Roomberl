@@ -4,3 +4,12 @@ export interface chatRequest {
  objectType: string;
  objectId: string;
 }
+
+export interface messageRequest {
+content: string;
+   }
+
+   export interface messageRequestParams{
+    body: messageRequest;
+    roomid: string;
+  }

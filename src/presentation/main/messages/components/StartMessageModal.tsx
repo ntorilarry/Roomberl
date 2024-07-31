@@ -6,8 +6,10 @@ import { HiArrowRight } from "react-icons/hi2";
 import toast from "react-hot-toast";
 import { chatRequest } from "../../../../models/request/message-request";
 import { useStartMessageMutation } from "../../../../services/message-service";
+import { useNavigate } from "react-router-dom";
 
-export const StartMessageModal = ({objectID}) => {
+export const StartMessageModal = ({ objectID }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -48,6 +50,8 @@ export const StartMessageModal = ({objectID}) => {
         toast.success(status);
 
         setIsOpen(false);
+        const { id } = data.room;
+        navigate(`/message/chat/${id}`);
       } else {
         if (typeof data === "object" && data !== null) {
           const errorMessages = Object.entries(data)
