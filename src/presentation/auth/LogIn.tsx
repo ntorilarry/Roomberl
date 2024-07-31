@@ -12,6 +12,9 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const LogIn = () => {
   const navigate = useNavigate();
+  const [storedHostelID] = useState(sessionStorage.getItem("hostelID"));
+  const [storedCodeName] = useState(sessionStorage.getItem("code_name"));
+
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState<loginRequest>({
     email: "",
@@ -56,6 +59,13 @@ const LogIn = () => {
         }
 
         sessionStorage.setItem("roles", userRole);
+
+        if (hostel[0].id !== storedHostelID) {
+          toast.error("You do not belong in this hostel");
+          navigate(`/auth/login/${storedCodeName}`);
+          return;
+        }
+
         if (userRole === "Student") {
           navigate("/rooms/view-room-types");
         } else if (
