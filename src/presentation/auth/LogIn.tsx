@@ -65,12 +65,12 @@ const LogIn = () => {
 
         sessionStorage.setItem("roles", userRole);
 
-        if (hostel[0].id !== hostelID) {
-          console.log("hostel validation", hostel[0].id, hostelID)
+        if (userRole !== "Administrator" && hostel[0].id !== hostelID) {
+          console.log("hostel validation", hostel[0].id, hostelID);
           toast.error("You do not belong in this hostel");
           navigate(`/auth/login/${code_name}`);
           return;
-        }
+      }
 
         if (userRole === "Student") {
           navigate("/rooms/view-room-types");
