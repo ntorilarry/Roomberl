@@ -15,14 +15,10 @@ const LogIn = () => {
   const { code_name } = useParams<{ code_name?: string }>();
 
   const { data: response } = useGetHostelByCodeNameQuery(code_name ?? "");
-  const hostelName = response?.data[0]?.name;
   const hostelImage = response?.data[0]?.image;
   const hostelID = response?.data[0]?.id;
   sessionStorage.setItem("hostelID", hostelID);
   sessionStorage.setItem("code_name", code_name ?? "");
-
-  const [storedHostelName] = useState(sessionStorage.getItem("hostelName"));
-  const [storedCodeName] = useState(sessionStorage.getItem("code_name"));
 
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState<loginRequest>({
@@ -70,9 +66,9 @@ const LogIn = () => {
         sessionStorage.setItem("roles", userRole);
 
         if (hostel[0].id !== hostelID) {
-          console.log("hostel validation", hostel[0].name, storedHostelName)
+          console.log("hostel validation", hostel[0].id, hostelID)
           toast.error("You do not belong in this hostel");
-          navigate(`/auth/login/${storedCodeName}`);
+          navigate(`/auth/login/${code_name}`);
           return;
         }
 
