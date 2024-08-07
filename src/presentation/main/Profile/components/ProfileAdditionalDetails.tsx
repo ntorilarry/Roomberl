@@ -1,143 +1,87 @@
-import React, { useState } from "react";
-import { useGetAddInfoByUserIdQuery } from "../../../../services/auth-service";
-
-const ProfileAdditionalDetails = () => {
-  const [userID] = useState<string | null>(sessionStorage.getItem("user_id"));
-  const { data: response, isLoading: getInfoLoading } =
-    useGetAddInfoByUserIdQuery(userID || "");
-  const addData = response?.data;
+const ProfileAdditionalDetails = ({ addData }) => {
   return (
-    <div className="flex justify-center">
-      <div className="space-y-3">
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-              Other Name:
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.otherName}
-              </li>
-            </ul>
-          </dd>
-        </dl>
+    <div className="bg-white dark:bg-slate-800 max-w-6xl shadow overflow-hidden sm:rounded-lg">
+      <div className="px-4 py-5 sm:px-6">
+        <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+          Additional Details
+        </h3>
+      </div>
+      <div className="border-t border-gray-200">
+        <dl>
+          <div className="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              Other name
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.otherName}
+            </dd>
+          </div>
+          <div className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              Nick name
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.nickname}
+            </dd>
+          </div>
 
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-              Nick Name:
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.nickname}
-              </li>
-            </ul>
-          </dd>
-        </dl>
+          <div className="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              Ghana Card Number
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.ghanaCardNumber}
+            </dd>
+          </div>
 
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-              Guardian FullName:
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.guardianFullName}
-              </li>
-            </ul>
-          </dd>
-        </dl>
-
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-              Ghana Card Number:
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.ghanaCardNumber}
-              </li>
-            </ul>
-          </dd>
-        </dl>
-
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-              Course of Study
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.courseOfStudy}
-              </li>
-            </ul>
-          </dd>
-        </dl>
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-              Date of Birth
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.dateOfBirth}
-              </li>
-            </ul>
-          </dd>
-        </dl>
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
+          <div className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              Date Of Birth
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.dateOfBirth}
+            </dd>
+          </div>
+          <div className="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              Student ID Number
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.studentIdNumber}
+            </dd>
+          </div>
+          <div className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              course Of Study
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.courseOfStudy}
+            </dd>
+          </div>
+          <div className="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              Date OfAdmission
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.dateOfAdmission}
+            </dd>
+          </div>
+          <div className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500 dark:text-white">
+              Guardian Full Name
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.guardianFullName}
+            </dd>
+          </div>
+          <div className="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray- dark:text-white">
               Guardian Phone
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.guardianPhone}
-              </li>
-            </ul>
-          </dd>
-        </dl>
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-            Student Id Number
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.studentIdNumber}
-              </li>
-            </ul>
-          </dd>
-        </dl>
-        <dl className="flex flex-col sm:flex-row gap-1">
-          <dt className="min-w-40">
-            <span className="block text-sm text-gray-500 dark:text-white">
-            Date Of Admission
-            </span>
-          </dt>
-          <dd>
-            <ul>
-              <li className="me-1 inline-flex items-center text-sm text-gray-800 dark:text-white">
-                {addData?.dateOfAdmission}
-              </li>
-            </ul>
-          </dd>
+            </dt>
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 sm:col-span-2">
+              {addData?.guardianPhone}
+            </dd>
+          </div>
         </dl>
       </div>
     </div>

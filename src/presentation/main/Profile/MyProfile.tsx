@@ -6,14 +6,14 @@ import { useGetAddInfoByUserIdQuery } from "../../../services/auth-service";
 
 const MyProfile = () => {
   const [userID] = useState<string | null>(sessionStorage.getItem("user_id"));
-  const { data: profileResponse, isLoading: getProfileLoading } = useGetUserProfileQuery(
-    userID || ""
-  );
+  const { data: profileResponse, isLoading: getProfileLoading } =
+    useGetUserProfileQuery(userID || "");
 
   const profile = profileResponse?.data;
 
-  const { data: detailsResponse, isLoading: getInfoLoading } =
+  const { data: addInfoResponse, isLoading: getInfoLoading } =
   useGetAddInfoByUserIdQuery(userID || "");
+const addData = addInfoResponse?.data;
 
   if (getProfileLoading) {
     return (
@@ -23,33 +23,43 @@ const MyProfile = () => {
     );
   }
 
-
   return (
     <div>
-      <section className="relative pt-16 pb-24 bg-white dark:bg-slate-800">
-        <img
-          src="https://pagedone.io/asset/uploads/1705471739.png"
-          alt=""
-          className="w-full absolute top-0 left-0 z-0 h-32"
-        />
-        <div className="w-full max-w-6xl mx-auto px-6 md:px-8">
-          <div className="flex items-center justify-center relative z-10 mb-2.5">
-            <img
-              src={`https://ui-avatars.com/api/?name=${profile?.firstName}+${profile?.lastName}&background=random&size=130`}
-              alt=""
-              className="border-4 border-solid border-white rounded-full"
-            />
-          </div>
+      <main className="w-full bg-white dark:bg-slate-800 min-h-screen py-1 lg:max-w-7xl mx-auto">
+        <div className="p-2 md:p-4">
+          <div className="w-full px-6 pb-8 sm:rounded-lg">
+            {/* <h2 className="pl-6 text-2xl font-bold sm:text-xl">
+              Public Profile
+            </h2> */}
 
-          {/* <h3 className="text-center font-manrope font-bold text-3xl leading-10 text-gray-900 mb-3">
-            Jenny Wilson
-          </h3>
-          <p className="font-normal text-base leading-7 text-gray-500 text-center mb-8">
-            A social media influencers and singer
-          </p> */}
-          <ProfileTabs profile={profile} />
+            <div className="grid mx-auto">
+              <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
+                <img
+                  className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
+                  src={`https://ui-avatars.com/api/?name=${profile?.firstName}+${profile?.lastName}&background=random&size=130`}
+                  alt="Bordered avatar"
+                />
+
+                <div className="flex flex-col space-y-5 sm:ml-8">
+                  <button
+                    type="button"
+                    className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 "
+                  >
+                    Change picture
+                  </button>
+                  <button
+                    type="button"
+                    className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 "
+                  >
+                    Delete picture
+                  </button>
+                </div>
+              </div>
+              <ProfileTabs profile={profile} addData={addData} />
+            </div>
+          </div>
         </div>
-      </section>
+      </main>
     </div>
   );
 };

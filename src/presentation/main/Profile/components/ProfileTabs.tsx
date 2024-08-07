@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { Tab } from "@headlessui/react";
 import ProfileDetails from "./ProfileDetails";
 import ProfileAdditionalDetails from "./ProfileAdditionalDetails";
+import PersonalityProfile from "./PersonalityProfile";
 
-const ProfileTabs = ({ profile }) => {
+const ProfileTabs = ({ profile, addData }) => {
   const tabs = [
     {
       title: "Profile Info",
@@ -11,14 +12,18 @@ const ProfileTabs = ({ profile }) => {
     },
     {
       title: "Additional Details",
-      content: <ProfileAdditionalDetails />,
+      content: <ProfileAdditionalDetails addData={addData} />,
+    },
+    {
+      title: "Personality Profile",
+      content: <PersonalityProfile addData={addData} />,
     },
   ];
   return (
-    <div className="w-full">
+    <div className="w-full mt-6">
       <div className="mx-auto px-2 w-full">
         <Tab.Group>
-          <Tab.List className="space-x-2 mx-auto flex justify-center">
+          <Tab.List className="space-x-2 mx-auto bg-[#F3F4F6] dark:bg-slate-900">
             {tabs.map((tab) => (
               <Tab key={tab.title} as={Fragment}>
                 {({ selected }) => (

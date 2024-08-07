@@ -25,7 +25,10 @@ const QuestionAnswer = () => {
     sessionStorage.setItem("hostel", hostel[0].id);
     sessionStorage.setItem("hostelName", hostel[0].name);
     sessionStorage.setItem("gender", gender);
-    sessionStorage.setItem("roles", groups.length > 0 ? groups[0]?.name : "Student");
+    sessionStorage.setItem(
+      "roles",
+      groups.length > 0 ? groups[0]?.name : "Student"
+    );
     const { access } = userToken.token;
     sessionStorage.setItem("access_token", access);
   }
@@ -55,6 +58,7 @@ const QuestionAnswer = () => {
             if (element.option.length > 0) {
               return {
                 id: element.id,
+                text: element.text,
                 option: element.option.map((data) => ({
                   text: data.text,
                   chosen: data.text === answer,
@@ -63,6 +67,7 @@ const QuestionAnswer = () => {
             } else {
               return {
                 id: element.id,
+                text: element.text,
                 option: [
                   {
                     text: answer,
