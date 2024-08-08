@@ -7,11 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 const ChooseRoom = ({ roomID }) => {
   const navigate = useNavigate();
-  const [userID, setUserID] = useState<string | null>(
-    sessionStorage.getItem("user_id")
-  );
+  const [userID] = useState<string | null>(sessionStorage.getItem("user_id"));
 
-  const [selectRoom, { isLoading: selectLoading }] = useChooseRoomMutation();
+  const [selectRoom] = useChooseRoomMutation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();

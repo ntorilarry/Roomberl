@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import { EnableUserParams, UpdateRoleParams } from "../models/request/user-request";
+import { UpdateProfilePicParams } from "../models/request/auth-request";
 
 export const userService = createApi({
   reducerPath: "userService",
@@ -70,6 +71,14 @@ export const userService = createApi({
       }),
       providesTags: ["Users"],
     }),
+    profilePicture: build.mutation<BaseResponse<any>, UpdateProfilePicParams>({
+      query: ({ body, userId }: UpdateProfilePicParams) => ({
+        url: `/accounts/users/${userId}/`,
+        method: "PATCH",
+        body: body,
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
@@ -80,5 +89,6 @@ export const {
   useGetGroupsQuery,
   useUpdateUserPermissionsMutation,
   useGetMatchingUsersQuery,
-  useGetUserProfileQuery
+  useGetUserProfileQuery,
+  useProfilePictureMutation
 } = userService;

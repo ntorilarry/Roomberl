@@ -60,3 +60,13 @@ export interface UpdateChooseRoomParams {
   body: UpdateChooseRoom;
   userId: string;
 }
+
+
+// export interface UpdateProfilePic {
+//   profilePicture: any;
+
+// }
+export interface UpdateProfilePicParams {
+  body: FormData;
+  userId: string;
+}

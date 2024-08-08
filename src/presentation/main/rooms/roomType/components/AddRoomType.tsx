@@ -13,8 +13,8 @@ import { useGetHostelsQuery } from "../../../../../services/auth-service";
 import Select from "react-select";
 
 export const AddRoomType = () => {
-  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
-  const [hostelID, setHostelID] = useState(
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID] = useState(
     sessionStorage.getItem("hostel") || ""
   );
   const [isOpen, setIsOpen] = useState(false);

@@ -3,6 +3,7 @@ import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
   UpdateChooseRoomParams,
+  UpdateProfilePicParams,
   UpdateRoomTypeParams,
   UpdateUserQuestionsParams,
   loginRequest,

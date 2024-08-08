@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetRoomsByIdQuery } from "../../../../services/room-service";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import ChooseRoom from "./components/ChooseRoom";
 import UnselectRoom from "./components/UnselectRoom";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
-import { useGetMatchingUsersQuery } from "../../../../services/user-service";
 import { useGlobalState } from "../../../../utils/GlobalStateContext";
 import { MdCheckroom, MdMeetingRoom } from "react-icons/md";
 import { FaCediSign } from "react-icons/fa6";
