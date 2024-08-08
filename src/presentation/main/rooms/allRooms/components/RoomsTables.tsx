@@ -157,7 +157,7 @@ const RoomsTables = ({
                                 {...cell.getCellProps()}
                                 className="px-6 py-4 whitespace-nowrap align-top"
                               >
-                                {cell.column.Header === "Description" ? (
+                                {cell.column.Header === "Description" || "Room Amenities" ? (
                                   <td
                                     {...cell.getCellProps()}
                                     className="h-px w-60 min-w-60"
