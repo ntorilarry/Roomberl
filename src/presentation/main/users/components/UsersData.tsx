@@ -1,17 +1,40 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import moment from "moment";
 import UsersTable from "./UsersTable";
 import { useGetUsersByHostelIdQuery } from "../../../../services/user-service";
 import { DisableUsers } from "./DisableUsers";
 import { EnableUsers } from "./EnableUsers";
 import { GroupPermission } from "./GroupPermission";
+import Pagination from "../../../../components/Pagination";
+import { useGlobalState } from "../../../../utils/GlobalStateContext";
 
 const UsersData = () => {
+  const { state } = useGlobalState(); // Destructure state and dispatch
+  const { searchQuery } = state;
   const [filterValue, setFilterValue] = useState("");
-  const { data: response, isLoading } = useGetUsersByHostelIdQuery(filterValue);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const { data: response, isLoading } = useGetUsersByHostelIdQuery({
+    hostelId: filterValue,
+    page: currentPage,
+    size: pageSize,
+  });
 
-  const RoomAmenity = response?.data.results || [];
+  const Users = response?.data.results || [];
 
+  const filteredData = useMemo(() => {
+    if (!searchQuery) return Users;
+
+    return Users.filter((user) =>
+      Object.values(user).some((value) =>
+        String(value).toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, Users]);
+
+  // Get current quotes to display
+  const totalElements = response?.data.count || 0;
+  const totalPages = Math.ceil(totalElements / pageSize);
   const columns = React.useMemo(
     () => [
       {
@@ -80,7 +103,7 @@ const UsersData = () => {
               )}
             </div>
             <div>
-              <GroupPermission user={row.original}/>
+              <GroupPermission user={row.original} />
             </div>
           </div>
         ),
@@ -89,28 +112,23 @@ const UsersData = () => {
     []
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
   // Calculate total pages
-  const totalPages = Math.ceil(RoomAmenity.length / pageSize);
-
-  // Get current quotes to display
-  const currentAmenities = RoomAmenity.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
 
   return (
     <div>
       <UsersTable
         columns={columns}
-        data={currentAmenities}
+        data={filteredData}
+        isLoading={isLoading}
+        setFilterValue={setFilterValue}
+      />
+
+      <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        isLoading={isLoading}
-        setFilterValue={setFilterValue}
+        pageSize={pageSize}
+        totalElements={totalElements}
       />
     </div>
   );

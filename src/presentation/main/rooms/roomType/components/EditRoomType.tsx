@@ -86,7 +86,10 @@ export const EditRoomType = ({ typeroom }) => {
   const { data: response } = useGetHostelsQuery();
   const Hostels = response?.data?.hostels || [];
 
-  const { data: responseAmenity } = useGetRoomAmenitiesQuery();
+  const { data: responseAmenity } = useGetRoomAmenitiesQuery({
+    page: 1,
+    size: 99999999,
+  });
 
   const RoomAmenity = responseAmenity?.data.results || [];
 

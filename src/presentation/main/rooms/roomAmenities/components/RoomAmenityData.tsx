@@ -1,15 +1,36 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import moment from "moment";
 import { useGetRoomAmenitiesQuery } from "../../../../../services/room-service";
 import RoomAmenityTable from "./RoomAmenityTable.tsx";
 import { EditRoomAmenity } from "./EditRoomAmenity";
 import { DeleteRoomAmenity } from "./DeleteRoomAmenity";
+import Pagination from "../../../../../components/Pagination";
+import { useGlobalState } from "../../../../../utils/GlobalStateContext";
 
 const RoomAmenityData = () => {
-  const { data: response, isLoading } = useGetRoomAmenitiesQuery();
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const { data: response, isLoading } = useGetRoomAmenitiesQuery({
+    page: currentPage,
+    size: pageSize,
+  });
+  const { state } = useGlobalState(); // Destructure state and dispatch
+  const { searchQuery } = state;
 
-  const RoomAmenity = response?.data.results || [];
+  const roomAmenity = response?.data.results || [];
 
+  const filteredData = useMemo(() => {
+    if (!searchQuery) return roomAmenity;
+
+    return roomAmenity.filter((user) =>
+      Object.values(user).some((value) =>
+        String(value).toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, roomAmenity]);
+
+  const totalElements = response?.data.count || 0;
+  const totalPages = Math.ceil(totalElements / pageSize);
   const columns = React.useMemo(
     () => [
       {
@@ -39,27 +60,19 @@ const RoomAmenityData = () => {
     []
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  // Calculate total pages
-  const totalPages = Math.ceil(RoomAmenity.length / pageSize);
-
-  // Get current quotes to display
-  const currentAmenities = RoomAmenity.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
-
   return (
     <div>
       <RoomAmenityTable
         columns={columns}
-        data={currentAmenities}
+        data={filteredData}
+        isLoading={isLoading}
+      />
+      <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        isLoading={isLoading}
+        pageSize={pageSize}
+        totalElements={totalElements}
       />
     </div>
   );

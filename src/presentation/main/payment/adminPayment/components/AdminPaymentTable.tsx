@@ -1,71 +1,14 @@
 import React, { useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
-import Pagination from "../../../../../components/Pagination";
 import { FiSearch } from "react-icons/fi";
 import { FilterPayments } from "./FilterPayments";
 
-const GlobalFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) => {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = React.useState(globalFilter);
-  const onChange = React.useCallback(
-    (value) => {
-      setGlobalFilter(value || undefined);
-    },
-    [setGlobalFilter]
-  );
+const AdminPaymentTable = ({ columns, data, isLoading, setFilterValue }) => {
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
 
-  return (
-    <div className="sm:col-span-1">
-      <label htmlFor="hs-as-table-product-review-search" className="sr-only">
-        Search
-      </label>
-      <div className="relative">
-        <input
-          type="text"
-          id="hs-as-table-product-review-search"
-          name="hs-as-table-product-review-search"
-          className="py-2 px-3 ps-11 border block w-full border-gray-200 rounded-xl text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-700 dark:text-slate-400 dark:placeholder-slate-500 dark:focus:ring-slate-700"
-          value={value || ""}
-          onChange={(e) => {
-            setValue(e.target.value);
-            onChange(e.target.value);
-          }}
-          placeholder={`${count} records...`}
-        />
-        <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-          <FiSearch className="flex-shrink-0 size-4 text-gray-400 dark:text-slate-500" />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const AdminPaymentTable = ({
-  columns,
-  data,
-  totalPages,
-  currentPage,
-  onPageChange,
-  isLoading,
-  setFilterValue
-}) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
-  
-  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
   return (
     <div>
       <div className="max-w-[85rem] mx-auto">
@@ -74,17 +17,15 @@ const AdminPaymentTable = ({
             <div className="p-2 min-w-full inline-block align-middle">
               <div className="bg-white border border-gray-200 rounded-xl overflow-hidden dark:bg-slate-800 dark:border-slate-800">
                 <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center ">
-                  <GlobalFilter
-                    preGlobalFilteredRows={preGlobalFilteredRows}
-                    globalFilter={state.globalFilter}
-                    setGlobalFilter={setGlobalFilter}
-                  />
+                  <h1 className="text-gray-800 dark:text-white font-semibold text-xl">
+                    Payments
+                  </h1>
                   <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className=" relative inline-block">
-                      {roles !== "Hostel_manager" && (
-                        <FilterPayments setFilterValue={setFilterValue}/>
-                      )}
+                        {roles !== "Hostel_manager" && (
+                          <FilterPayments setFilterValue={setFilterValue} />
+                        )}
                       </div>
                     </div>
                   </div>
@@ -188,16 +129,6 @@ const AdminPaymentTable = ({
                     )}
                   </tbody>
                 </table>
-
-                <div className="px-6 py-4 grid gap-3 md:flex md:justify-center md:items-center border-t border-gray-200 dark:border-slate-700">
-                  <div>
-                    <Pagination
-                      totalPages={totalPages}
-                      currentPage={currentPage}
-                      onPageChange={onPageChange}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>

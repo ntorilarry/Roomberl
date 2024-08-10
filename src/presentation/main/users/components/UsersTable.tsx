@@ -1,83 +1,28 @@
 import React from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
-import { FiSearch } from "react-icons/fi";
 import { FilterUsers } from "./FilterUsers";
-import Pagination from "../../../../components/Pagination";
-
-
-const GlobalFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) => {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = React.useState(globalFilter);
-  const onChange = React.useCallback(
-    (value) => {
-      setGlobalFilter(value || undefined);
-    },
-    [setGlobalFilter]
-  );
-
-  return (
-    <div className="sm:col-span-1">
-      <label htmlFor="hs-as-table-product-review-search" className="sr-only">
-        Search
-      </label>
-      <div className="relative">
-        <input
-          type="text"
-          id="hs-as-table-product-review-search"
-          name="hs-as-table-product-review-search"
-          className="py-2 px-3 ps-11 border block w-full border-gray-200 rounded-xl text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-slate-400 dark:placeholder-slate-500 dark:focus:ring-slate-600"
-          value={value || ""}
-          onChange={(e) => {
-            setValue(e.target.value);
-            onChange(e.target.value);
-          }}
-          placeholder={`${count} records...`}
-        />
-        <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
-          <FiSearch className="flex-shrink-0 size-4 text-gray-400 dark:text-slate-500" />
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const UsersTable = ({
   columns,
   data,
-  totalPages,
-  currentPage,
-  onPageChange,
+
   isLoading,
   setFilterValue,
 }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
   return (
     <div>
-      <div className="max-w-[85rem] mx-auto">
+      <div className="w-full mx-auto">
         <div className="flex flex-col">
           <div className="-m-1.5 overflow-x-auto">
             <div className="p-2 min-w-full inline-block align-middle">
               <div className="bg-white border border-gray-200 rounded-xl overflow-hidden dark:bg-slate-800 dark:border-slate-800">
                 <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center">
-                  <GlobalFilter
-                    preGlobalFilteredRows={preGlobalFilteredRows}
-                    globalFilter={state.globalFilter}
-                    setGlobalFilter={setGlobalFilter}
-                  />
+                  <h1 className="text-gray-800 dark:text-white font-semibold text-xl">
+                    Users
+                  </h1>
                   <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className="gap-x-2 relative inline-flex">
@@ -172,16 +117,6 @@ const UsersTable = ({
                     )}
                   </tbody>
                 </table>
-
-                <div className="px-6 py-4 grid gap-3 md:flex md:justify-center md:items-center border-t border-gray-200 dark:border-slate-700">
-                  <div>
-                    <Pagination
-                      totalPages={totalPages}
-                      currentPage={currentPage}
-                      onPageChange={onPageChange}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>

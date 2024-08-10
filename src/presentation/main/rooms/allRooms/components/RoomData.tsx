@@ -1,24 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import moment from "moment";
 import { useGetRoomsQuery } from "../../../../../services/room-service";
 import RoomsTables from "./RoomsTables";
-import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { EditRoom } from "./EditRoom";
 import { DeleteRoom } from "./DeleteRoom";
+import Pagination from "../../../../../components/Pagination";
+import { useGlobalState } from "../../../../../utils/GlobalStateContext";
 
 const RoomData = () => {
   const [filterhostel, setFilterHostel] = useState("");
   const [filterRoomType, setFilterRoomType] = useState("");
   const [filterGender, setFilterGender] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: filterhostel,
     roomTypeId: filterRoomType,
     gender: filterGender,
+    page: currentPage,
+    size: pageSize,
   });
 
-  const Rooms = response?.data.results || [];
+  const { state } = useGlobalState(); // Destructure state and dispatch
+  const { searchQuery } = state;
 
+  const rooms = response?.data.results || [];
+
+  // Filter the data based on the search query
+  const filteredData = useMemo(() => {
+    if (!searchQuery) return rooms;
+
+    return rooms.filter((user) =>
+      Object.values(user).some((value) =>
+        String(value).toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, rooms]);
+
+  const totalElements = response?.data.count || 0;
+  const totalPages = Math.ceil(totalElements / pageSize);
   const columns = React.useMemo(
     () => [
       {
@@ -90,30 +111,23 @@ const RoomData = () => {
     []
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  // Calculate total pages
-  const totalPages = Math.ceil(Rooms.length / pageSize);
-
-  // Get current quotes to display
-  const currentAmenities = Rooms.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
-
   return (
     <div>
       <RoomsTables
         columns={columns}
-        data={currentAmenities}
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
+        data={filteredData}
         isLoading={isLoading}
         setFilterHostel={setFilterHostel}
         setFilterRoomType={setFilterRoomType}
         setFilterGender={setFilterGender}
+      />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        pageSize={pageSize}
+        totalElements={totalElements}
+     
       />
     </div>
   );

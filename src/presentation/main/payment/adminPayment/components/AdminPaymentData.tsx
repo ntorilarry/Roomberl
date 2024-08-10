@@ -1,24 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import moment from "moment";
 import { useGetRoomPaymentQuery } from "../../../../../services/room-service";
 import AdminPaymentTable from "./AdminPaymentTable";
 import { IoIosWarning } from "react-icons/io";
 import { MdVerified } from "react-icons/md";
 import { VerifyPaymentModal } from "./VerifyPaymentModal";
+import Pagination from "../../../../../components/Pagination";
+import { useGlobalState } from "../../../../../utils/GlobalStateContext";
 
 const AdminPaymentData = () => {
-  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
-  const [hostelID, setHostelID] = useState(sessionStorage.getItem("hostel") || "");
+  const { state } = useGlobalState(); // Destructure state and dispatch
+  const { searchQuery } = state;
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID] = useState(
+    sessionStorage.getItem("hostel") || ""
+  );
   const [filterValue, setFilterValue] = useState("");
-  const { data: response, isLoading } = useGetRoomPaymentQuery(filterValue);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const { data: response, isLoading } = useGetRoomPaymentQuery({
+    hostelId: filterValue,
+    page: currentPage,
+    size: pageSize,
+  });
 
   useEffect(() => {
     if (roles === "Hostel_manager") {
       setFilterValue(hostelID);
     }
   }, [roles, hostelID]);
-  
+
   const RoomPayment = response?.data.results || [];
+
+  const filteredData = useMemo(() => {
+    if (!searchQuery) return RoomPayment;
+
+    return RoomPayment.filter((user) =>
+      Object.values(user).some((value) =>
+        String(value).toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, RoomPayment]);
+
+  const totalElements = response?.data.count || 0;
+  const totalPages = Math.ceil(totalElements / pageSize);
 
   const columns = React.useMemo(
     () => [
@@ -115,28 +140,23 @@ const AdminPaymentData = () => {
     []
   );
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
 
-  // Calculate total pages
-  const totalPages = Math.ceil(RoomPayment.length / pageSize);
-
-  // Get current quotes to display
-  const currentAmenities = RoomPayment.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
 
   return (
     <div>
       <AdminPaymentTable
         columns={columns}
-        data={currentAmenities}
+        data={filteredData}
+        isLoading={isLoading}
+        setFilterValue={setFilterValue}
+      />
+      <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        isLoading={isLoading}
-        setFilterValue={setFilterValue}
+        pageSize={pageSize}
+        totalElements={totalElements}
+    
       />
     </div>
   );

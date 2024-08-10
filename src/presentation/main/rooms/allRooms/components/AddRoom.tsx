@@ -33,7 +33,7 @@ export const AddRoom = () => {
     code: "",
     roomType: "",
     hostel: roles === "Hostel_manager" ? hostelID : "",
-    gender:"",
+    gender: "",
     roomAmenities: [],
   });
 
@@ -136,10 +136,17 @@ export const AddRoom = () => {
   const Hostels = response?.data?.hostels || [];
 
   const { data: responseRoomType, isLoading: isRoomTypeLoading } =
-    useGetRoomTypeQuery(selectedHostelId);
+    useGetRoomTypeQuery({
+      hostelId: selectedHostelId || "",
+      page: 1,
+      size: 99999999,
+    });
   const RoomTypes = responseRoomType?.data?.results || [];
 
-  const { data: responseAmenity } = useGetRoomAmenitiesQuery();
+  const { data: responseAmenity } = useGetRoomAmenitiesQuery({
+    page: 1,
+    size: 99999999,
+  });
   const RoomAmenity = responseAmenity?.data.results || [];
 
   const amenityOptions = RoomAmenity?.map((room) => ({
@@ -217,30 +224,30 @@ export const AddRoom = () => {
                         />
                       </div>
                       {roles !== "Hostel_manager" && (
-                      <div className="mb-2">
-                        <label
-                          htmlFor="hostel"
-                          className="block mb-2 text-sm font-medium dark:text-white"
-                        >
-                          Hostel
-                        </label>
-                        <select
-                          name="hostel"
-                          id="hostel"
-                          className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
-                          onChange={handleFormChanged}
-                          required
-                        >
-                          <option value="" disabled selected>
-                            Choose hostel
-                          </option>
-                          {Hostels.map((data, index) => (
-                            <option key={index} value={data.id}>
-                              {data.name}
+                        <div className="mb-2">
+                          <label
+                            htmlFor="hostel"
+                            className="block mb-2 text-sm font-medium dark:text-white"
+                          >
+                            Hostel
+                          </label>
+                          <select
+                            name="hostel"
+                            id="hostel"
+                            className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                            onChange={handleFormChanged}
+                            required
+                          >
+                            <option value="" disabled selected>
+                              Choose hostel
                             </option>
-                          ))}
-                        </select>
-                      </div>
+                            {Hostels.map((data, index) => (
+                              <option key={index} value={data.id}>
+                                {data.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       )}
                       <div className="mb-2">
                         <label
@@ -431,7 +438,7 @@ export const AddRoom = () => {
                       >
                         Close
                       </button>
-                      <button 
+                      <button
                         className="bg-blue-500 text-white  w-full  text-sm px-6 py-3 rounded-3xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="submit"
                       >

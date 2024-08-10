@@ -271,9 +271,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       </Transition>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-[280px] lg:flex-col">
+      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50  lg:flex lg:w-[280px] lg:flex-col">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex grow flex-col gap-y-5 overflow-y-auto  bg-white dark:bg-slate-800 px-6 pb-4">
+        <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white dark:bg-slate-800 px-6 pb-4">
           <a href="/" className="flex gap-x-2 h-16 shrink-0 items-center">
             <img className="h-8 w-auto" src={RoomBerlLogo} alt="Your Company" />
             <p className="font-semibold text-slate-900 text-xl dark:text-white">

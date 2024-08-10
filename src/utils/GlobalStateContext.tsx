@@ -4,6 +4,7 @@ interface GlobalState {
   isPaymentVerified: boolean | null;
   isRoomTypePresent: string | null;
   RoomIdPresent: string | null;
+  searchQuery: string;
 }
 
 interface GlobalStateContextType {
@@ -15,6 +16,7 @@ const initialState: GlobalState = {
   isPaymentVerified: null,
   isRoomTypePresent: null,
   RoomIdPresent: null,
+  searchQuery: "",
 };
 
 const GlobalStateContext = createContext<GlobalStateContextType>({
@@ -30,6 +32,8 @@ const globalStateReducer = (state: GlobalState, action: any): GlobalState => {
       return { ...state, isRoomTypePresent: action.payload };
     case "SET_ROOM_ID_PRESENT":
       return { ...state, RoomIdPresent: action.payload };
+    case "SET_SEARCH_QUERY": // Add this case
+      return { ...state, searchQuery: action.payload };
     default:
       return state;
   }

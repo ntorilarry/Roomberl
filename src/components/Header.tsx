@@ -1,9 +1,15 @@
-import { HiMiniBars4, HiOutlineBell, HiMiniChevronDown } from "react-icons/hi2";
+import {
+  HiMiniBars4,
+  HiOutlineBell,
+  HiMiniChevronDown,
+  HiMagnifyingGlass,
+} from "react-icons/hi2";
 import { Menu, Transition } from "@headlessui/react";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../presentation/auth/utils/AuthContext";
 import DarkModeToggle from "./DarkModeToggle";
+import { useGlobalState } from "../utils/GlobalStateContext";
 
 const userNavigation = [
   { name: "Your profile", href: "/my-profile" },
@@ -17,20 +23,24 @@ function classNames(...classes) {
 const Header = ({ setSidebarOpen }) => {
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState(
-    sessionStorage.getItem("first_name")
-  );
+  const [firstName] = useState(sessionStorage.getItem("first_name"));
 
-  const [code_name, setCode_name] = useState<string | null>(
+  const [code_name] = useState<string | null>(
     sessionStorage.getItem("code_name")
   );
-  const [lastName, setLastName] = useState(sessionStorage.getItem("last_name"));
-  const [email, setEmail] = useState(sessionStorage.getItem("email"));
+  const [lastName] = useState(sessionStorage.getItem("last_name"));
+
   const { logout } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout();
     navigate(`/auth/login/${code_name}`);
+  };
+
+  const { dispatch } = useGlobalState(); // Get dispatch function
+
+  const handleSearchChange = (e) => {
+    dispatch({ type: "SET_SEARCH_QUERY", payload: e.target.value }); // Dispatch action
   };
   return (
     <div className="sticky top-0 z-40 w-full flex h-16 shrink-0 items-center gap-x-4 bg-white dark:bg-slate-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
@@ -50,7 +60,7 @@ const Header = ({ setSidebarOpen }) => {
       />
 
       <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-        {/* <form className="relative flex flex-1" action="#" method="GET">
+        <form className="relative flex flex-1" action="#" method="GET">
           <label htmlFor="search-field" className="sr-only">
             Search
           </label>
@@ -60,12 +70,13 @@ const Header = ({ setSidebarOpen }) => {
           />
           <input
             id="search-field"
-            className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+            className="block h-full w-full border-0 py-0 dark:bg-slate-800 dark:text-white pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 focus:ring-offset-0 sm:text-sm"
             placeholder="Search..."
             type="search"
             name="search"
+            onChange={handleSearchChange}
           />
-        </form> */}
+        </form>
         <div className="flex flex-1 justify-end items-center gap-x-4 lg:gap-x-6">
           <button
             type="button"

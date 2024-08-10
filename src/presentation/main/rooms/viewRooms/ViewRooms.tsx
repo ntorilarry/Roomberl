@@ -18,6 +18,8 @@ const ViewRooms = () => {
     hostelId: hostel || "",
     roomTypeId: roomTypeId || "",
     gender: roomGender || "",
+    page: 1,
+    size: 99999999,
   });
 
   const rooms = response?.data?.results || [];

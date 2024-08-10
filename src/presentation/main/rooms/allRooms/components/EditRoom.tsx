@@ -147,7 +147,10 @@ export const EditRoom = ({ room }) => {
     useGetRoomTypeQuery(selectedHostelId);
   const RoomTypes = responseRoomType?.data?.results || [];
 
-  const { data: responseAmenity } = useGetRoomAmenitiesQuery();
+  const { data: responseAmenity } = useGetRoomAmenitiesQuery({
+    page: 1,
+    size: 99999999,
+  });
   const RoomAmenity = responseAmenity?.data.results || [];
 
   const amenityOptions = RoomAmenity?.map((room) => ({

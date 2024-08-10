@@ -19,9 +19,9 @@ export const userService = createApi({
 
   tagTypes: ["Users"],
   endpoints: (build) => ({
-    getUsersByHostelId: build.query<BaseResponse<any>, string>({
-      query: (hostelId ) => ({
-        url: `/accounts/users/?hostel=${hostelId}`,
+    getUsersByHostelId: build.query<BaseResponse<any>, {hostelId: string, page: number, size: number}>({
+      query: ({hostelId, page, size} ) => ({
+        url: `/accounts/users/?hostel=${hostelId}&page=${page}&size=${size}`,
         method: "GET",
       }),
       providesTags: ["Users"],

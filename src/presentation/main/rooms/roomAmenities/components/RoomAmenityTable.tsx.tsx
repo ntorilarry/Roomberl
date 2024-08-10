@@ -48,9 +48,6 @@ const GlobalFilter = ({
 const RoomAmenityTable = ({
   columns,
   data,
-  totalPages,
-  currentPage,
-  onPageChange,
   isLoading,
 }) => {
   const {
@@ -59,9 +56,7 @@ const RoomAmenityTable = ({
     headerGroups,
     rows,
     prepareRow,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
+ 
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
   return (
     <div>
@@ -71,11 +66,7 @@ const RoomAmenityTable = ({
             <div className="p-2 min-w-full inline-block align-middle">
               <div className="bg-white border border-gray-200 rounded-xl overflow-hidden dark:bg-slate-800 dark:border-slate-800">
                 <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center ">
-                  <GlobalFilter
-                    preGlobalFilteredRows={preGlobalFilteredRows}
-                    globalFilter={state.globalFilter}
-                    setGlobalFilter={setGlobalFilter}
-                  />
+                 <h1 className="text-gray-800 dark:text-white font-semibold text-xl">Room Amenity</h1>
                   <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className=" relative inline-block">
@@ -183,16 +174,6 @@ const RoomAmenityTable = ({
                     )}
                   </tbody>
                 </table>
-
-                <div className="px-6 py-4 grid gap-3 md:flex md:justify-center md:items-center border-t border-gray-200 dark:border-slate-700">
-                  <div>
-                    <Pagination
-                      totalPages={totalPages}
-                      currentPage={currentPage}
-                      onPageChange={onPageChange}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>

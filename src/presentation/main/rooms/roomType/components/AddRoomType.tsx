@@ -14,9 +14,7 @@ import Select from "react-select";
 
 export const AddRoomType = () => {
   const [roles] = useState(sessionStorage.getItem("roles") || "");
-  const [hostelID] = useState(
-    sessionStorage.getItem("hostel") || ""
-  );
+  const [hostelID] = useState(sessionStorage.getItem("hostel") || "");
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -91,7 +89,10 @@ export const AddRoomType = () => {
   const { data: response } = useGetHostelsQuery();
   const Hostels = response?.data?.hostels || [];
 
-  const { data: responseAmenity } = useGetRoomAmenitiesQuery();
+  const { data: responseAmenity } = useGetRoomAmenitiesQuery({
+    page: 1,
+    size: 99999999,
+  });
 
   const RoomAmenity = responseAmenity?.data.results || [];
 

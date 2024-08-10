@@ -32,7 +32,7 @@ export const FilterRoom = ({
   const Hostels = responseHostel?.data?.hostels || [];
 
   const { data: responseRoomType, isLoading: isRoomTypeLoading } =
-    useGetRoomTypeQuery(selectedHostel);
+    useGetRoomTypeQuery({ hostelId: selectedHostel, page: 1, size: 99999999 });
   const RoomTypes = responseRoomType?.data?.results || [];
 
   const applyFilter = () => {
@@ -103,31 +103,31 @@ export const FilterRoom = ({
                   </Dialog.Title>
                   <hr className="border-hr border-gray-500 mt-4" />
                   <form className="mt-5">
-                  {roles !== "Hostel_manager" && (
-                    <div className="my-2">
-                      <label
-                        htmlFor="hostel"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Hostel
-                      </label>
-                      <select
-                        id="hostel"
-                        value={selectedHostel}
-                        onChange={(e) => setSelectedHostel(e.target.value)}
-                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
-                      >
-                        <option value="" selected disabled>
-                          Choose hostel
-                        </option>
-                        {Hostels.map((data) => (
-                          <option key={data.id} value={data.id}>
-                            {data.name}
+                    {roles !== "Hostel_manager" && (
+                      <div className="my-2">
+                        <label
+                          htmlFor="hostel"
+                          className="block mb-2 text-sm font-medium dark:text-white"
+                        >
+                          Hostel
+                        </label>
+                        <select
+                          id="hostel"
+                          value={selectedHostel}
+                          onChange={(e) => setSelectedHostel(e.target.value)}
+                          className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                        >
+                          <option value="" selected disabled>
+                            Choose hostel
                           </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                          {Hostels.map((data) => (
+                            <option key={data.id} value={data.id}>
+                              {data.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
                     <div className="my-2">
                       <label
                         htmlFor="roomType"

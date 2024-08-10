@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
-import Pagination from "../../../../../components/Pagination";
 import { FiSearch } from "react-icons/fi";
 import { AddRoomType } from "./AddRoomType";
 import { FilterRoomType } from "./FilterRoomType";
@@ -49,9 +48,6 @@ const GlobalFilter = ({
 const RoomAmenityTable = ({
   columns,
   data,
-  totalPages,
-  currentPage,
-  onPageChange,
   isLoading,
   setFilterValue,
 }) => {
@@ -190,16 +186,6 @@ const RoomAmenityTable = ({
                     )}
                   </tbody>
                 </table>
-
-                <div className="px-6 py-4 grid gap-3 md:flex md:justify-center md:items-center border-t border-gray-200 dark:border-slate-700">
-                  <div>
-                    <Pagination
-                      totalPages={totalPages}
-                      currentPage={currentPage}
-                      onPageChange={onPageChange}
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>

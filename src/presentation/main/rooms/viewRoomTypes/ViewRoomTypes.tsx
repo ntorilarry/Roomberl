@@ -12,7 +12,11 @@ import { useGlobalState } from "../../../../utils/GlobalStateContext";
 
 const ViewRoomTypes = () => {
   const [hostel] = useState(sessionStorage.getItem("hostel"));
-  const { data: response, isLoading } = useGetRoomTypeQuery(hostel || "");
+  const { data: response, isLoading } = useGetRoomTypeQuery({
+    hostelId: hostel || "",
+    page: 1,
+    size: 99999999,
+  });
 
   const roomType = response?.data.results || [];
 

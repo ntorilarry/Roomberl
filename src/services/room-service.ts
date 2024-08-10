@@ -27,10 +27,10 @@ export const roomService = createApi({
   endpoints: (build) => ({
     getRooms: build.query<
       BaseResponse<any>,
-      { roomTypeId: string; hostelId: string; gender: string }
+      { roomTypeId: string, hostelId: string, gender: string, page: number, size: number }
     >({
-      query: ({ roomTypeId, hostelId, gender }) => ({
-        url: `/room/rooms/?room_type=${roomTypeId}&hostel=${hostelId}&gender=${gender}`,
+      query: ({ roomTypeId, hostelId, gender, page, size }) => ({
+        url: `/room/rooms/?room_type=${roomTypeId}&hostel=${hostelId}&gender=${gender}&page=${page}&size=${size}`,
         method: "GET",
       }),
       providesTags: ["Room"],
@@ -68,9 +68,9 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomAmenities: build.query<BaseResponse<any>, void>({
-      query: () => ({
-        url: "/room/amenities/",
+    getRoomAmenities: build.query<BaseResponse<any>, {page: number, size: number}>({
+      query: ({page, size}) => ({
+        url: `/room/amenities/?page=${page}&size=${size}`,
         method: "GET",
       }),
       providesTags: ["Room"],
@@ -98,9 +98,9 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomType: build.query<BaseResponse<any>, string>({
-      query: (hostelId) => ({
-        url: `/room/room_types/?hostel=${hostelId}`,
+    getRoomType: build.query<BaseResponse<any>, {hostelId: string, page: number, size: number}>({
+      query: ({hostelId, page, size}) => ({
+        url: `/room/room_types/?hostel=${hostelId}&page=${page}&size=${size}`,
         method: "GET",
       }),
       providesTags: ["Room"],
@@ -138,9 +138,9 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomPayment: build.query<BaseResponse<any>, string>({
-      query: (hostelId) => ({
-        url: `/accounts/room-payment/?hostel=${hostelId}`,
+    getRoomPayment: build.query<BaseResponse<any>, {hostelId: string, page: number, size: number}>({
+      query: ({hostelId, page, size}) => ({
+        url: `/accounts/room-payment/?hostel=${hostelId}&page=${page}&size=${size}`,
         method: "GET",
       }),
       providesTags: ["Room"],
