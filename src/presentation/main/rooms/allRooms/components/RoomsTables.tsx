@@ -20,9 +20,7 @@ const RoomsTables = ({
     headerGroups,
     rows,
     prepareRow,
-    state,
-    preGlobalFilteredRows,
-    setGlobalFilter,
+
   } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
   return (
     <div>
