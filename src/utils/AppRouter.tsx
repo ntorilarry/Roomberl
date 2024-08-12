@@ -22,6 +22,7 @@ import UnauthorizedPage from "../presentation/auth/Unauthorized";
 import Message from "../presentation/main/messages/Message";
 import Chat from "../presentation/main/messages/Chat";
 import MyProfile from "../presentation/main/Profile/MyProfile";
+import ViewMemberProfile from "../presentation/main/members/ViewMemberProfile";
 
 const AppRouter = () => {
   return (
@@ -38,6 +39,7 @@ const AppRouter = () => {
       <Route path="/" element={<MainLayout />}>
         <Route index element={<Navigate replace to="members" />} />
         <Route path="members" element={<Members />} />
+        <Route path="view-profile/:userId" element={<ViewMemberProfile />} />
         <Route path="users" element={<Users />} />
         <Route path="my-profile" element={<MyProfile />} />
 

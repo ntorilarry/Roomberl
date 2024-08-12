@@ -2,8 +2,9 @@ import React from "react";
 import ProtectedRoutes from "../../auth/utils/ProtectedRoutes";
 import { useGetMatchingUsersQuery } from "../../../services/user-service";
 import Loader from "../../../components/Loader";
-import { HiArrowRight } from "react-icons/hi2";
+import { RiUserFill } from "react-icons/ri";
 import { StartMessageModal } from "../messages/components/StartMessageModal";
+import { Link } from "react-router-dom";
 
 const Members = () => {
   const { data: matchResponse, isLoading: matchLoading } =
@@ -52,7 +53,15 @@ const Members = () => {
                   <p className="text-gray-500 text-sm capitalize dark:text-gray-300">
                     Match percentage: {item.matchPercentage}
                   </p>
-                  <StartMessageModal objectID={item.user.id} />
+                  <div className="flex items-center gap-x-2">
+                    <Link
+                      to={`/view-profile/${item.user?.id}`}
+                      className="bg-green-700 rounded-full   hover:bg-green-600"
+                    >
+                      <RiUserFill className="text-2xl p-1 m-auto  text-white " />
+                    </Link>
+                    <StartMessageModal objectID={item.user.id} />
+                  </div>
                 </div>
               ))}
             </div>
