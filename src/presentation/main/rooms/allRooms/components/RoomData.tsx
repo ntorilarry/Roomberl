@@ -6,6 +6,9 @@ import { EditRoom } from "./EditRoom";
 import { DeleteRoom } from "./DeleteRoom";
 import Pagination from "../../../../../components/Pagination";
 import { useGlobalState } from "../../../../../utils/GlobalStateContext";
+import { LockRoom } from "./LockRoom";
+import { IoLockOpen, IoLockClosedSharp } from "react-icons/io5";
+import { UnlockRoom } from "./UnlockRoom";
 
 const RoomData = () => {
   const [filterhostel, setFilterHostel] = useState("");
@@ -93,7 +96,26 @@ const RoomData = () => {
         accessor: (row) =>
           row.roomAmenities.map((amenity) => amenity.name).join(", "),
       },
-
+      {
+        Header: "Room Lock",
+        accessor: "isLocked",
+        Cell: ({ value }) =>
+          value ? (
+            <div>
+              <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full dark:bg-teal-500/10 dark:text-teal-500">
+                <IoLockClosedSharp className="size-2.5" />
+                Locked
+              </span>
+            </div>
+          ) : (
+            <div>
+              <span className="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full dark:bg-blue-500/10 dark:text-blue-500">
+                <IoLockOpen className="size-2.5" />
+                Unlocked
+              </span>
+            </div>
+          ),
+      },
       {
         Header: "Date Created",
         accessor: (row) => moment(row.createdAt).format("MMMM Do YYYY"),
@@ -103,6 +125,11 @@ const RoomData = () => {
         Cell: ({ row }) => (
           <div className="flex gap-x-2">
             <EditRoom room={row.original} />
+            {row.original.isLocked ? (
+              <UnlockRoom room={row.original} />
+            ) : (
+              <LockRoom room={row.original} />
+            )}
             <DeleteRoom room={row.original} />
           </div>
         ),
@@ -127,7 +154,6 @@ const RoomData = () => {
         onPageChange={setCurrentPage}
         pageSize={pageSize}
         totalElements={totalElements}
-     
       />
     </div>
   );

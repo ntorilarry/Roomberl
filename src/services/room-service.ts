@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
+  lockRoomParams,
   paymentParams,
   roomAmenityParams,
   roomAmenityRequest,
@@ -57,6 +58,14 @@ export const roomService = createApi({
       query: ({body, id}: UpdateRoomParams) => ({
         url: `/room/rooms/${id}/`,
         method: "PUT",
+        body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    lockRoom: build.mutation<BaseResponse<any>, lockRoomParams>({
+      query: ({body, id}: lockRoomParams) => ({
+        url: `/room/rooms/${id}/`,
+        method: "PATCH",
         body: body,
       }),
       invalidatesTags: ["Room"],
@@ -172,5 +181,6 @@ export const {
   useGetRoomPaymentQuery,
   useVerifyRoomPaymentMutation,
   useUpdateRoomMutation,
-  useDeleteRoomMutation
+  useDeleteRoomMutation,
+  useLockRoomMutation
 } = roomService;

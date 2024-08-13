@@ -45,28 +45,20 @@ const GlobalFilter = ({
   );
 };
 
-const RoomAmenityTable = ({
-  columns,
-  data,
-  isLoading,
-}) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
- 
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+const RoomAmenityTable = ({ columns, data, isLoading }) => {
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
   return (
     <div>
-      <div className="max-w-[85rem] mx-auto">
+      <div className="w-full mx-auto">
         <div className="flex flex-col">
           <div className="-m-1.5 overflow-x-auto">
             <div className="p-2 min-w-full inline-block align-middle">
               <div className="bg-white border border-gray-200 rounded-xl overflow-hidden dark:bg-slate-800 dark:border-slate-800">
                 <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center ">
-                 <h1 className="text-gray-800 dark:text-white font-semibold text-xl">Room Amenity</h1>
+                  <h1 className="text-gray-800 dark:text-white font-semibold text-xl">
+                    Room Amenity
+                  </h1>
                   <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className=" relative inline-block">
@@ -137,7 +129,7 @@ const RoomAmenityTable = ({
                             {row.cells.map((cell) => (
                               <td
                                 {...cell.getCellProps()}
-                                className="px-6 py-4 whitespace-nowrap align-top"
+                                className="px-6 py-4 whitespace-nowrap"
                               >
                                 {cell.column.Header === "Description" ? (
                                   <td

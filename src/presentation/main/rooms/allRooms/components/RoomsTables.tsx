@@ -14,17 +14,11 @@ const RoomsTables = ({
   setFilterRoomType,
   setFilterGender,
 }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-
-  } = useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
   return (
     <div>
-      <div className="max-w-[85rem] mx-auto">
+      <div className="w-full mx-auto">
         <div className="flex flex-col">
           <div className="-m-1.5 overflow-x-auto">
             <div className="p-2 min-w-full inline-block align-middle">
@@ -108,7 +102,7 @@ const RoomsTables = ({
                             {row.cells.map((cell) => (
                               <td
                                 {...cell.getCellProps()}
-                                className="px-6 py-4 whitespace-nowrap align-top"
+                                className="px-6 py-4 whitespace-nowrap"
                               >
                                 {cell.column.Header === "Description" ||
                                 "Room Amenities" ? (

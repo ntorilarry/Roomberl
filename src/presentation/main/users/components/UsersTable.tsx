@@ -93,7 +93,7 @@ const UsersTable = ({
                             {row.cells.map((cell) => (
                               <td
                                 {...cell.getCellProps()}
-                                className="px-6 py-4 whitespace-nowrap align-top"
+                                className="px-6 py-4 whitespace-nowrap"
                               >
                                 <div className="block">
                                   <span className="block text-xs font-normal text-gray-800 dark:text-slate-200">

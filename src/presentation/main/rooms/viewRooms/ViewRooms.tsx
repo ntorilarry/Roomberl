@@ -24,8 +24,6 @@ const ViewRooms = () => {
 
   const rooms = response?.data?.results || [];
 
-
-
   if (isLoading) {
     return (
       <div>
@@ -40,7 +38,7 @@ const ViewRooms = () => {
         <h2 className="text-xl mb-5 dark:text-white font-semibold ">
           Choose room
         </h2>
-        <div className="grid md:grid-cols-2 p-4 border gap-4 dark:border-none">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3  border gap-4 dark:border-none">
           {rooms.length === 0 ? (
             <div className=" w-full">
               <p className="text-lg dark:text-white">No available rooms</p>
@@ -64,18 +62,18 @@ const ViewRooms = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <div>
-                    <h1 className="text-[18px] leading-none font-semibold text-black dark:text-white mb-2">
+                    <h1 className="text-base leading-none font-semibold text-black dark:text-white mb-2">
                       {item.name}
                     </h1>
                     <div className="flex flex-wrap text-[#53575A] dark:text-white items-center">
                       <HiOutlineBuildingOffice className="text-[16px]" />
-                      <h1 className="text-[14px] pl-2 font-normal">
+                      <h1 className="text-sm pl-2 font-normal">
                         {item.code || "Na"}
                       </h1>
                     </div>
                     <div className="flex flex-wrap text-[#53575A] dark:text-white items-center">
                       <FaRegStar className="text-[16px]" />
-                      <h1 className="text-[14px] pl-2 font-normal">
+                      <h1 className="text-sm pl-2 font-normal">
                         {item.roomAmenities
                           .map((amenity) => amenity.name)
                           .join(", ") || "NA"}
@@ -85,29 +83,34 @@ const ViewRooms = () => {
                       <FaGamepad className="text-[16px]" />
                       <hr className="w-full"></hr>
                     </div>
-                    <div className="flex text-[14px] leading-4 py-2 text-[#53575A] dark:text-white items-center">
+                    <div className="flex text-sm leading-4 py-2 text-[#53575A] dark:text-white items-center">
                       <p>{item.description || "NA"}</p>
                     </div>
-                    {isPaymentVerified && isRoomTypePresent === roomTypeId && (
-                      <>
-                        {RoomIdPresent === item.id ? (
-                          <Link
-                            to={`/rooms/room-details/${roomTypeId}/${item.id}`}
-                            className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-red-700 hover:bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
-                          >
-                            Unselect room
-                            <HiArrowRight className="ml-2" />
-                          </Link>
-                        ) : (
-                          <Link
-                            to={`/rooms/room-details/${roomTypeId}/${item.id}`}
-                            className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
-                          >
-                            Choose room
-                            <HiArrowRight className="ml-2" />
-                          </Link>
-                        )}
-                      </>
+                    {item.isLocked ? (
+                      <p className="text-red-600 pt-2 text-sm">This room is locked</p>
+                    ) : (
+                      isPaymentVerified &&
+                      isRoomTypePresent === roomTypeId && (
+                        <>
+                          {RoomIdPresent === item.id ? (
+                            <Link
+                              to={`/rooms/room-details/${roomTypeId}/${item.id}`}
+                              className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-red-700 hover:bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                            >
+                              Unselect room
+                              <HiArrowRight className="ml-2" />
+                            </Link>
+                          ) : (
+                            <Link
+                              to={`/rooms/room-details/${roomTypeId}/${item.id}`}
+                              className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-[#4187ED] px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                            >
+                              Choose room
+                              <HiArrowRight className="ml-2" />
+                            </Link>
+                          )}
+                        </>
+                      )
                     )}
                   </div>
                 </div>

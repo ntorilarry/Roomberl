@@ -120,7 +120,7 @@ export const EditRoomType = ({ typeroom }) => {
     <>
       <button
         type="button"
-        className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:border-slate-700 dark:text-white dark:hover:bg-slate-800"
+        className="py-2 px-2 inline-flex items-center gap-x-2 text-xs font-medium rounded-xl border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:border-slate-700 dark:text-white dark:hover:bg-slate-800"
         onClick={openModal}
       >
         <TbEditCircle className="flex-shrink-0 size-3.5" />
@@ -239,30 +239,30 @@ export const EditRoomType = ({ typeroom }) => {
                       />
                     </div>
                     {roles !== "Hostel_manager" && (
-                    <div className="mb-2">
-                      <label
-                        htmlFor="hs-feedback-post-comment-name-1"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Hostel
-                      </label>
-                      <select
-                        name="hostel"
-                        id="hs-feedback-post-comment-name-1"
-                        className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
-                        value={formData.hostel}
-                        onChange={handleFormChanged}
-                      >
-                        <option value="" selected>
-                          Choose hostel
-                        </option>
-                        {Hostels.map((data, index) => (
-                          <option key={index} value={data.id}>
-                            {data.name}
+                      <div className="mb-2">
+                        <label
+                          htmlFor="hs-feedback-post-comment-name-1"
+                          className="block mb-2 text-sm font-medium dark:text-white"
+                        >
+                          Hostel
+                        </label>
+                        <select
+                          name="hostel"
+                          id="hs-feedback-post-comment-name-1"
+                          className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-700"
+                          value={formData.hostel}
+                          onChange={handleFormChanged}
+                        >
+                          <option value="" selected>
+                            Choose hostel
                           </option>
-                        ))}
-                      </select>
-                    </div>
+                          {Hostels.map((data, index) => (
+                            <option key={index} value={data.id}>
+                              {data.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     )}
                     <div className="mb-2">
                       <label

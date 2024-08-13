@@ -3,7 +3,7 @@ import React from "react";
 const ViewRoomLoader = () => {
   return (
     <div>
-      <div className="grid md:grid-cols-2 p-4 border gap-4 dark:border-none">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 p-4 border gap-4 dark:border-none">
         {[1, 2, 3, 4].map((_, index) => (
           <div
             key={index}

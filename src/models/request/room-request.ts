@@ -70,3 +70,10 @@ export interface UpdateRoomParams {
   body: FormData;
 }
 
+export interface lockRoomRequest {
+  isLocked: boolean;
+}
+export interface lockRoomParams {
+  id: string;
+  body: lockRoomRequest;
+}

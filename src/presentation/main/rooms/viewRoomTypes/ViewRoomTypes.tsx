@@ -53,12 +53,12 @@ const ViewRoomTypes = () => {
               className="bg-white dark:bg-slate-800 rounded-lg flex flex-col justify-between p-4 border dark:border-none"
             >
               <div>
-                <h1 className="text-[18px] leading-none font-semibold text-black dark:text-white mb-2 ">
+                <h1 className="text-base leading-none font-semibold text-black dark:text-white mb-2 ">
                   {item.name}
                 </h1>
                 <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
-                  <FaCediSign className="text-[16px] " />
-                  <h1 className="text-[14px] pl-2 font-normal">{item.price}</h1>
+                  <FaCediSign className="text-sm " />
+                  <h1 className="text-sm pl-2 font-normal">{item.price}</h1>
                 </div>
                 {/* <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
                   <HiOutlineBuildingOffice className="text-[16px] " />
@@ -67,8 +67,8 @@ const ViewRoomTypes = () => {
                   </h1>
                 </div> */}
                 <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
-                  <FaRegStar className="text-[16px] " />
-                  <h1 className="text-[14px] pl-2 font-normal">
+                  <FaRegStar className="text-sm" />
+                  <h1 className="text-sm pl-2 font-normal">
                     {item.roomAmenities
                       .map((amenity) => amenity.name)
                       .join(", ") || "NA"}
@@ -76,10 +76,10 @@ const ViewRoomTypes = () => {
                 </div>
 
                 <div className="flex text-[#53575A] py-2 dark:text-white  items-center">
-                  <FaGamepad className="text-[16px] " />
+                  <FaGamepad className="text-sm " />
                   <hr className=" w-full"></hr>
                 </div>
-                <div className="flex text-[14px] leading-4 py-2 text-[#53575A] dark:text-white  items-center">
+                <div className="flex text-sm leading-4 py-2 text-[#53575A] dark:text-white  items-center">
                   <p>{item.description || "NA"}</p>
                 </div>
                 <div className="flex gap-2">
