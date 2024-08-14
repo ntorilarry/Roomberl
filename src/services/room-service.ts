@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
+  duplicateRoomParams,
   lockRoomParams,
   paymentParams,
   roomAmenityParams,
@@ -59,6 +60,13 @@ export const roomService = createApi({
         url: `/room/rooms/${id}/`,
         method: "PUT",
         body: body,
+      }),
+      invalidatesTags: ["Room"],
+    }),
+    duplicateRoom: build.mutation<BaseResponse<any>, duplicateRoomParams>({
+      query: ({ id, quantity}: duplicateRoomParams) => ({
+        url: `/room/duplicate/${id}/${quantity}/`,
+        method: "POST"
       }),
       invalidatesTags: ["Room"],
     }),
@@ -182,5 +190,6 @@ export const {
   useVerifyRoomPaymentMutation,
   useUpdateRoomMutation,
   useDeleteRoomMutation,
-  useLockRoomMutation
+  useLockRoomMutation,
+  useDuplicateRoomMutation,
 } = roomService;

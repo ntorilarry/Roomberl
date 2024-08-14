@@ -77,3 +77,9 @@ export interface lockRoomParams {
   id: string;
   body: lockRoomRequest;
 }
+
+
+export interface duplicateRoomParams {
+  id: string;
+  quantity: number;
+}

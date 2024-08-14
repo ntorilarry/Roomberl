@@ -9,6 +9,7 @@ import { useGlobalState } from "../../../../../utils/GlobalStateContext";
 import { LockRoom } from "./LockRoom";
 import { IoLockOpen, IoLockClosedSharp } from "react-icons/io5";
 import { UnlockRoom } from "./UnlockRoom";
+import { DuplicateRoom } from "./DuplicateRoom";
 
 const RoomData = () => {
   const [filterhostel, setFilterHostel] = useState("");
@@ -125,6 +126,7 @@ const RoomData = () => {
         Cell: ({ row }) => (
           <div className="flex gap-x-2">
             <EditRoom room={row.original} />
+            <DuplicateRoom room={row.original}/>
             {row.original.isLocked ? (
               <UnlockRoom room={row.original} />
             ) : (

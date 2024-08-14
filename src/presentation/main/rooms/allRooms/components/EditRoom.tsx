@@ -32,6 +32,7 @@ export const EditRoom = ({ room }) => {
     floorPlan: room.floorPlan || "",
     code: room.code,
     roomType: room.roomType.id,
+    gender: room.gender,
     hostel: roles === "Hostel_manager" ? hostelID : room.hostel.id,
     roomAmenities: room.roomAmenities.map((amenity) => amenity.id),
   });
@@ -78,6 +79,7 @@ export const EditRoom = ({ room }) => {
       formDataToSend.append("description", formData.description);
       formDataToSend.append("code", formData.code);
       formDataToSend.append("roomType", formData.roomType);
+      formDataToSend.append("gender", formData.gender);
       formDataToSend.append("hostel", formData.hostel);
       if (floorPlan) {
         formDataToSend.append("floorPlan", floorPlan);
@@ -134,6 +136,7 @@ export const EditRoom = ({ room }) => {
       floorPlan: room.floorPlan || "",
       code: room.code,
       roomType: room.roomType.id,
+      gender: room.gender,
       hostel: roles === "Hostel_manager" ? hostelID : room.hostel.id,
       roomAmenities: room.roomAmenities.map((amenity) => amenity.id),
     }));
@@ -179,8 +182,8 @@ export const EditRoom = ({ room }) => {
       </button>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50  outline-none focus:outline-none">
+            <div className="relative w-auto z-50 my-6 mx-auto max-w-3xl">
               <div className="dark:border-2 border-slate-700 rounded-lg shadow-lg relative flex flex-col w-full bg-white dark:bg-slate-800 outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-3 dark:text-white border-b border-solid border-blueGray-200 dark:border-slate-500 rounded-t">
                   <h3 className="text-base font-semibold">Edit Room</h3>
@@ -301,27 +304,52 @@ export const EditRoom = ({ room }) => {
                         className="py-4 px-3 block w-full bg-[#f0efef] rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                       />
                     </div>
-                    <div className="mb-2">
-                      <label
-                        htmlFor="roomAmenities"
-                        className="block mb-2 text-sm font-medium dark:text-white"
-                      >
-                        Room Amenities
-                      </label>
-                      <Select
-                        id="roomAmenities"
-                        name="roomAmenities"
-                        isMulti
-                        options={amenityOptions}
-                        value={
-                          formData.roomAmenities
-                            ? amenityOptions.filter((option) =>
-                                formData.roomAmenities.includes(option.value)
-                              )
-                            : []
-                        }
-                        onChange={handleAmenitiesSelectChange}
-                      />
+                    <div className="grid lg:grid-cols-2 gap-6 pt-6">
+                      <div className="mb-2">
+                        <label
+                          htmlFor="roomAmenities"
+                          className="block mb-2 text-sm font-medium dark:text-white"
+                        >
+                          Room Amenities
+                        </label>
+                        <Select
+                          id="roomAmenities"
+                          name="roomAmenities"
+                          isMulti
+                          options={amenityOptions}
+                          value={
+                            formData.roomAmenities
+                              ? amenityOptions.filter((option) =>
+                                  formData.roomAmenities.includes(option.value)
+                                )
+                              : []
+                          }
+                          onChange={handleAmenitiesSelectChange}
+                        />
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="gender"
+                          className="block mb-2 text-sm font-medium dark:text-white"
+                        >
+                          Room Gender
+                        </label>
+                        <select
+                          name="roomType"
+                          id="roomType"
+                          className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
+                          value={formData.gender}
+                          onChange={handleFormChanged}
+                          required
+                        >
+                          <option value="" disabled selected>
+                            Choose gender
+                          </option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
                     </div>
                     <div className="grid lg:grid-cols-2 gap-6 pt-6">
                       <div className="mb-4">

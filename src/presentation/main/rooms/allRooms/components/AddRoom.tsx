@@ -100,6 +100,7 @@ export const AddRoom = () => {
         ? response.error["data"]
         : response["data"];
       if (status === "success") {
+        
         toast.success(status);
         setFormData({
           name: "",

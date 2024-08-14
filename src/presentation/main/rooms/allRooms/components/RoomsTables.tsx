@@ -110,7 +110,7 @@ const RoomsTables = ({
                                     {...cell.getCellProps()}
                                     className="h-px w-60 min-w-60"
                                   >
-                                    <div className="block relative z-10">
+                                    <div className="block relative">
                                       <p className="text-xs text-wrap text-gray-800 dark:text-slate-200">
                                         {cell.render("Cell")}
                                       </p>
