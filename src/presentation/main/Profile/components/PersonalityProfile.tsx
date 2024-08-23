@@ -4,7 +4,7 @@ const PersonalityProfile = ({ addData }) => {
   const { responses } = addData;
 
   const renderResponses = () => {
-    return responses.map((response) => {
+    return responses?.map((response) => {
       return response?.question?.map((q) => {
         const chosenOption = q.option.find((opt) => opt.chosen);
         return (
