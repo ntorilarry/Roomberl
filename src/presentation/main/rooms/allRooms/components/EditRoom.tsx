@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Select from "react-select";
-import { IoMdAdd, IoMdClose } from "react-icons/io";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { TbEditCircle } from "react-icons/tb";
 import { MdDriveFolderUpload } from "react-icons/md";
@@ -16,10 +15,8 @@ import { UpdateRoomParams } from "../../../../../models/request/room-request";
 
 export const EditRoom = ({ room }) => {
   const baseImageUrl = "https://cyrax1.pythonanywhere.com";
-  const [roles, setRoles] = useState(sessionStorage.getItem("roles") || "");
-  const [hostelID, setHostelID] = useState(
-    sessionStorage.getItem("hostel") || ""
-  );
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID] = useState(sessionStorage.getItem("hostel") || "");
 
   const [showModal, setShowModal] = useState(false);
   const [selectedHostelId, setSelectedHostelId] = useState(
@@ -69,7 +66,7 @@ export const EditRoom = ({ room }) => {
     }
   };
 
-  const [updateRoom, { isLoading }] = useUpdateRoomMutation();
+  const [updateRoom] = useUpdateRoomMutation();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -141,7 +138,7 @@ export const EditRoom = ({ room }) => {
       roomAmenities: room.roomAmenities.map((amenity) => amenity.id),
     }));
     setSelectedHostelId(room.hostel.id);
-  }, [room]);
+  }, [room, hostelID, roles]);
 
   const { data: response } = useGetHostelsQuery();
   const Hostels = response?.data?.hostels || [];
@@ -277,7 +274,7 @@ export const EditRoom = ({ room }) => {
                           disabled={!selectedHostelId || isRoomTypeLoading}
                           required
                         >
-                          <option value="" disabled selected>
+                          <option value="" disabled>
                             Choose room type
                           </option>
                           {RoomTypes.map((data, index) => (
@@ -335,8 +332,8 @@ export const EditRoom = ({ room }) => {
                           Room Gender
                         </label>
                         <select
-                          name="roomType"
-                          id="roomType"
+                          name="gender" // Corrected from "roomType" to "gender"
+                          id="gender" // Corrected from "roomType" to "gender"
                           className="py-3 px-4 block w-full rounded-lg bg-[#f0efef] text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-600 dark:text-white dark:placeholder-slate-200 dark:focus:ring-slate-600"
                           value={formData.gender}
                           onChange={handleFormChanged}
