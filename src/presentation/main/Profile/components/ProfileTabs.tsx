@@ -3,22 +3,32 @@ import { Tab } from "@headlessui/react";
 import ProfileDetails from "./ProfileDetails";
 import ProfileAdditionalDetails from "./ProfileAdditionalDetails";
 import PersonalityProfile from "./PersonalityProfile";
+import { useLocation } from "react-router-dom";
 
 const ProfileTabs = ({ profile, addData }) => {
-  const tabs = [
-    {
-      title: "Profile Info",
-      content: <ProfileDetails profile={profile} />,
-    },
-    {
-      title: "Additional Details",
-      content: <ProfileAdditionalDetails addData={addData} />,
-    },
-    {
-      title: "Personality Profile",
-      content: <PersonalityProfile addData={addData} />,
-    },
-  ];
+  const location = useLocation();
+  const tabs =
+    location.pathname === "/my-profile"
+      ? [
+          {
+            title: "Profile Info",
+            content: <ProfileDetails profile={profile} />,
+          },
+          {
+            title: "Additional Details",
+            content: <ProfileAdditionalDetails addData={addData} />,
+          },
+          {
+            title: "Personality Profile",
+            content: <PersonalityProfile addData={addData} />,
+          },
+        ]
+      : [
+          {
+            title: "Personality Profile",
+            content: <PersonalityProfile addData={addData} />,
+          },
+        ];
   return (
     <div className="w-full mt-6">
       <div className="mx-auto px-2 w-full">

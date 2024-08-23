@@ -34,7 +34,7 @@ const ViewRooms = () => {
 
   return (
     <div>
-      <div className="sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
+      <div className="w-full">
         <h2 className="text-xl mb-5 dark:text-white font-semibold ">
           Choose room
         </h2>

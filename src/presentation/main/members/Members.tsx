@@ -22,17 +22,18 @@ const Members = () => {
   return (
     <div>
       <section className="">
-        <div className="container px-6 mx-auto">
+        <div className="w-full px-6 mx-auto">
           <h1 className="text-xl font-semibold text-center text-gray-800 capitalize lg:text-2xl dark:text-white">
             {" "}
             Matching Users
           </h1>
           {matchUsers && matchUsers.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {matchUsers.map((item, key) => (
-                <div
+                <Link
+                  to={`/view-profile/${item.user?.id}`}
                   key={key}
-                  className="flex bg-white dark:bg-slate-800 flex-col items-center p-8 transition-colors duration-300 transform border cursor-pointer rounded-xl dark:border-gray-700"
+                  className="flex bg-white dark:bg-slate-800 flex-col items-center p-8 border cursor-pointer rounded-xl dark:border-gray-700 transform transition duration-300 hover:scale-110"
                 >
                   <img
                     className="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300"
@@ -54,15 +55,9 @@ const Members = () => {
                     Match percentage: {item.matchPercentage}
                   </p>
                   <div className="flex items-center gap-x-2">
-                    <Link
-                      to={`/view-profile/${item.user?.id}`}
-                      className="bg-green-700 rounded-full   hover:bg-green-600"
-                    >
-                      <RiUserFill className="text-2xl p-1 m-auto  text-white " />
-                    </Link>
                     <StartMessageModal objectID={item.user.id} />
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (

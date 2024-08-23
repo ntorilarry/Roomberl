@@ -199,7 +199,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                         />
                                       )}
                                     </Disclosure.Button>
-                                    <Disclosure.Panel className="pl-9 space-y-1">
+                                    <Disclosure.Panel className=" space-y-1">
                                       {item.subItems.map((subItem) => (
                                         <NavLink
                                           key={subItem.name}
@@ -314,7 +314,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 />
                               )}
                             </Disclosure.Button>
-                            <Disclosure.Panel className="pl-9 space-y-1">
+                            <Disclosure.Panel className="space-y-1">
                               {item.subItems.map((subItem) => (
                                 <NavLink
                                   key={subItem.name}

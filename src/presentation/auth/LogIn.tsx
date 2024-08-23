@@ -9,8 +9,11 @@ import toast from "react-hot-toast";
 
 import Loader from "../../components/Loader";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useGlobalState } from "../../utils/GlobalStateContext";
 
 const LogIn = () => {
+  const { state } = useGlobalState();
+  const { paymentRoomTypeId, isPaymentVerified } = state;
   const navigate = useNavigate();
   const { code_name } = useParams<{ code_name?: string }>();
 
@@ -70,10 +73,14 @@ const LogIn = () => {
           toast.error("You do not belong in this hostel");
           navigate(`/auth/login/${code_name}`);
           return;
-      }
+        }
 
         if (userRole === "Student") {
-          navigate("/rooms/view-room-types");
+          if (isPaymentVerified === true) {
+            navigate(`/rooms/rooms/${paymentRoomTypeId}`);
+          } else {
+            navigate("/rooms/view-room-types");
+          }
         } else if (
           userRole === "Administrator" ||
           userRole === "Hostel_manager"
@@ -102,7 +109,6 @@ const LogIn = () => {
       toast.error(error.message || "An unexpected error occurred");
     }
   };
-
 
   return (
     <div className="bg-white dark:bg-slate-800">

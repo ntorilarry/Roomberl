@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import Loader from "../../components/Loader";
 
 const SignUpAdditionalInfo = () => {
-  const [code_name, setCode_name] = useState<string | null>(
+  const [code_name] = useState<string | null>(
     sessionStorage.getItem("code_name")
   );
   const navigate = useNavigate();
@@ -18,7 +18,6 @@ const SignUpAdditionalInfo = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm();
   const userId = location.state?.id;
   const [infoData, setInfoData] = useState<signUpAddInfoRequest>({
