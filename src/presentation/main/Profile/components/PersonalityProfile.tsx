@@ -4,15 +4,23 @@ const PersonalityProfile = ({ addData }) => {
   const { responses } = addData;
 
   const renderResponses = () => {
-    return responses?.map((response) => {
+    // Check if 'responses' is an array
+    if (!Array.isArray(responses)) {
+      return <div className="text-sm px-4 text-gray-800 py-5 sm:px-6">No Profile available</div>;
+    }
+
+    return responses.map((response) => {
       return response?.question?.map((q) => {
         const chosenOption = q.option.find((opt) => opt.chosen);
         return (
-          <div key={q.id} className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
+          <div
+            key={q.id}
+            className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6"
+          >
             <dt className="text-sm font-medium text-gray-500 dark:text-white">
               {q.text || "NA"}
             </dt>
-            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0 ">
+            <dd className="mt-1 text-sm text-gray-900 dark:text-white sm:mt-0">
               {chosenOption ? chosenOption.text : "No answer chosen"}
             </dd>
           </div>
@@ -29,9 +37,7 @@ const PersonalityProfile = ({ addData }) => {
         </h3>
       </div>
       <div className="border-t border-gray-200">
-        <dl>
-          {renderResponses()}
-        </dl>
+        <dl>{renderResponses()}</dl>
       </div>
     </div>
   );
