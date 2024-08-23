@@ -5,7 +5,7 @@ const PersonalityProfile = ({ addData }) => {
 
   const renderResponses = () => {
     return responses.map((response) => {
-      return response.question.map((q) => {
+      return response?.question?.map((q) => {
         const chosenOption = q.option.find((opt) => opt.chosen);
         return (
           <div key={q.id} className="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6">
