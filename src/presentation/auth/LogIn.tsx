@@ -76,12 +76,16 @@ const LogIn = () => {
         }
 
         if (userRole === "Student") {
-          if (isPaymentVerified === true) {
+          if (isPaymentVerified === null) {
+            // Handle the loading state or delay navigation until `isPaymentVerified` is set
+            toast.loading("Verifying payment status...");
+          } else if (isPaymentVerified === true) {
             navigate(`/rooms/rooms/${paymentRoomTypeId}`);
           } else {
             navigate("/rooms/view-room-types");
           }
-        } else if (
+        }
+         else if (
           userRole === "Administrator" ||
           userRole === "Hostel_manager"
         ) {
