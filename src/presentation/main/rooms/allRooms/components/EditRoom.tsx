@@ -144,7 +144,11 @@ export const EditRoom = ({ room }) => {
   const Hostels = response?.data?.hostels || [];
 
   const { data: responseRoomType, isLoading: isRoomTypeLoading } =
-    useGetRoomTypeQuery(selectedHostelId);
+    useGetRoomTypeQuery({
+      hostelId: selectedHostelId,
+      page: 1,
+      size: 99999999,
+    });
   const RoomTypes = responseRoomType?.data?.results || [];
 
   const { data: responseAmenity } = useGetRoomAmenitiesQuery({
