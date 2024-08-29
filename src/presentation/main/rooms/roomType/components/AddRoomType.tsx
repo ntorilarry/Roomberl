@@ -142,7 +142,7 @@ export const AddRoomType = () => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative inline-flex w-full transform flex-col  rounded-xl border-2 bg-white dark:bg-slate-800 dark:border-slate-700 text-left align-bottom transition-all sm:my-8 sm:max-w-md sm:align-middle">
+              <Dialog.Panel className="relative inline-flex w-full transform flex-col rounded-xl border-2 bg-white dark:bg-slate-800 dark:border-slate-700 text-left align-bottom transition-all sm:my-8 sm:max-w-md sm:align-middle">
                 <div className="absolute top-4 right-5">
                   <button
                     type="button"

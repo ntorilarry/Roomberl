@@ -12,8 +12,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 const QuestionAnswer = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const UserId = location.state?.id;
+  console.log(UserId, "UserId");
   const QuserId = location.state?.userId;
-  const { data: userTokenResponse } = useGetUserTokenQuery(QuserId);
+  const { data: userTokenResponse } = useGetUserTokenQuery(QuserId || UserId);
   const userToken = userTokenResponse?.data;
   if (userToken?.user) {
     const { id, firstName, lastName, email, hostel, gender, groups } =
@@ -82,7 +84,7 @@ const QuestionAnswer = () => {
 
       const response = await updateQuestion({
         body: questionRequest,
-        userId: QuserId || "",
+        userId: QuserId || UserId,
       });
       console.log(response);
       const { status, data } = response.error

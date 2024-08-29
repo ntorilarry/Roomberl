@@ -51,8 +51,16 @@ const LogIn = () => {
         const { access } = data.token;
         sessionStorage.setItem("access_token", access);
 
-        const { id, firstName, lastName, email, hostel, groups, gender } =
-          data.user;
+        const {
+          id,
+          firstName,
+          lastName,
+          email,
+          hostel,
+          groups,
+          gender,
+          additionalDetails,
+        } = data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
         sessionStorage.setItem("last_name", lastName);
@@ -76,13 +84,20 @@ const LogIn = () => {
         }
 
         if (userRole === "Student") {
+          const userAdditionalDetails = additionalDetails?.[0];
+          const responses = userAdditionalDetails?.responses;
+          if (responses === null) {
+            console.log(id, "id");
+            // Navigate to questions and answers page with the id as state
+            navigate("/auth/questions-and-answers", { state: { id } });
+            return;
+          }
           if (isPaymentVerified === true) {
             navigate(`/rooms/rooms/${paymentRoomTypeId}`);
           } else {
             navigate("/rooms/view-room-types");
           }
-        }
-         else if (
+        } else if (
           userRole === "Administrator" ||
           userRole === "Hostel_manager"
         ) {
