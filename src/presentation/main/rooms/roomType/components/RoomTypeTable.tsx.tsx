@@ -104,7 +104,7 @@ const RoomAmenityTable = ({ columns, data, isLoading, setFilterValue }) => {
                                 {...cell.getCellProps()}
                                 className="px-6 py-4 whitespace-nowrap"
                               >
-                                {cell.column.Header === "Description" ? (
+                                {cell.column.Header === "Description" || cell.column.Header === "Room Amenities" ? (
                                   <td
                                     {...cell.getCellProps()}
                                     className="h-px w-60 min-w-60"

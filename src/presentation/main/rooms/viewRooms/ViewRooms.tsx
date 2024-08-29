@@ -87,7 +87,9 @@ const ViewRooms = () => {
                       <p>{item.description || "NA"}</p>
                     </div>
                     {item.isLocked ? (
-                      <p className="text-red-600 pt-2 text-sm">This room is locked</p>
+                      <p className="text-red-600 pt-2 text-sm">
+                        This room is locked
+                      </p>
                     ) : (
                       isPaymentVerified &&
                       isRoomTypePresent === roomTypeId && (
@@ -97,7 +99,7 @@ const ViewRooms = () => {
                               to={`/rooms/room-details/${roomTypeId}/${item.id}`}
                               className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-red-700 hover:bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
                             >
-                              Unselect room
+                              Leave room
                               <HiArrowRight className="ml-2" />
                             </Link>
                           ) : (

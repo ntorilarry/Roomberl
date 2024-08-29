@@ -57,7 +57,7 @@ const UnselectRoom = () => {
         onClick={handleFormSubmit}
         className="rounded-full text-sm flex items-center justify-center leading-none text-white bg-red-700 dark:bg-red-500 w-full py-3 px-4 hover:bg-red-600"
       >
-        Unselect room
+        Leave room
         <HiArrowRight />
       </button>
     </div>
