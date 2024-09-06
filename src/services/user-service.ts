@@ -19,8 +19,11 @@ export const userService = createApi({
 
   tagTypes: ["Users"],
   endpoints: (build) => ({
-    getUsersByHostelId: build.query<BaseResponse<any>, {hostelId: string, page: number, size: number}>({
-      query: ({hostelId, page, size} ) => ({
+    getUsersByHostelId: build.query<
+      BaseResponse<any>,
+      { hostelId: string; page: number; size: number }
+    >({
+      query: ({ hostelId, page, size }) => ({
         url: `/accounts/users/?hostel=${hostelId}&page=${page}&size=${size}`,
         method: "GET",
       }),
@@ -33,7 +36,7 @@ export const userService = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
-    
+
     enableUser: build.mutation<BaseResponse<any>, EnableUserParams>({
       query: ({ body, userId }: EnableUserParams) => ({
         url: `/accounts/users/${userId}/`,
@@ -57,15 +60,15 @@ export const userService = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
-    getMatchingUsers: build.query<BaseResponse<any>, void>({
-      query: () => ({
-        url: "/accounts/matching-users/",
+    getMatchingUsers: build.query<BaseResponse<any>, string>({
+      query: (hostelId) => ({
+        url: `/accounts/matching-users/?hostel=${hostelId}`,
         method: "GET",
       }),
       providesTags: ["Users"],
     }),
     getUserProfile: build.query<BaseResponse<any>, string>({
-      query: (userid ) => ({
+      query: (userid) => ({
         url: `/accounts/users/${userid}/`,
         method: "GET",
       }),

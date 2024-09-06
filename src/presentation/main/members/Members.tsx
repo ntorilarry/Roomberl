@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ProtectedRoutes from "../../auth/utils/ProtectedRoutes";
 import { useGetMatchingUsersQuery } from "../../../services/user-service";
 import Loader from "../../../components/Loader";
-import { RiUserFill } from "react-icons/ri";
 import { StartMessageModal } from "../messages/components/StartMessageModal";
 import { Link } from "react-router-dom";
 
 const Members = () => {
+  const [hostelId] = useState(sessionStorage.getItem("hostel"));
+
   const { data: matchResponse, isLoading: matchLoading } =
-    useGetMatchingUsersQuery();
+    useGetMatchingUsersQuery(hostelId || "");
   const matchUsers = matchResponse?.data?.results;
 
   if (matchLoading) {
