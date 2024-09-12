@@ -10,7 +10,7 @@ const UserAdditionalDetails = () => {
   useEffect(() => {
     if (response) {
       const payment = response?.data?.roomPayments?.[0];
-      const isPaymentVerified = payment?.isVerified || false;
+      const isPaymentVerified = payment?.isVerified ;
       const paymentRoomTypeId = isPaymentVerified ? payment?.roomTypeId : null;
       const isRoomTypePresent = payment?.roomTypeId || null;
       const RoomIdPresent = response?.data?.room || null;

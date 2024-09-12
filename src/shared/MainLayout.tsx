@@ -4,7 +4,6 @@ import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
 import ProtectedRoutes from "../presentation/auth/utils/ProtectedRoutes";
 import { useGlobalState } from "../utils/GlobalStateContext";
-import UserAdditionalDetails from "../presentation/auth/UserAdditionalDetails";
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,6 +13,7 @@ const MainLayout = () => {
   const { isPaymentVerified } = state;
 
   console.log(isPaymentVerified, "isPaymentVerified");
+
   const shouldRenderSidebar = () => {
     return (
       roles.includes("Administrator") ||
@@ -22,12 +22,22 @@ const MainLayout = () => {
     );
   };
 
+  if (isPaymentVerified === null) {
+    // Render a loading spinner or message while waiting for the value
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="dark:bg-slate-900 h-screen bg-gray-100">
-      {shouldRenderSidebar() && isPaymentVerified !== null && (
+      
+      {shouldRenderSidebar() && (
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
-      {shouldRenderSidebar() && isPaymentVerified !== null ? (
+      {shouldRenderSidebar() ? (
         <div className="lg:pl-[280px]">
           <Header setSidebarOpen={setSidebarOpen} />
           <main className="py-10 dark:bg-slate-900 bg-gray-100">
