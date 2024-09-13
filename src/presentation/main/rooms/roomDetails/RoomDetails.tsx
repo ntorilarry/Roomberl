@@ -15,8 +15,6 @@ import Loader from "../../../../components/Loader";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-
-
 const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
   const [hostel] = useState(sessionStorage.getItem("hostel"));
@@ -164,6 +162,18 @@ const RoomDetails = () => {
             <p className="text-base font-normal leading-7 text-gray-700 dark:text-gray-100 mt-5">
               {roomDetails.description || "No description"}
             </p>
+            <h2 className="text-lg font-bold text-gray-900 dark:text-gray-50 mt-4">
+              Room Amenities
+            </h2>
+            <ul className="space-y-4 text-base font-medium text-gray-600 list-disc list-inside mt-2">
+              {roomDetails.roomAmenities?.length > 0 ? (
+                roomDetails.roomAmenities.map((amenity) => (
+                  <li key={amenity.id}>{amenity.name}</li>
+                ))
+              ) : (
+                <li>No amenities available</li>
+              )}
+            </ul>
 
             <h2 className="text-lg font-bold text-gray-900 dark:text-gray-50 mt-4">
               Other room details
@@ -184,43 +194,53 @@ const RoomDetails = () => {
 
           <div className="pt-8 lg:col-span-2 lg:pl-14 lg:pt-0">
             <h3 className="text-base font-bold text-gray-900 dark:text-gray-50">
-              Room Amenities:
+              Roommates:
             </h3>
 
             <div className="mt-5 space-y-3">
-              {roomDetails.roomAmenities?.length > 0 ? (
-                roomDetails.roomAmenities.map((amenity) => (
+              {roomMates?.length > 0 ? (
+                roomMates?.map((data) => (
                   <label
-                    key={amenity.id}
+                    key={data.id}
                     className="relative flex items-center p-4 border-2 border-gray-200 rounded-md cursor-pointer focus:outline-none"
                   >
                     <div>
                       <span>
-                        <svg
-                          className="w-5 h-5 text-gray-300"
-                          viewBox="0 0 22 22"
-                          fill="none"
-                          stroke="currentColor"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle
-                            cx="11"
-                            cy="11"
-                            r="10.25"
-                            stroke-width="1.5"
-                          />
-                        </svg>
+                        <img
+                          className="w-8 h-8 rounded-full"
+                          src={`https://ui-avatars.com/api/?name=${data?.additionalDetails[0].nickname}}&background=random&size=32`}
+                          alt=""
+                        />
                       </span>
                     </div>
                     <div className="flex flex-col ml-5">
                       <span className="block text-lg font-bold text-gray-900 dark:text-gray-50">
-                        {amenity.name}
+                        {data?.additionalDetails[0].nickname}
+                      </span>
+                      <span className="block mt-1 text-sm font-medium text-gray-500">
+                        {" "}
+                        {data?.additionalDetails[0].courseOfStudy}
                       </span>
                     </div>
                   </label>
                 ))
               ) : (
-                <li>No amenities available</li>
+                <label className="relative flex items-center p-4 border-2 border-gray-200 rounded-md cursor-pointer focus:outline-none">
+                  <div>
+                    <span>
+                      <img
+                        className="w-8 h-8 rounded-full"
+                        src={`https://ui-avatars.com/api/?name=NA&background=random&size=32`}
+                        alt=""
+                      />
+                    </span>
+                  </div>
+                  <div className="flex flex-col ml-5">
+                    <span className="block text-lg font-bold text-gray-900 dark:text-gray-50">
+                      No room mates
+                    </span>
+                  </div>
+                </label>
               )}
             </div>
 

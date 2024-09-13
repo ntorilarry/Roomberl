@@ -11,11 +11,11 @@ const ViewRooms = () => {
   const { roomTypeId } = useParams();
   const [roomGender] = useState(sessionStorage.getItem("gender"));
   const [hostel] = useState(sessionStorage.getItem("hostel"));
-    // const [isPaymentVerified] = useState(
-    //   sessionStorage.getItem("paymentVerification")
-    // );
+    const [isPaymentVerified] = useState(
+      sessionStorage.getItem("paymentVerification")
+    );
   const { state } = useGlobalState();
-  const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } = state;
+  const { RoomIdPresent, isRoomTypePresent } = state;
 
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: hostel || "",
@@ -94,7 +94,7 @@ const ViewRooms = () => {
                         This room is locked
                       </p>
                     ) : (
-                      isPaymentVerified &&
+                      isPaymentVerified === "true" &&
                       isRoomTypePresent === roomTypeId && (
                         <>
                           {RoomIdPresent === item.id ? (
