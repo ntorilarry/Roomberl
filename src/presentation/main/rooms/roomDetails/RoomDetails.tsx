@@ -12,6 +12,10 @@ import { MdCheckroom, MdMeetingRoom } from "react-icons/md";
 import { FaCediSign } from "react-icons/fa6";
 import { TbFileDescription } from "react-icons/tb";
 import Loader from "../../../../components/Loader";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+
 
 const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
@@ -110,17 +114,45 @@ const RoomDetails = () => {
             />
           </div>
 
-          <div className="overflow-hidden bg-gray-400 rounded-lg aspect-w-16 aspect-h-9">
-            <img
-              className="object-cover w-full h-full"
-              src="https://cdn.rareblocks.xyz/collection/clarity-ecommerce/images/product-details/1/image-2.png"
-              alt=""
-            />
+          <div className="overflow-hidden bg-gray-400 rounded-lg aspect-w-16 aspect-[16/9]">
+            <Swiper
+              spaceBetween={20}
+              loop={true}
+              slidesPerView={1}
+              navigation={true}
+              autoplay={{
+                delay: 10000,
+                disableOnInteraction: false,
+              }}
+              pagination={{
+                clickable: true,
+              }}
+              modules={[Navigation, Pagination, Autoplay]}
+              className="mySwiper"
+            >
+              {roomDetails.images?.length > 0 ? (
+                roomDetails.images.map((data) => (
+                  <SwiperSlide key={data.id}>
+                    <img
+                      className="object-cover w-full h-full"
+                      src={`https://cyrax1.pythonanywhere.com${data.image}`}
+                      alt=""
+                    />
+                  </SwiperSlide>
+                ))
+              ) : (
+                <img
+                  className="object-cover w-full h-full"
+                  src="https://cdn.rareblocks.xyz/collection/clarity-ecommerce/images/product-details/1/image-2.png"
+                  alt=""
+                />
+              )}
+            </Swiper>
           </div>
         </div>
 
         <div className="grid grid-cols-1 mt-8 lg:grid-cols-5">
-          <div className="pb-8 border-b border-gray-100 lg:col-span-3  lg:border-r lg:pr-14 lg:pb-0 lg:border-b-0">
+          <div className="pb-8 border-b border-gray-200 dark:border-gray-600 lg:col-span-3  lg:border-r lg:pr-14 lg:pb-0 lg:border-b-0">
             <h1 className="mt-5 text-3xl font-bold text-gray-900 dark:text-gray-50">
               {roomDetails.name}
             </h1>
@@ -199,7 +231,7 @@ const RoomDetails = () => {
                 <ChooseRoom roomID={roomDetails.id} />
               )}
 
-              <button
+              {/* <button
                 type="button"
                 className="
                             flex
@@ -223,7 +255,7 @@ const RoomDetails = () => {
                         "
               >
                 Live preview
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
