@@ -11,11 +11,13 @@ const ViewRooms = () => {
   const { roomTypeId } = useParams();
   const [roomGender] = useState(sessionStorage.getItem("gender"));
   const [hostel] = useState(sessionStorage.getItem("hostel"));
-    const [isPaymentVerified] = useState(
-      sessionStorage.getItem("paymentVerification")
-    );
+  const [uRoomId] = useState(sessionStorage.getItem("roomID"));
+  const [paymentRoomTypeId] = useState(
+    sessionStorage.getItem("paymentRoomTypeId")
+  );
+  const [isPaymentV] = useState(sessionStorage.getItem("paymentVerification"));
   const { state } = useGlobalState();
-  const { RoomIdPresent, isRoomTypePresent } = state;
+  const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } = state;
 
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: hostel || "",
@@ -26,6 +28,10 @@ const ViewRooms = () => {
   });
 
   const rooms = response?.data?.results || [];
+
+  const payment = isPaymentV === "true" || isPaymentVerified;
+  const userRoomId = uRoomId || RoomIdPresent;
+  const roomTypesID = paymentRoomTypeId || isRoomTypePresent;
 
   if (isLoading) {
     return (
@@ -94,10 +100,10 @@ const ViewRooms = () => {
                         This room is locked
                       </p>
                     ) : (
-                      isPaymentVerified === "true" &&
-                      isRoomTypePresent === roomTypeId && (
+                      payment &&
+                      roomTypesID === roomTypeId && (
                         <>
-                          {RoomIdPresent === item.id ? (
+                          {userRoomId === item.id ? (
                             <Link
                               to={`/rooms/room-details/${roomTypeId}/${item.id}`}
                               className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-red-700 hover:bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"

@@ -102,7 +102,7 @@ const RoomDetails = () => {
     //   </div>
     // </section>
     <section className="py-12 bg-white  dark:bg-slate-800 sm:py-16">
-      <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+      <div className="px-4 mx-auto sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 gap-5 mt-4 md:gap-6 sm:grid-cols-2">
           <div className="bg-gray-400 rounded-lg overflow-hidden aspect-[16/9]">
             <img

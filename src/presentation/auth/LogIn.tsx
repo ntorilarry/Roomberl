@@ -84,13 +84,14 @@ const LogIn = () => {
         if (userRole === "Student") {
           const userAdditionalDetails = additionalDetails?.[0];
           const responses = userAdditionalDetails?.responses;
+          const roomID = userAdditionalDetails?.roomId;
 
           const userRoomPayments = roomPayments?.[0];
           const paymentVerification = userRoomPayments?.isVerified;
           const paymentRoomTypeId = userRoomPayments?.roomType?.id;
-
           sessionStorage.setItem("paymentVerification", paymentVerification);
-
+          sessionStorage.setItem("roomID", roomID);
+          sessionStorage.setItem("paymentRoomTypeId", paymentRoomTypeId);
           if (
             responses === null ||
             (typeof responses === "object" &&
