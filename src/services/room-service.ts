@@ -29,7 +29,13 @@ export const roomService = createApi({
   endpoints: (build) => ({
     getRooms: build.query<
       BaseResponse<any>,
-      { roomTypeId: string, hostelId: string, gender: string, page: number, size: number }
+      {
+        roomTypeId: string;
+        hostelId: string;
+        gender: string;
+        page: number;
+        size: number;
+      }
     >({
       query: ({ roomTypeId, hostelId, gender, page, size }) => ({
         url: `/room/rooms/?room_type=${roomTypeId}&hostel=${hostelId}&gender=${gender}&page=${page}&size=${size}`,
@@ -56,7 +62,7 @@ export const roomService = createApi({
       invalidatesTags: ["Room"],
     }),
     updateRoom: build.mutation<BaseResponse<any>, UpdateRoomParams>({
-      query: ({body, id}: UpdateRoomParams) => ({
+      query: ({ body, id }: UpdateRoomParams) => ({
         url: `/room/rooms/${id}/`,
         method: "PUT",
         body: body,
@@ -64,14 +70,14 @@ export const roomService = createApi({
       invalidatesTags: ["Room"],
     }),
     duplicateRoom: build.mutation<BaseResponse<any>, duplicateRoomParams>({
-      query: ({ id, quantity}: duplicateRoomParams) => ({
+      query: ({ id, quantity }: duplicateRoomParams) => ({
         url: `/room/duplicate/${id}/${quantity}/`,
-        method: "POST"
+        method: "POST",
       }),
       invalidatesTags: ["Room"],
     }),
     lockRoom: build.mutation<BaseResponse<any>, lockRoomParams>({
-      query: ({body, id}: lockRoomParams) => ({
+      query: ({ body, id }: lockRoomParams) => ({
         url: `/room/rooms/${id}/`,
         method: "PATCH",
         body: body,
@@ -85,8 +91,11 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomAmenities: build.query<BaseResponse<any>, {page: number, size: number}>({
-      query: ({page, size}) => ({
+    getRoomAmenities: build.query<
+      BaseResponse<any>,
+      { page: number; size: number }
+    >({
+      query: ({ page, size }) => ({
         url: `/room/amenities/?page=${page}&size=${size}`,
         method: "GET",
       }),
@@ -101,7 +110,7 @@ export const roomService = createApi({
       invalidatesTags: ["Room"],
     }),
     updateRoomAmenities: build.mutation<BaseResponse<any>, roomAmenityParams>({
-      query: ({body, id}: roomAmenityParams) => ({
+      query: ({ body, id }: roomAmenityParams) => ({
         url: `/room/amenities/${id}/`,
         method: "PUT",
         body: body,
@@ -115,8 +124,11 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomType: build.query<BaseResponse<any>, {hostelId: string, page: number, size: number}>({
-      query: ({hostelId, page, size}) => ({
+    getRoomType: build.query<
+      BaseResponse<any>,
+      { hostelId: string; page: number; size: number }
+    >({
+      query: ({ hostelId, page, size }) => ({
         url: `/room/room_types/?hostel=${hostelId}&page=${page}&size=${size}`,
         method: "GET",
       }),
@@ -133,7 +145,7 @@ export const roomService = createApi({
     }),
 
     editRoomType: build.mutation<BaseResponse<any>, roomTypesParams>({
-      query: ({body, id}: roomTypesParams) => ({
+      query: ({ body, id }: roomTypesParams) => ({
         url: `/room/room_types/${id}/`,
         method: "PUT",
         body: body,
@@ -155,20 +167,30 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomPayment: build.query<BaseResponse<any>, {hostelId: string, page: number, size: number}>({
-      query: ({hostelId, page, size}) => ({
+    getRoomPayment: build.query<
+      BaseResponse<any>,
+      { hostelId: string; page: number; size: number }
+    >({
+      query: ({ hostelId, page, size }) => ({
         url: `/accounts/room-payment/?hostel=${hostelId}&page=${page}&size=${size}`,
         method: "GET",
       }),
       providesTags: ["Room"],
     }),
     verifyRoomPayment: build.mutation<BaseResponse<any>, paymentParams>({
-      query: ({body, id}: paymentParams) => ({
+      query: ({ body, id }: paymentParams) => ({
         url: `/accounts/room-payment/${id}/`,
         method: "PATCH",
         body: body,
       }),
       invalidatesTags: ["Room"],
+    }),
+    getRoomMates: build.query<BaseResponse<any>, string>({
+      query: (id) => ({
+        url: `/room/view-room-members/${id}/`,
+        method: "GET",
+      }),
+      providesTags: ["Room"],
     }),
   }),
 });
@@ -192,4 +214,5 @@ export const {
   useDeleteRoomMutation,
   useLockRoomMutation,
   useDuplicateRoomMutation,
+  useGetRoomMatesQuery,
 } = roomService;

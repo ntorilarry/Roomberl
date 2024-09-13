@@ -86,7 +86,11 @@ const LogIn = () => {
         if (userRole === "Student") {
           const userAdditionalDetails = additionalDetails?.[0];
           const responses = userAdditionalDetails?.responses;
-          if (responses === null) {
+          if (
+            responses === null ||
+            (typeof responses === "object" &&
+              Object.keys(responses).length === 0)
+          ) {
             console.log(id, "id");
             // Navigate to questions and answers page with the id as state
             navigate("/auth/questions-and-answers", { state: { id } });

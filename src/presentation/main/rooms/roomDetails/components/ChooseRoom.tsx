@@ -51,9 +51,11 @@ const ChooseRoom = ({ roomID }) => {
   };
   return (
     <div>
+  
       <button
         onClick={handleFormSubmit}
-        className="text-sm rounded-full flex items-center justify-center leading-none text-white bg-gray-800 dark:bg-gray-600 w-full py-3 px-4 hover:bg-gray-700"
+        type="button"
+        className="flex items-center justify-center w-full px-4 py-3 text-base font-bold text-center text-white transition-all duration-200 bg-gray-900 border-2 border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:bg-gray-700"
       >
         Choose room
         <HiArrowRight />
