@@ -9,11 +9,8 @@ import toast from "react-hot-toast";
 
 import Loader from "../../components/Loader";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useGlobalState } from "../../utils/GlobalStateContext";
 
 const LogIn = () => {
-  const { state } = useGlobalState();
-  const { paymentRoomTypeId, isPaymentVerified } = state;
   const navigate = useNavigate();
   const { code_name } = useParams<{ code_name?: string }>();
 
@@ -60,6 +57,7 @@ const LogIn = () => {
           groups,
           gender,
           additionalDetails,
+          roomPayments,
         } = data.user;
         sessionStorage.setItem("user_id", id);
         sessionStorage.setItem("first_name", firstName);
@@ -86,6 +84,13 @@ const LogIn = () => {
         if (userRole === "Student") {
           const userAdditionalDetails = additionalDetails?.[0];
           const responses = userAdditionalDetails?.responses;
+
+          const userRoomPayments = roomPayments?.[0];
+          const paymentVerification = userRoomPayments?.isVerified;
+          const paymentRoomTypeId = userRoomPayments?.roomType?.id;
+
+          sessionStorage.setItem("paymentVerification", paymentVerification);
+
           if (
             responses === null ||
             (typeof responses === "object" &&
@@ -96,7 +101,7 @@ const LogIn = () => {
             navigate("/auth/questions-and-answers", { state: { id } });
             return;
           }
-          if (isPaymentVerified === true) {
+          if (paymentVerification === true) {
             navigate(`/rooms/rooms/${paymentRoomTypeId}`);
           } else {
             navigate("/rooms/view-room-types");

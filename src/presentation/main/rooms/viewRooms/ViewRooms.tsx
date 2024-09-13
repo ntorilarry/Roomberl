@@ -11,6 +11,9 @@ const ViewRooms = () => {
   const { roomTypeId } = useParams();
   const [roomGender] = useState(sessionStorage.getItem("gender"));
   const [hostel] = useState(sessionStorage.getItem("hostel"));
+    // const [isPaymentVerified] = useState(
+    //   sessionStorage.getItem("paymentVerification")
+    // );
   const { state } = useGlobalState();
   const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } = state;
 
