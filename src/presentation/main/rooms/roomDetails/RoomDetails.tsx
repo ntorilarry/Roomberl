@@ -106,8 +106,12 @@ const RoomDetails = () => {
         <div className="grid grid-cols-1 gap-5 mt-4 md:gap-6 sm:grid-cols-2">
           <div className="bg-gray-400 rounded-lg overflow-hidden aspect-[16/9]">
             <img
-              className="object-cover  w-full h-full"
-              src={`https://cyrax1.pythonanywhere.com${roomDetails.floorPlan}`}
+              className="object-cover w-full h-full"
+              src={
+                roomDetails.floorPlan
+                  ? `https://cyrax1.pythonanywhere.com${roomDetails.floorPlan}`
+                  : "https://placehold.co/500x500?text=No+Image"
+              }
               alt="Room Floor Plan"
             />
           </div>
@@ -141,7 +145,7 @@ const RoomDetails = () => {
               ) : (
                 <img
                   className="object-cover w-full h-full"
-                  src="https://cdn.rareblocks.xyz/collection/clarity-ecommerce/images/product-details/1/image-2.png"
+                  src="https://placehold.co/500x500?text=No+Image"
                   alt=""
                 />
               )}

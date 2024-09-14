@@ -16,7 +16,8 @@ const ViewRooms = () => {
   //   sessionStorage.getItem("paymentRoomTypeId")
   // );
   // const [isPaymentV] = useState(sessionStorage.getItem("paymentVerification"));
-  const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } = useGlobalState();
+  const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } =
+    useGlobalState();
 
   const { data: response, isLoading } = useGetRoomsQuery({
     hostelId: hostel || "",
@@ -53,9 +54,10 @@ const ViewRooms = () => {
             </div>
           ) : (
             rooms.map((item, key) => (
-              <div
+              <Link
+                to={`/rooms/room-details/${roomTypeId}/${item.id}`}
                 key={key}
-                className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg"
+                className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg transform transition duration-300 hover:scale-110"
               >
                 <div>
                   <img
@@ -124,7 +126,7 @@ const ViewRooms = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))
           )}
         </div>
