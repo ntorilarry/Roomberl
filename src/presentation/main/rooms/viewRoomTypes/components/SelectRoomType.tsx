@@ -14,8 +14,7 @@ const SelectRoomType = ({ roomTypeId }) => {
     sessionStorage.getItem("user_id")
   );
 
-  const { state } = useGlobalState();
-  const { isRoomTypePresent, isPaymentVerified } = state;
+  const { isRoomTypePresent, isPaymentVerified } = useGlobalState();
   const navigate = useNavigate();
   const [selectRoomType, { isLoading: selectLoading }] =
     useUpdateRoomTypeMutation();

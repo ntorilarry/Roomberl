@@ -26,8 +26,8 @@ const RoomData = () => {
     size: pageSize,
   });
 
-  const { state } = useGlobalState(); // Destructure state and dispatch
-  const { searchQuery } = state;
+
+  const { searchQuery } = useGlobalState();
 
   const rooms = response?.data.results || [];
 

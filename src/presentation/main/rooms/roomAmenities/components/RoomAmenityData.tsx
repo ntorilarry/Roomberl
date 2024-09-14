@@ -14,8 +14,8 @@ const RoomAmenityData = () => {
     page: currentPage,
     size: pageSize,
   });
-  const { state } = useGlobalState(); // Destructure state and dispatch
-  const { searchQuery } = state;
+ // Destructure state and dispatch
+  const { searchQuery } = useGlobalState();
 
   const roomAmenity = response?.data.results || [];
 

@@ -9,8 +9,8 @@ import Pagination from "../../../../components/Pagination";
 import { useGlobalState } from "../../../../utils/GlobalStateContext";
 
 const UsersData = () => {
-  const { state } = useGlobalState(); // Destructure state and dispatch
-  const { searchQuery } = state;
+ // Destructure state and dispatch
+  const { searchQuery } = useGlobalState();
   const [filterValue, setFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;

@@ -19,8 +19,8 @@ const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
   const [hostel] = useState(sessionStorage.getItem("hostel"));
 
-  const { state } = useGlobalState();
-  const { RoomIdPresent } = state;
+
+  const { RoomIdPresent } = useGlobalState();
 
   const { data: roomResponse, isLoading: RoomLoading } = useGetRoomsByIdQuery({
     hostelId: hostel || "",

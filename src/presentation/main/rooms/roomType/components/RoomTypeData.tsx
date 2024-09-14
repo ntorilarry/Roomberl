@@ -7,9 +7,8 @@ import { EditRoomType } from "./EditRoomType";
 import Pagination from "../../../../../components/Pagination";
 import { useGlobalState } from "../../../../../utils/GlobalStateContext";
 
-const RoomTypeData = () => {
-  const { state } = useGlobalState(); // Destructure state and dispatch
-  const { searchQuery } = state;
+const RoomTypeData = () => { // Destructure state and dispatch
+  const { searchQuery } = useGlobalState();
   const [roles] = useState(sessionStorage.getItem("roles") || "");
   const [hostelID] = useState(sessionStorage.getItem("hostel") || "");
   const [filterValue, setFilterValue] = useState("");

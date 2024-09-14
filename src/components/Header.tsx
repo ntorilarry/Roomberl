@@ -37,10 +37,10 @@ const Header = ({ setSidebarOpen }) => {
     navigate(`/auth/login/${code_name}`);
   };
 
-  const { dispatch } = useGlobalState(); // Get dispatch function
+  const { setSearchQuery } = useGlobalState();
 
   const handleSearchChange = (e) => {
-    dispatch({ type: "SET_SEARCH_QUERY", payload: e.target.value }); // Dispatch action
+    setSearchQuery(e.target.value); // Update the global searchQuery directly
   };
   return (
     <div className="sticky top-0 z-40 w-full flex h-16 shrink-0 items-center gap-x-4 bg-white dark:bg-slate-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">

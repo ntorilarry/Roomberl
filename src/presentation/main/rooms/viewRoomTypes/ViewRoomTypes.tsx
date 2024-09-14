@@ -4,7 +4,6 @@ import { FaCediSign } from "react-icons/fa6";
 import { useGetRoomTypeQuery } from "../../../../services/room-service";
 import { FaGamepad, FaRegStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { HiOutlineBuildingOffice } from "react-icons/hi2";
 import ViewRoomTypesLoader from "./components/ViewRoomTypesLoader";
 import SelectRoomType from "./components/SelectRoomType";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
@@ -20,8 +19,8 @@ const ViewRoomTypes = () => {
 
   const roomType = response?.data.results || [];
 
-  const { state } = useGlobalState();
-  const { isPaymentVerified, isRoomTypePresent } = state;
+
+  const { isPaymentVerified, isRoomTypePresent } = useGlobalState();
 
   if (isLoading) {
     return (

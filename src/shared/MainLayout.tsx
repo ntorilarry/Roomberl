@@ -3,13 +3,13 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
 import ProtectedRoutes from "../presentation/auth/utils/ProtectedRoutes";
+import { useGlobalState } from "../utils/GlobalStateContext";
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [roles] = useState(sessionStorage.getItem("roles") || "");
-  const [isPaymentVerified] = useState(
-    sessionStorage.getItem("paymentVerification")
-  );
+
+    const { isPaymentVerified } = useGlobalState();
 
 
   console.log(isPaymentVerified, "isPaymentVerified");
@@ -18,7 +18,7 @@ const MainLayout = () => {
     return (
       roles.includes("Administrator") ||
       roles.includes("Hostel_manager") ||
-      (roles.includes("Student") && isPaymentVerified === "true")
+      (roles.includes("Student") && isPaymentVerified === true)
     );
   };
 
