@@ -7,7 +7,7 @@ import UserAdditionalDetails from "./presentation/auth/UserAdditionalDetails";
 const App = () => {
   return (
     <GlobalStateProvider>
-      <UserAdditionalDetails />
+  
       <Startup />
     </GlobalStateProvider>
   );

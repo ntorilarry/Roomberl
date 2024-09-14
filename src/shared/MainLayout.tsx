@@ -4,13 +4,13 @@ import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
 import ProtectedRoutes from "../presentation/auth/utils/ProtectedRoutes";
 import { useGlobalState } from "../utils/GlobalStateContext";
+import UserAdditionalDetails from "../presentation/auth/UserAdditionalDetails";
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [roles] = useState(sessionStorage.getItem("roles") || "");
 
-    const { isPaymentVerified } = useGlobalState();
-
+  const { isPaymentVerified } = useGlobalState();
 
   console.log(isPaymentVerified, "isPaymentVerified");
 
@@ -22,11 +22,9 @@ const MainLayout = () => {
     );
   };
 
-
-
   return (
     <div className="dark:bg-slate-900 h-screen bg-gray-100">
-      
+      <UserAdditionalDetails />
       {shouldRenderSidebar() && (
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
