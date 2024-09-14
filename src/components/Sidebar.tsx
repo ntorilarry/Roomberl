@@ -19,6 +19,7 @@ import { GoHome } from "react-icons/go";
 import { RoomBerlLogo } from "../assets";
 import { NavLink } from "react-router-dom";
 import { LuMessagesSquare } from "react-icons/lu";
+import { useGlobalState } from "../utils/GlobalStateContext";
 
 const navigation = [
   {
@@ -50,7 +51,8 @@ const navigation = [
     icon: MdOutlinePayments,
   },
   { name: "Users", href: "/users", icon: HiOutlineUsers },
-  { name: "Messages", href: "/message/history", icon: LuMessagesSquare},
+  { name: "Messages", href: "/message/history", icon: LuMessagesSquare },
+  
 ];
 
 function classNames(...classes) {
@@ -58,50 +60,82 @@ function classNames(...classes) {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+  const { isRoomTypePresent, isPaymentVerified } =
+    useGlobalState();
+
   const roles = sessionStorage.getItem("roles");
   const isAdmin = roles && roles.includes("Administrator");
   const isStudent = roles && roles.includes("Student");
   const isHotelManager = roles && roles.includes("Hostel_manager");
 
-  const filteredNavigation = navigation
-    .filter((item) => {
-      if (isStudent) {
-        return (
-          item.name === "Members" || item.name === "Messages" ||
-          (item.name === "Rooms" &&
-            item.subItems &&
-            item.subItems.some((subItem) => subItem.name === "View Room Types"))
-        );
-      }
-      if (isAdmin) {
-        return item.name !== "View Room Types" && item.name !== "Members" && item.name !== "Messages";
-      }
-      if (isHotelManager) {
-        return (
-          item.name !== "View Room Types" &&
-          item.name !== "Users" &&
-          item.name !== "Members" && item.name !== "Messages"
-        );
-      }
-      return true;
-    })
-    .map((item) => {
-      if (item.subItems) {
-        return {
-          ...item,
-          subItems: item.subItems.filter((subItem) => {
-            if (isStudent) {
-              return subItem.name === "View Room Types";
-            }
-            if (isAdmin || isHotelManager) {
-              return subItem.name !== "View Room Types";
-            }
-            return true;
-          }),
-        };
-      }
-      return item;
-    });
+ const filteredNavigation = navigation
+   .filter((item) => {
+     if (isStudent) {
+       if (isPaymentVerified) {
+         // Show simplified "Rooms" when payment is verified
+         return (
+           item.name === "Rooms" ||
+           item.name === "Members" ||
+           item.name === "Messages"
+         );
+       } else {
+         // Show "Rooms" with accordion, along with "Members" and "Messages"
+         return (
+           item.name === "Members" ||
+           item.name === "Messages" ||
+           (item.name === "Rooms" &&
+             item.subItems &&
+             item.subItems.some(
+               (subItem) => subItem.name === "View Room Types"
+             ))
+         );
+       }
+     }
+     if (isAdmin) {
+       return (
+         item.name !== "View Room Types" &&
+         item.name !== "Members" &&
+         item.name !== "Messages"
+       );
+     }
+     if (isHotelManager) {
+       return (
+         item.name !== "View Room Types" &&
+         item.name !== "Users" &&
+         item.name !== "Members" &&
+         item.name !== "Messages"
+       );
+     }
+     return true;
+   })
+   .map((item) => {
+     if (isStudent && isPaymentVerified) {
+       // Simplified "Rooms" item when payment is verified
+       if (item.name === "Rooms") {
+         return {
+           name: "Rooms",
+           href: `/rooms/rooms/${isRoomTypePresent}`,
+           icon: HiOutlineFolder,
+         };
+       }
+     } else if (item.subItems) {
+       // Show accordion for other cases
+       return {
+         ...item,
+         subItems: item.subItems.filter((subItem) => {
+           if (isStudent) {
+             return subItem.name === "View Room Types";
+           }
+           if (isAdmin || isHotelManager) {
+             return subItem.name !== "View Room Types";
+           }
+           return true;
+         }),
+       };
+     }
+     return item;
+   });
+
 
   return (
     <>
@@ -249,7 +283,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         </ul>
                       </li>
 
-                      <li className="mt-auto">
+                      {/* <li className="mt-auto">
                         <a
                           href="#"
                           className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
@@ -260,7 +294,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           />
                           Settings
                         </a>
-                      </li>
+                      </li> */}
                     </ul>
                   </nav>
                 </div>
@@ -364,7 +398,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 </ul>
               </li>
 
-              <li className="mt-auto">
+              {/* <li className="mt-auto">
                 <a
                   href="#"
                   className="group -mx-2 flex gap-x-3 rounded-md p-3 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
@@ -375,7 +409,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   />
                   Settings
                 </a>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>

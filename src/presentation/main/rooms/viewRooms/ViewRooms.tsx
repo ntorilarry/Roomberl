@@ -57,7 +57,7 @@ const ViewRooms = () => {
               <Link
                 to={`/rooms/room-details/${roomTypeId}/${item.id}`}
                 key={key}
-                className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg transform transition duration-300 hover:scale-110"
+                className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg transform transition duration-300 hover:scale-105"
               >
                 <div>
                   <img

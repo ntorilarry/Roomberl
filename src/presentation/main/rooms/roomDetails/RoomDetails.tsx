@@ -169,7 +169,7 @@ const RoomDetails = () => {
             <h2 className="text-lg font-bold text-gray-900 dark:text-gray-50 mt-4">
               Room Amenities
             </h2>
-            <ul className="space-y-4 text-base font-medium text-gray-600 list-disc list-inside mt-2">
+            <ul className="space-y-2 text-base font-medium text-gray-600 list-disc list-inside mt-2">
               {roomDetails.roomAmenities?.length > 0 ? (
                 roomDetails.roomAmenities.map((amenity) => (
                   <li key={amenity.id}>{amenity.name}</li>
