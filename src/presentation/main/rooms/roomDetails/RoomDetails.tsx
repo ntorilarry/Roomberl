@@ -14,11 +14,11 @@ import { TbFileDescription } from "react-icons/tb";
 import Loader from "../../../../components/Loader";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { StartMessageModal } from "../../messages/components/StartMessageModal";
 
 const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
   const [hostel] = useState(sessionStorage.getItem("hostel"));
-
 
   const { RoomIdPresent } = useGlobalState();
 
@@ -116,7 +116,7 @@ const RoomDetails = () => {
             />
           </div>
 
-          <div className="overflow-hidden bg-gray-400 rounded-lg aspect-w-16 aspect-[16/9]">
+          <div className="overflow-hidden bg-gray-400 rounded-lg  aspect-[16/9]">
             <Swiper
               spaceBetween={20}
               loop={true}
@@ -169,7 +169,7 @@ const RoomDetails = () => {
             <h2 className="text-lg font-bold text-gray-900 dark:text-gray-50 mt-4">
               Room Amenities
             </h2>
-            <ul className="space-y-2 text-base font-medium text-gray-600 list-disc list-inside mt-2">
+            <ul className="space-y-2 text-base font-medium text-gray-600 dark:text-gray-50 list-disc list-inside mt-2">
               {roomDetails.roomAmenities?.length > 0 ? (
                 roomDetails.roomAmenities.map((amenity) => (
                   <li key={amenity.id}>{amenity.name}</li>
@@ -208,23 +208,31 @@ const RoomDetails = () => {
                     key={data.id}
                     className="relative flex items-center p-4 border-2 border-gray-200 rounded-md cursor-pointer focus:outline-none"
                   >
-                    <div>
-                      <span>
-                        <img
-                          className="w-8 h-8 rounded-full"
-                          src={`https://ui-avatars.com/api/?name=${data?.additionalDetails[0].nickname}}&background=random&size=32`}
-                          alt=""
+                    <div></div>
+                    <div className="flex flex-col justify-between w-full sm:flex-row ml-2">
+                      <div className="flex">
+                        <span>
+                          <img
+                            className="w-10 h-10 rounded-full"
+                            src={`https://ui-avatars.com/api/?name=${data?.additionalDetails[0].nickname}}&background=random&size=32`}
+                            alt=""
+                          />
+                        </span>
+                        <div className="ml-2">
+                          <span className="block text-base font-bold text-gray-900 dark:text-gray-50">
+                            {data?.additionalDetails[0].nickname}
+                          </span>
+                          <span className="block text-sm font-medium text-gray-500">
+                            {" "}
+                            {data?.additionalDetails[0].courseOfStudy}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="">
+                        <StartMessageModal
+                          objectID={data?.additionalDetails[0].id}
                         />
-                      </span>
-                    </div>
-                    <div className="flex flex-col ml-5">
-                      <span className="block text-lg font-bold text-gray-900 dark:text-gray-50">
-                        {data?.additionalDetails[0].nickname}
-                      </span>
-                      <span className="block mt-1 text-sm font-medium text-gray-500">
-                        {" "}
-                        {data?.additionalDetails[0].courseOfStudy}
-                      </span>
+                      </div>
                     </div>
                   </label>
                 ))
@@ -254,32 +262,6 @@ const RoomDetails = () => {
               ) : (
                 <ChooseRoom roomID={roomDetails.id} />
               )}
-
-              {/* <button
-                type="button"
-                className="
-                            flex
-                            items-center
-                            justify-center
-                            w-full
-                            px-4
-                            py-3
-                            text-base
-                            font-bold
-                            text-center text-gray-900
-                            transition-all
-                            duration-200
-                            bg-transparent
-                            border-2 border-gray-900
-                            rounded-md
-                            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900
-                            hover:bg-gray-900
-                            focus:bg-gray-900 focus:text-white
-                            hover:text-white
-                        "
-              >
-                Live preview
-              </button> */}
             </div>
           </div>
         </div>

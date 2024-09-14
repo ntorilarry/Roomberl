@@ -11,11 +11,6 @@ const ViewRooms = () => {
   const { roomTypeId } = useParams();
   const [roomGender] = useState(sessionStorage.getItem("gender"));
   const [hostel] = useState(sessionStorage.getItem("hostel"));
-  // const [uRoomId] = useState(sessionStorage.getItem("roomID"));
-  // const [paymentRoomTypeId] = useState(
-  //   sessionStorage.getItem("paymentRoomTypeId")
-  // );
-  // const [isPaymentV] = useState(sessionStorage.getItem("paymentVerification"));
   const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } =
     useGlobalState();
 
@@ -29,10 +24,6 @@ const ViewRooms = () => {
 
   const rooms = response?.data?.results || [];
 
-  // const payment = isPaymentV === "true" || isPaymentVerified;
-  // const userRoomId = uRoomId || RoomIdPresent;
-  // const roomTypesID = paymentRoomTypeId || isRoomTypePresent;
-
   if (isLoading) {
     return (
       <div>
@@ -41,13 +32,84 @@ const ViewRooms = () => {
     );
   }
 
+  // Find the current room if RoomIdPresent matches any room's id
+  const currentRoom = rooms.find((item) => item.id === RoomIdPresent);
+
   return (
     <div>
-      <div className="w-full">
-        <h2 className="text-xl mb-5 dark:text-white font-semibold ">
+      {/* Only show the "Current room" section if RoomIdPresent matches a room */}
+      {currentRoom && (
+        <div className="w-full">
+          <h2 className="text-xl mb-5 dark:text-white font-semibold">
+            Current room
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 border gap-4 dark:border-none">
+            <Link
+              to={`/rooms/room-details/${roomTypeId}/${currentRoom.id}`}
+              className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg transform transition duration-300 hover:scale-105"
+            >
+              <div>
+                <img
+                  className="object-cover w-48 h-48"
+                  src={
+                    currentRoom.floorPlan
+                      ? `https://cyrax1.pythonanywhere.com${currentRoom.floorPlan}`
+                      : "https://placehold.co/500x500?text=No+Image"
+                  }
+                  alt={currentRoom.name || "Room"}
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <div>
+                  <h1 className="text-base leading-none font-semibold text-black dark:text-white mb-2">
+                    {currentRoom.name}
+                  </h1>
+                  <div className="flex flex-wrap text-[#53575A] dark:text-white items-center">
+                    <HiOutlineBuildingOffice className="text-[16px]" />
+                    <h1 className="text-sm pl-2 font-normal">
+                      {currentRoom.code || "NA"}
+                    </h1>
+                  </div>
+                  <div className="flex flex-wrap text-[#53575A] dark:text-white items-center">
+                    <FaRegStar className="text-[16px]" />
+                    <h1 className="text-sm pl-2 font-normal">
+                      {currentRoom.roomAmenities
+                        .map((amenity) => amenity.name)
+                        .join(", ") || "NA"}
+                    </h1>
+                  </div>
+                  <div className="flex text-[#53575A] py-2 dark:text-white items-center">
+                    <FaGamepad className="text-[16px]" />
+                    <hr className="w-full"></hr>
+                  </div>
+                  <div className="flex text-sm leading-4 py-2 text-[#53575A] dark:text-white items-center">
+                    <p>{currentRoom.description || "NA"}</p>
+                  </div>
+                  {currentRoom.isLocked && (
+                    <p className="text-red-600 pt-2 text-sm">
+                      This room is locked
+                    </p>
+                  )}
+                  <Link
+                    to={`/rooms/room-details/${roomTypeId}/${currentRoom.id}`}
+                    className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-red-700 hover:bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                  >
+                    Leave room
+                    <HiArrowRight className="ml-2" />
+                  </Link>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* "Choose room" section */}
+      <div className="w-full mt-5">
+        <h2 className="text-xl mb-5 dark:text-white font-semibold">
           Choose room
         </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3  border gap-4 dark:border-none">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 border gap-4 dark:border-none">
           {rooms.length === 0 ? (
             <div className=" w-full">
               <p className="text-lg dark:text-white">No available rooms</p>
@@ -78,7 +140,7 @@ const ViewRooms = () => {
                     <div className="flex flex-wrap text-[#53575A] dark:text-white items-center">
                       <HiOutlineBuildingOffice className="text-[16px]" />
                       <h1 className="text-sm pl-2 font-normal">
-                        {item.code || "Na"}
+                        {item.code || "NA"}
                       </h1>
                     </div>
                     <div className="flex flex-wrap text-[#53575A] dark:text-white items-center">
@@ -107,9 +169,9 @@ const ViewRooms = () => {
                           {RoomIdPresent === item.id ? (
                             <Link
                               to={`/rooms/room-details/${roomTypeId}/${item.id}`}
-                              className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-red-700 hover:bg-red-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
+                              className="inline-flex cursor-pointer my-2 items-center justify-center rounded-full bg-green-700 hover:bg-green-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:border-primary-accent hover:bg-primary-accent"
                             >
-                              Leave room
+                              Current room
                               <HiArrowRight className="ml-2" />
                             </Link>
                           ) : (
