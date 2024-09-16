@@ -6,6 +6,7 @@ import { MdDriveFolderUpload } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
+import Loader from "../../../../components/Loader";
 
 const UserPayment = () => {
   const location = useLocation();
@@ -229,7 +230,13 @@ const UserPayment = () => {
                 className="hover:shadow-form w-full dark:border darK:border-white rounded-full bg-gray-800 hover:bg-gray-700 py-3 px-8 text-center  text-white outline-none"
                 disabled={!formData.amountPayed}
               >
-                Submit payment details
+                {isLoading ? (
+                  <span>
+                    <Loader />
+                  </span>
+                ) : (
+                  <span>Submit Payment Details</span>
+                )}
               </button>
             </div>
           </form>
