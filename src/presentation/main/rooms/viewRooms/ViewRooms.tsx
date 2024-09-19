@@ -44,10 +44,7 @@ const ViewRooms = () => {
             Current room
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 border gap-4 dark:border-none">
-            <Link
-              to={`/rooms/room-details/${roomTypeId}/${currentRoom.id}`}
-              className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg transform transition duration-300 hover:scale-105"
-            >
+            <div className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg transform transition duration-300 hover:scale-105">
               <div>
                 <img
                   className="object-cover w-48 h-48"
@@ -99,7 +96,7 @@ const ViewRooms = () => {
                   </Link>
                 </div>
               </div>
-            </Link>
+            </div>
           </div>
         </div>
       )}
@@ -116,8 +113,7 @@ const ViewRooms = () => {
             </div>
           ) : (
             rooms.map((item, key) => (
-              <Link
-                to={`/rooms/room-details/${roomTypeId}/${item.id}`}
+              <div
                 key={key}
                 className="flex p-4 gap-x-4 bg-white dark:bg-slate-700 rounded-lg transform transition duration-300 hover:scale-105"
               >
@@ -188,7 +184,7 @@ const ViewRooms = () => {
                     )}
                   </div>
                 </div>
-              </Link>
+              </div>
             ))
           )}
         </div>

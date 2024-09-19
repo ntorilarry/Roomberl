@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { loginRequest } from "../../models/request/auth-request";
 import {
@@ -6,13 +6,22 @@ import {
   useLoginMutation,
 } from "../../services/auth-service";
 import toast from "react-hot-toast";
-
 import Loader from "../../components/Loader";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const LogIn = () => {
   const navigate = useNavigate();
   const { code_name } = useParams<{ code_name?: string }>();
+
+  useEffect(() => {
+    if (!code_name || code_name === "null") {
+      toast.loading("Page not found! Redirecting...", { duration: 5000 });
+
+      setTimeout(() => {
+        window.location.href = "https://roomberl.com/universities/";
+      }, 5000); // Delays the redirection to show the toast message
+    }
+  }, [code_name]);
 
   const { data: response } = useGetHostelByCodeNameQuery(code_name ?? "");
   const hostelImage = response?.data[0]?.image;

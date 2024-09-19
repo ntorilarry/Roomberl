@@ -20,7 +20,7 @@ const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
   const [hostel] = useState(sessionStorage.getItem("hostel"));
 
-  const { RoomIdPresent } = useGlobalState();
+  const { RoomIdPresent, isPaymentVerified } = useGlobalState();
 
   const { data: roomResponse, isLoading: RoomLoading } = useGetRoomsByIdQuery({
     hostelId: hostel || "",
@@ -200,7 +200,6 @@ const RoomDetails = () => {
             <h3 className="text-base font-bold text-gray-900 dark:text-gray-50">
               Roommates:
             </h3>
-
             <div className="mt-5 space-y-3">
               {roomMates?.length > 0 ? (
                 roomMates?.map((data) => (
@@ -228,11 +227,13 @@ const RoomDetails = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="">
-                        <StartMessageModal
-                          objectID={data?.additionalDetails[0].id}
-                        />
-                      </div>
+                      {isPaymentVerified && (
+                        <div className="">
+                          <StartMessageModal
+                            objectID={data?.additionalDetails[0].id}
+                          />
+                        </div>
+                      )}
                     </div>
                   </label>
                 ))
@@ -255,14 +256,15 @@ const RoomDetails = () => {
                 </label>
               )}
             </div>
-
-            <div className="mt-5 space-y-3">
-              {RoomIdPresent === roomDetails.id ? (
-                <UnselectRoom />
-              ) : (
-                <ChooseRoom roomID={roomDetails.id} />
-              )}
-            </div>
+            {isPaymentVerified && (
+              <div className="mt-5 space-y-3">
+                {RoomIdPresent === roomDetails.id ? (
+                  <UnselectRoom />
+                ) : (
+                  <ChooseRoom roomID={roomDetails.id} />
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

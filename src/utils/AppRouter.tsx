@@ -23,6 +23,7 @@ import Message from "../presentation/main/messages/Message";
 import Chat from "../presentation/main/messages/Chat";
 import MyProfile from "../presentation/main/Profile/MyProfile";
 import ViewMemberProfile from "../presentation/main/members/ViewMemberProfile";
+import Redirect from "../presentation/auth/Redirect";
 
 const AppRouter = () => {
   return (
@@ -34,6 +35,7 @@ const AppRouter = () => {
         <Route path="sign-up-additional" element={<SignUpAdditionalInfo />} />
         <Route path="questions-and-answers" element={<QuestionAnswer />} />
         <Route path="unauthorized" element={<UnauthorizedPage />} />
+        <Route path="redirect" element={<Redirect />} />
       </Route>
 
       <Route path="/" element={<MainLayout />}>
