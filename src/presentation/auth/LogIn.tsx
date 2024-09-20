@@ -12,22 +12,48 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 const LogIn = () => {
   const navigate = useNavigate();
   const { code_name } = useParams<{ code_name?: string }>();
+  console.log(code_name, "code_name");
+  const {
+    data: response,
+    error,
+    isError,
+    isLoading: isHostelLoading,
+  } = useGetHostelByCodeNameQuery(code_name ?? "");
 
+  // Error handling for hostel fetch
   useEffect(() => {
-    if (!code_name || code_name === "null") {
+    if (!code_name || code_name === "null" || code_name === undefined) {
       toast.loading("Page not found! Redirecting...", { duration: 5000 });
 
       setTimeout(() => {
         window.location.href = "https://roomberl.com/universities/";
-      }, 5000); // Delays the redirection to show the toast message
+      }, 5000); // 5 seconds delay
     }
   }, [code_name]);
 
-  const { data: response } = useGetHostelByCodeNameQuery(code_name ?? "");
+  useEffect(() => {
+    if (isError) {
+      const errorMessage =
+        (error as any)?.data?.detail || "Hostel not found! Redirecting...";
+      toast.loading(errorMessage);
+      // Redirect after a short delay to allow the toast to display
+      setTimeout(() => {
+        window.location.href = "https://roomberl.com/universities/";
+      }, 3000); // 3 seconds delay
+    }
+  }, [isError, error]);
+
+  // Proceed only if data is successfully fetched
   const hostelImage = response?.data[0]?.image;
   const hostelID = response?.data[0]?.id;
-  sessionStorage.setItem("hostelID", hostelID);
-  sessionStorage.setItem("code_name", code_name ?? "");
+
+  // Set session storage only if hostel data is available
+  useEffect(() => {
+    if (hostelID && code_name) {
+      sessionStorage.setItem("hostelID", hostelID);
+      sessionStorage.setItem("code_name", code_name);
+    }
+  }, [hostelID, code_name]);
 
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState<loginRequest>({

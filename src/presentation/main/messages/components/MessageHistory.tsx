@@ -17,7 +17,7 @@ const MessageHistory = () => {
           {chatHistory && chatHistory.length > 0 ? (
             chatHistory.map((history) => (
               <div
-                key={history.id}
+                key={history?.id}
                 className="group flex gap-y-6 size-full bg-white dark:bg-slate-800  focus:outline-none focus:bg-gray-100 rounded-lg p-5 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
               >
                 <BiMessageSquareDetail className="shrink-0 size-8 text-gray-800 mt-0.5 me-6 dark:text-neutral-200" />
@@ -28,12 +28,12 @@ const MessageHistory = () => {
                       {history.name}
                     </h3>
                     <p className="text-gray-600 text-sm dark:text-neutral-400">
-                      Message between {history.participants[0].nickname} and{" "}
-                      {history.participants[1].nickname}
+                      Message between {history?.participants[0]?.nickname} and{" "}
+                      {history?.participants[1]?.nickname}
                     </p>
                   </div>
                   <Link
-                    to={`/message/chat/${history.id}`}
+                    to={`/message/chat/${history?.id}`}
                     className="mt-3 inline-flex items-center gap-x-1 cursor-pointer text-sm font-semibold text-blue-500 dark:text-neutral-200"
                   >
                     send message
