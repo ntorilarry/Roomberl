@@ -89,7 +89,11 @@ const ViewRoomTypes = () => {
                     View rooms
                     <BsSendCheck className="ml-2" />
                   </Link>
-                  <SelectRoomType roomTypeId={item.id} />
+                  {item.isFullyOccupied ? (
+                    <p className="text-red-500 my-auto">Fully Occupied</p>
+                  ) : (
+                    <SelectRoomType roomTypeId={item.id} />
+                  )}
                 </div>
               </div>
             </div>
