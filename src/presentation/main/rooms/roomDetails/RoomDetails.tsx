@@ -221,9 +221,13 @@ const RoomDetails = () => {
                           <span className="block text-base font-bold text-gray-900 dark:text-gray-50">
                             {data?.additionalDetails[0].nickname}
                           </span>
-                          <span className="block text-sm font-medium text-gray-500">
+                          <span className="block text-xs font-medium text-gray-500">
                             {" "}
                             {data?.additionalDetails[0].courseOfStudy}
+                          </span>
+                          <span className="block text-xs font-medium text-gray-500">
+                            {" "}
+                            Match Percent: {data?.matchPercentage}
                           </span>
                         </div>
                       </div>
