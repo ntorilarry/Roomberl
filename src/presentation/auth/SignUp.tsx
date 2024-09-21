@@ -16,6 +16,9 @@ const SignUp = () => {
   const [hostelID, setHostelID] = useState<string | null>(
     sessionStorage.getItem("hostelID")
   );
+    const [codeName, setCodeName] = useState<string | null>(
+      sessionStorage.getItem("code_name")
+    );
   const { code_name } = useParams<{ code_name?: string }>();
 
   const {
@@ -23,7 +26,7 @@ const SignUp = () => {
     error,
     isError,
     isLoading: isHostelLoading,
-  } = useGetHostelByCodeNameQuery(code_name ?? "");
+  } = useGetHostelByCodeNameQuery((code_name || codeName) ?? "");
 
   // Error handling for hostel fetch
   useEffect(() => {
@@ -136,7 +139,7 @@ const SignUp = () => {
           <p className="mb-6 mt-3 text-center dark:text-white text-sm text-text">
             Have account?{" "}
             <Link
-              to={`/auth/login/${code_name}`}
+              to={`/auth/login/${code_name || codeName}`}
               className="font-semibold text-primary hover:text-primary-accent"
             >
               Sign in

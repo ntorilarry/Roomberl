@@ -44,8 +44,8 @@ const LogIn = () => {
   }, [isError, error]);
 
   // Proceed only if data is successfully fetched
-  const hostelImage = response?.data[0]?.image;
-  const hostelID = response?.data[0]?.id;
+  const hostelImage = response?.data.image;
+  const hostelID = response?.data?.id;
 
   // Set session storage only if hostel data is available
   useEffect(() => {
