@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { RoomBerlLogo } from "../../assets";
 import toast from "react-hot-toast";
-
 import { signUpRequest } from "../../models/request/auth-request";
 import {
+  useGetHostelByCodeNameQuery,
   useGetHostelsQuery,
   useSignUpMutation,
 } from "../../services/auth-service";
@@ -16,9 +16,42 @@ const SignUp = () => {
   const [hostelID, setHostelID] = useState<string | null>(
     sessionStorage.getItem("hostelID")
   );
-  const [code_name, setCode_name] = useState<string | null>(
-    sessionStorage.getItem("code_name")
-  );
+  const { code_name } = useParams<{ code_name?: string }>();
+
+  const {
+    data: codeResponse,
+    error,
+    isError,
+    isLoading: isHostelLoading,
+  } = useGetHostelByCodeNameQuery(code_name ?? "");
+
+  // Error handling for hostel fetch
+  useEffect(() => {
+    if (!code_name || code_name === "null" || code_name === undefined) {
+      toast.loading("Page not found! Redirecting...", { duration: 5000 });
+
+      setTimeout(() => {
+        window.location.href = "https://roomberl.com/universities/";
+      }, 5000); // 5 seconds delay
+    }
+  }, [code_name]);
+
+  useEffect(() => {
+    if (isError) {
+      const errorMessage =
+        (error as any)?.data?.detail || "Hostel not found! Redirecting...";
+      toast.loading(errorMessage);
+      // Redirect after a short delay to allow the toast to display
+      setTimeout(() => {
+        window.location.href = "https://roomberl.com/universities/";
+      }, 3000); // 3 seconds delay
+    }
+  }, [isError, error]);
+
+  // Proceed only if data is successfully fetched
+
+  const IdHostel = codeResponse?.data[0]?.id;
+
   const navigate = useNavigate();
   const {
     register,
@@ -39,7 +72,7 @@ const SignUp = () => {
     mobile: "",
     address: "",
     gender: "",
-    hostel: hostelID || "",
+    hostel: hostelID || IdHostel,
     groups: [],
     userPermissions: [],
   });
