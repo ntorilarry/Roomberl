@@ -8,6 +8,7 @@ import ViewRoomTypesLoader from "./components/ViewRoomTypesLoader";
 import SelectRoomType from "./components/SelectRoomType";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
 import { useGlobalState } from "../../../../utils/GlobalStateContext";
+import { HiOutlineBuildingOffice } from "react-icons/hi2";
 
 const ViewRoomTypes = () => {
   const [hostel] = useState(sessionStorage.getItem("hostel"));
@@ -18,7 +19,6 @@ const ViewRoomTypes = () => {
   });
 
   const roomType = response?.data.results || [];
-
 
   const { isPaymentVerified, isRoomTypePresent } = useGlobalState();
 
@@ -59,12 +59,12 @@ const ViewRoomTypes = () => {
                   <FaCediSign className="text-sm " />
                   <h1 className="text-sm pl-2 font-normal">{item.price}</h1>
                 </div>
-                {/* <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
-                  <HiOutlineBuildingOffice className="text-[16px] " />
-                  <h1 className="text-[14px] pl-2 font-normal">
-                    {item.numOccupancy} rooms available
+                <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
+                  <HiOutlineBuildingOffice className="text-sm " />
+                  <h1 className="text-sm pl-2 font-normal">
+                    Current Occupancy: {item.currentOccupancy}
                   </h1>
-                </div> */}
+                </div>
                 <div className="flex flex-wrap text-[#53575A] dark:text-white  items-center">
                   <FaRegStar className="text-sm" />
                   <h1 className="text-sm pl-2 font-normal">
