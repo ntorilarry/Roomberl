@@ -16,43 +16,38 @@ export interface roomRequest {
   name: string;
   description: string;
   roomType: string;
-  code:string
-  images:string[]
-  floorPlan: string,
+  code: string;
+  images: string[];
+  floorPlan: string;
   hostel: string;
   roomAmenities: string[];
 }
 
-
-export interface roomAmenityParams{
+export interface roomAmenityParams {
   body: roomAmenityRequest;
   id: string;
 }
 
-
-export interface roomTypesParams{
+export interface roomTypesParams {
   body: roomTypeRequest;
   id: string;
 }
 
-
-export interface paymentRequest{
+export interface paymentRequest {
   firstReceipt: string;
   secondReceipt: string;
   amountPayed: string;
   note: string;
   user: string;
   roomType: string;
-
 }
-export interface updatePaymentRequest{
+export interface updatePaymentRequest {
   isVerified: boolean;
 }
-export interface paymentParams{
+export interface paymentParams {
   body: updatePaymentRequest;
   id: string;
 }
-
 
 export interface roomDataType {
   name: string;
@@ -78,8 +73,23 @@ export interface lockRoomParams {
   body: lockRoomRequest;
 }
 
-
 export interface duplicateRoomParams {
   id: string;
   quantity: number;
+}
+
+export interface getRoomParams {
+  id: string;
+  roomTypeId: string;
+  hostelId: string;
+  gender: string;
+  page: number;
+  size: number;
+}
+
+export interface getRoomPaymentParams {
+  hostelId: string;
+  user: string;
+  page: number;
+  size: number;
 }

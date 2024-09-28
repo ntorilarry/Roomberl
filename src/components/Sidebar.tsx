@@ -4,7 +4,6 @@ import {
   HiMiniXMark,
   HiOutlineChevronDown,
   HiOutlineChevronUp,
-  HiOutlineCog6Tooth,
   HiOutlineFolder,
   HiOutlineUsers,
 } from "react-icons/hi2";
@@ -20,6 +19,7 @@ import { RoomBerlLogo } from "../assets";
 import { NavLink } from "react-router-dom";
 import { LuMessagesSquare } from "react-icons/lu";
 import { useGlobalState } from "../utils/GlobalStateContext";
+import { RiSecurePaymentFill } from "react-icons/ri";
 
 const navigation = [
   {
@@ -52,7 +52,11 @@ const navigation = [
   },
   { name: "Users", href: "/users", icon: HiOutlineUsers },
   { name: "Messages", href: "/message/history", icon: LuMessagesSquare },
-  
+  {
+    name: "Complete Payment",
+    href: "/payments/user",
+    icon: RiSecurePaymentFill,
+  },
 ];
 
 function classNames(...classes) {
@@ -60,81 +64,88 @@ function classNames(...classes) {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const { isRoomTypePresent, isPaymentVerified } =
-    useGlobalState();
+  const { isRoomTypePresent, isPaymentVerified, paymentStatus } = useGlobalState();
 
   const roles = sessionStorage.getItem("roles");
   const isAdmin = roles && roles.includes("Administrator");
   const isStudent = roles && roles.includes("Student");
   const isHotelManager = roles && roles.includes("Hostel_manager");
 
- const filteredNavigation = navigation
-   .filter((item) => {
-     if (isStudent) {
-       if (isPaymentVerified) {
-         // Show simplified "Rooms" when payment is verified
-         return (
-           item.name === "Rooms" ||
-           item.name === "Members" ||
-           item.name === "Messages"
-         );
-       } else {
-         // Show "Rooms" with accordion, along with "Members" and "Messages"
-         return (
-           item.name === "Members" ||
-           item.name === "Messages" ||
-           (item.name === "Rooms" &&
-             item.subItems &&
-             item.subItems.some(
-               (subItem) => subItem.name === "View Room Types"
-             ))
-         );
-       }
-     }
-     if (isAdmin) {
-       return (
-         item.name !== "View Room Types" &&
-         item.name !== "Members" &&
-         item.name !== "Messages"
-       );
-     }
-     if (isHotelManager) {
-       return (
-         item.name !== "View Room Types" &&
-         item.name !== "Users" &&
-         item.name !== "Members" &&
-         item.name !== "Messages"
-       );
-     }
-     return true;
-   })
-   .map((item) => {
-     if (isStudent && isPaymentVerified) {
-       // Simplified "Rooms" item when payment is verified
-       if (item.name === "Rooms") {
-         return {
-           name: "Rooms",
-           href: `/rooms/rooms/${isRoomTypePresent}`,
-           icon: HiOutlineFolder,
-         };
-       }
-     } else if (item.subItems) {
-       // Show accordion for other cases
-       return {
-         ...item,
-         subItems: item.subItems.filter((subItem) => {
-           if (isStudent) {
-             return subItem.name === "View Room Types";
-           }
-           if (isAdmin || isHotelManager) {
-             return subItem.name !== "View Room Types";
-           }
-           return true;
-         }),
-       };
-     }
-     return item;
-   });
+const filteredNavigation = navigation
+  .filter((item) => {
+    if (isStudent) {
+      if (paymentStatus === "Incomplete") {
+        // Show only the "Complete Payment" option if payment is incomplete
+        return item.name === "Complete Payment";
+      } else if (isPaymentVerified) {
+        // Show simplified "Rooms" when payment is verified
+        return (
+          item.name === "Rooms" ||
+          item.name === "Members" ||
+          item.name === "Messages"
+        );
+      } else {
+        // Show "Rooms" with accordion, along with "Members" and "Messages"
+        return (
+          item.name === "Members" ||
+          item.name === "Messages" ||
+          (item.name === "Rooms" &&
+            item.subItems &&
+            item.subItems.some((subItem) => subItem.name === "View Room Types"))
+        );
+      }
+    }
+    if (isAdmin) {
+      return (
+        item.name !== "View Room Types" &&
+        item.name !== "Members" &&
+        item.name !== "Messages"
+      );
+    }
+    if (isHotelManager) {
+      return (
+        item.name !== "View Room Types" &&
+        item.name !== "Users" &&
+        item.name !== "Members" &&
+        item.name !== "Messages"
+      );
+    }
+    return true;
+  })
+  .map((item) => {
+    if (isStudent && paymentStatus === "Incomplete") {
+      // Return "Complete Payment" when payment is incomplete
+      return {
+        name: "Complete Payment",
+        href: "/payments/user",
+        icon: RiSecurePaymentFill,
+      };
+    } else if (isStudent && isPaymentVerified) {
+      // Simplified "Rooms" item when payment is verified
+      if (item.name === "Rooms") {
+        return {
+          name: "Rooms",
+          href: `/rooms/rooms/${isRoomTypePresent}`,
+          icon: HiOutlineFolder,
+        };
+      }
+    } else if (item.subItems) {
+      // Show accordion for other cases
+      return {
+        ...item,
+        subItems: item.subItems.filter((subItem) => {
+          if (isStudent) {
+            return subItem.name === "View Room Types";
+          }
+          if (isAdmin || isHotelManager) {
+            return subItem.name !== "View Room Types";
+          }
+          return true;
+        }),
+      };
+    }
+    return item;
+  });
 
 
   return (

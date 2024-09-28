@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
-import { institutionResponse } from "../models/response/institution-response";
 
 export const literalsService = createApi({
   reducerPath: "literalsService",

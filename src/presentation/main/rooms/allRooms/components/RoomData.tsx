@@ -10,6 +10,7 @@ import { LockRoom } from "./LockRoom";
 import { IoLockOpen, IoLockClosedSharp } from "react-icons/io5";
 import { UnlockRoom } from "./UnlockRoom";
 import { DuplicateRoom } from "./DuplicateRoom";
+import { getRoomParams } from "../../../../../models/request/room-request";
 
 const RoomData = () => {
   const [filterhostel, setFilterHostel] = useState("");
@@ -24,8 +25,7 @@ const RoomData = () => {
     gender: filterGender,
     page: currentPage,
     size: pageSize,
-  });
-
+  } as getRoomParams);
 
   const { searchQuery } = useGlobalState();
 
@@ -126,7 +126,7 @@ const RoomData = () => {
         Cell: ({ row }) => (
           <div className="flex gap-x-2">
             <EditRoom room={row.original} />
-            <DuplicateRoom room={row.original}/>
+            <DuplicateRoom room={row.original} />
             {row.original.isLocked ? (
               <UnlockRoom room={row.original} />
             ) : (

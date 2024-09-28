@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import ProtectedRoutes from "../presentation/auth/utils/ProtectedRoutes";
 import { useGlobalState } from "../utils/GlobalStateContext";
 import UserAdditionalDetails from "../presentation/auth/UserAdditionalDetails";
+import PaymentCheck from "../presentation/main/payment/userPayment/PaymentCheck";
 
 const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,6 +26,7 @@ const MainLayout = () => {
   return (
     <div className="dark:bg-slate-900 h-screen bg-gray-100">
       <UserAdditionalDetails />
+      <PaymentCheck />
       {shouldRenderSidebar() && (
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       )}
@@ -33,7 +35,6 @@ const MainLayout = () => {
           <Header setSidebarOpen={setSidebarOpen} />
           <main className="py-10 dark:bg-slate-900 bg-gray-100">
             <div className="px-4 sm:px-6 lg:px-8">
-              {/* <UserAdditionalDetails /> */}
               <Outlet />
             </div>
           </main>
@@ -43,7 +44,6 @@ const MainLayout = () => {
           <Header setSidebarOpen={setSidebarOpen} />
           <main className="py-10 dark:bg-slate-900 bg-gray-100">
             <div className="px-4 sm:px-6 lg:px-8">
-              {/* <UserAdditionalDetails /> */}
               <Outlet />
             </div>
           </main>

@@ -7,13 +7,12 @@ import { MdVerified } from "react-icons/md";
 import { VerifyPaymentModal } from "./VerifyPaymentModal";
 import Pagination from "../../../../../components/Pagination";
 import { useGlobalState } from "../../../../../utils/GlobalStateContext";
+import { getRoomPaymentParams } from "../../../../../models/request/room-request";
 
 const AdminPaymentData = () => {
   const { searchQuery } = useGlobalState();
   const [roles] = useState(sessionStorage.getItem("roles") || "");
-  const [hostelID] = useState(
-    sessionStorage.getItem("hostel") || ""
-  );
+  const [hostelID] = useState(sessionStorage.getItem("hostel") || "");
   const [filterValue, setFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -21,7 +20,7 @@ const AdminPaymentData = () => {
     hostelId: filterValue,
     page: currentPage,
     size: pageSize,
-  });
+  } as getRoomPaymentParams);
 
   useEffect(() => {
     if (roles === "Hostel_manager") {
@@ -139,8 +138,6 @@ const AdminPaymentData = () => {
     []
   );
 
-
-
   return (
     <div>
       <AdminPaymentTable
@@ -155,7 +152,6 @@ const AdminPaymentData = () => {
         onPageChange={setCurrentPage}
         pageSize={pageSize}
         totalElements={totalElements}
-    
       />
     </div>
   );

@@ -3,6 +3,8 @@ import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
 import {
   duplicateRoomParams,
+  getRoomParams,
+  getRoomPaymentParams,
   lockRoomParams,
   paymentParams,
   roomAmenityParams,
@@ -11,6 +13,7 @@ import {
   roomTypesParams,
   UpdateRoomParams,
 } from "../models/request/room-request";
+import queryString from "query-string";
 
 export const roomService = createApi({
   reducerPath: "roomService",
@@ -27,32 +30,21 @@ export const roomService = createApi({
 
   tagTypes: ["Room"],
   endpoints: (build) => ({
-    getRooms: build.query<
-      BaseResponse<any>,
-      {
-        roomTypeId: string;
-        hostelId: string;
-        gender: string;
-        page: number;
-        size: number;
-      }
-    >({
-      query: ({ roomTypeId, hostelId, gender, page, size }) => ({
-        url: `/room/rooms/?room_type=${roomTypeId}&hostel=${hostelId}&gender=${gender}&page=${page}&size=${size}`,
+    getRooms: build.query<BaseResponse<any>, getRoomParams>({
+      query: ({ id, roomTypeId, hostelId, gender, page, size }) => ({
+        url: `/room/rooms?${queryString.stringify({
+          id: id,
+          room_type: roomTypeId,
+          hostel: hostelId,
+          gender: gender,
+          page: page,
+          size: size,
+        })}`,
         method: "GET",
       }),
       providesTags: ["Room"],
     }),
-    getRoomsById: build.query<
-      BaseResponse<any>,
-      { roomTypeId: string; hostelId: string; id: string }
-    >({
-      query: ({ roomTypeId, hostelId, id }) => ({
-        url: `/room/rooms/?room_type=${roomTypeId}&hostel=${hostelId}&id=${id}`,
-        method: "GET",
-      }),
-      providesTags: ["Room"],
-    }),
+
     addRoom: build.mutation<BaseResponse<any>, FormData>({
       query: (body: FormData) => ({
         url: "/room/rooms/",
@@ -167,12 +159,14 @@ export const roomService = createApi({
       }),
       invalidatesTags: ["Room"],
     }),
-    getRoomPayment: build.query<
-      BaseResponse<any>,
-      { hostelId: string; page: number; size: number }
-    >({
-      query: ({ hostelId, page, size }) => ({
-        url: `/accounts/room-payment/?hostel=${hostelId}&page=${page}&size=${size}`,
+    getRoomPayment: build.query<BaseResponse<any>, getRoomPaymentParams>({
+      query: ({ hostelId, page, size, user }) => ({
+        url: `/accounts/room-payment/?${queryString.stringify({
+          hostel: hostelId,
+          user: user,
+          page: page,
+          size: size,
+        })}`,
         method: "GET",
       }),
       providesTags: ["Room"],
@@ -197,7 +191,6 @@ export const roomService = createApi({
 
 export const {
   useGetRoomsQuery,
-  useGetRoomsByIdQuery,
   useAddRoomMutation,
   useGetRoomAmenitiesQuery,
   useAddRoomAmenitiesMutation,

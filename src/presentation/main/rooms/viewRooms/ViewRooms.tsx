@@ -6,6 +6,7 @@ import { HiArrowRight, HiOutlineBuildingOffice } from "react-icons/hi2";
 import ViewRoomLoader from "./components/ViewRoomLoader";
 import ProtectedRoutes from "../../../auth/utils/ProtectedRoutes";
 import { useGlobalState } from "../../../../utils/GlobalStateContext";
+import { getRoomParams } from "../../../../models/request/room-request";
 
 const ViewRooms = () => {
   const { roomTypeId } = useParams();
@@ -14,13 +15,15 @@ const ViewRooms = () => {
   const { RoomIdPresent, isRoomTypePresent, isPaymentVerified } =
     useGlobalState();
 
-  const { data: response, isLoading } = useGetRoomsQuery({
-    hostelId: hostel || "",
-    roomTypeId: roomTypeId || "",
-    gender: roomGender || "",
-    page: 1,
-    size: 99999999,
-  });
+
+
+    const { data: response, isLoading } = useGetRoomsQuery({
+      hostelId: hostel || "",
+      roomTypeId: roomTypeId || "",
+      gender: roomGender || "",
+      page: 1,
+      size: 99999999,
+    } as getRoomParams);
 
   const rooms = response?.data?.results || [];
 

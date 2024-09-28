@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   useGetRoomMatesQuery,
-  useGetRoomsByIdQuery,
+  useGetRoomsQuery,
 } from "../../../../services/room-service";
 import ChooseRoom from "./components/ChooseRoom";
 import UnselectRoom from "./components/UnselectRoom";
@@ -15,6 +15,7 @@ import Loader from "../../../../components/Loader";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { StartMessageModal } from "../../messages/components/StartMessageModal";
+import { getRoomParams } from "../../../../models/request/room-request";
 
 const RoomDetails = () => {
   const { roomTypeId, roomId } = useParams();
@@ -22,11 +23,11 @@ const RoomDetails = () => {
 
   const { RoomIdPresent, isPaymentVerified } = useGlobalState();
 
-  const { data: roomResponse, isLoading: RoomLoading } = useGetRoomsByIdQuery({
+  const { data: roomResponse, isLoading: RoomLoading } = useGetRoomsQuery({
     hostelId: hostel || "",
     roomTypeId: roomTypeId || "",
     id: roomId || "",
-  });
+  } as getRoomParams);
 
   const roomDetails = roomResponse?.data?.results[0] || [];
 

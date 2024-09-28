@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AppConstants } from "../core/app-constants";
 import { BaseResponse } from "../models/response/base-response";
-import { chatRequest, messageRequestParams } from "../models/request/message-request";
+import {
+  chatRequest,
+  messageRequestParams,
+} from "../models/request/message-request";
 
 export const messageService = createApi({
   reducerPath: "messageService",
@@ -22,7 +25,7 @@ export const messageService = createApi({
       query: (body: chatRequest) => ({
         url: "/chats/start/",
         method: "POST",
-        body: body
+        body: body,
       }),
       invalidatesTags: ["Messages"],
     }),
@@ -37,7 +40,7 @@ export const messageService = createApi({
       query: ({ body, roomid }: messageRequestParams) => ({
         url: `/chats/create/${roomid}/`,
         method: "POST",
-        body: body
+        body: body,
       }),
       invalidatesTags: ["Messages"],
     }),
@@ -51,4 +54,9 @@ export const messageService = createApi({
   }),
 });
 
-export const { useStartMessageMutation, useGetChatsByRoomIdQuery, useCreateMessageMutation, useGetChatsRoomListQuery } = messageService;
+export const {
+  useStartMessageMutation,
+  useGetChatsByRoomIdQuery,
+  useCreateMessageMutation,
+  useGetChatsRoomListQuery,
+} = messageService;

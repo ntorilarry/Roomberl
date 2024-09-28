@@ -44,14 +44,12 @@ export const authService = createApi({
     }),
 
     getAddInfoByUserId: build.query<BaseResponse<any>, string>({
-      query: (userId ) => ({
+      query: (userId) => ({
         url: `/accounts/user-additional-detail/${userId}/`,
         method: "GET",
-   
       }),
       providesTags: ["Auth"],
     }),
-
 
     updateRoomType: build.mutation<BaseResponse<any>, UpdateRoomTypeParams>({
       query: ({ body, userId }: UpdateRoomTypeParams) => ({
@@ -83,7 +81,10 @@ export const authService = createApi({
       }),
       providesTags: ["Auth"],
     }),
-    updateUserQuestions: build.mutation<BaseResponse<any>, UpdateUserQuestionsParams>({
+    updateUserQuestions: build.mutation<
+      BaseResponse<any>,
+      UpdateUserQuestionsParams
+    >({
       query: ({ body, userId }: UpdateUserQuestionsParams) => ({
         url: `/accounts/user-additional-detail/${userId}/`,
         method: "PATCH",
@@ -120,5 +121,5 @@ export const {
   useUpdateUserQuestionsMutation,
   useChooseRoomMutation,
   useGetHostelByCodeNameQuery,
-  useGetUserTokenQuery
+  useGetUserTokenQuery,
 } = authService;
