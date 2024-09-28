@@ -53,7 +53,7 @@ const Members = () => {
                     {item.courseOfStudy}
                   </p>
                   <p className="text-gray-500 text-sm capitalize dark:text-gray-300">
-                    Match percentage: {item.matchPercentage}
+                    Match percentage: {item.user.matchPercentage}
                   </p>
                   <div className="flex items-center gap-x-2">
                     <StartMessageModal objectID={item.user.id} />
