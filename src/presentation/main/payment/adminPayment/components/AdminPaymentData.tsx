@@ -8,6 +8,7 @@ import { VerifyPaymentModal } from "./VerifyPaymentModal";
 import Pagination from "../../../../../components/Pagination";
 import { useGlobalState } from "../../../../../utils/GlobalStateContext";
 import { getRoomPaymentParams } from "../../../../../models/request/room-request";
+import { UnverifyPaymentModal } from "./UnverifyPaymentModal";
 
 const AdminPaymentData = () => {
   const { searchQuery } = useGlobalState();
@@ -131,6 +132,7 @@ const AdminPaymentData = () => {
         Cell: ({ row }) => (
           <div className="flex gap-x-2">
             <VerifyPaymentModal payment={row.original} />
+            <UnverifyPaymentModal payment={row.original} />
           </div>
         ),
       },

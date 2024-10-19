@@ -10,5 +10,5 @@ const Users = () => {
 };
 
 export default ProtectedRoutes(Users, {
-  allowedRoles: ["Administrator"],
+  allowedRoles: ["Administrator", "Hostel_manager"],
 });

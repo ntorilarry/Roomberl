@@ -1,17 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { useTable, useFilters, useGlobalFilter, useSortBy } from "react-table";
 import { FilterUsers } from "./FilterUsers";
 
-const UsersTable = ({
-  columns,
-  data,
-
-  isLoading,
-  setFilterValue,
-}) => {
+const UsersTable = ({ columns, data, isLoading, setFilterValue }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data }, useFilters, useGlobalFilter, useSortBy);
+
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
   return (
     <div>
       <div className="w-full mx-auto">
@@ -26,7 +22,9 @@ const UsersTable = ({
                   <div className="sm:col-span-2 md:grow">
                     <div className="flex justify-end gap-x-2">
                       <div className="gap-x-2 relative inline-flex">
-                        <FilterUsers setFilterValue={setFilterValue} />
+                        {roles !== "Hostel_manager" && (
+                          <FilterUsers setFilterValue={setFilterValue} />
+                        )}
                       </div>
                     </div>
                   </div>

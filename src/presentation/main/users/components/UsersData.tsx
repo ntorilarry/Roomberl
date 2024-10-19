@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import moment from "moment";
 import UsersTable from "./UsersTable";
 import { useGetUsersByHostelIdQuery } from "../../../../services/user-service";
@@ -9,7 +9,8 @@ import Pagination from "../../../../components/Pagination";
 import { useGlobalState } from "../../../../utils/GlobalStateContext";
 
 const UsersData = () => {
- // Destructure state and dispatch
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID] = useState(sessionStorage.getItem("hostel") || "");
   const { searchQuery } = useGlobalState();
   const [filterValue, setFilterValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +20,12 @@ const UsersData = () => {
     page: currentPage,
     size: pageSize,
   });
+
+    useEffect(() => {
+      if (roles === "Hostel_manager") {
+        setFilterValue(hostelID);
+      }
+    }, [roles, hostelID]);
 
   const Users = response?.data.results || [];
 
@@ -102,9 +109,11 @@ const UsersData = () => {
                 <EnableUsers user={row.original} />
               )}
             </div>
-            <div>
-              <GroupPermission user={row.original} />
-            </div>
+            {roles === "Administrator" && (
+              <div>
+                <GroupPermission user={row.original} />
+              </div>
+            )}
           </div>
         ),
       },

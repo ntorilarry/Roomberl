@@ -64,7 +64,8 @@ function classNames(...classes) {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const { isRoomTypePresent, isPaymentVerified, paymentStatus } = useGlobalState();
+  const { isRoomTypePresent, isPaymentVerified, paymentStatus } =
+    useGlobalState();
 
   const roles = sessionStorage.getItem("roles");
   const isAdmin = roles && roles.includes("Administrator");
@@ -95,19 +96,12 @@ const filteredNavigation = navigation
         );
       }
     }
-    if (isAdmin) {
+    if (isAdmin || isHotelManager) {
+      // Admin and Hotel Manager can see only Rooms, Payments, and Users
       return (
-        item.name !== "View Room Types" &&
-        item.name !== "Members" &&
-        item.name !== "Messages"
-      );
-    }
-    if (isHotelManager) {
-      return (
-        item.name !== "View Room Types" &&
-        item.name !== "Users" &&
-        item.name !== "Members" &&
-        item.name !== "Messages"
+        item.name === "Rooms" ||
+        item.name === "Payment" ||
+        item.name === "Users"
       );
     }
     return true;
@@ -146,6 +140,7 @@ const filteredNavigation = navigation
     }
     return item;
   });
+
 
 
   return (

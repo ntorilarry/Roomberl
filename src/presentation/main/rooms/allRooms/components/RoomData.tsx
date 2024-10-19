@@ -13,6 +13,8 @@ import { DuplicateRoom } from "./DuplicateRoom";
 import { getRoomParams } from "../../../../../models/request/room-request";
 
 const RoomData = () => {
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
+  const [hostelID] = useState(sessionStorage.getItem("hostel") || "");
   const [filterhostel, setFilterHostel] = useState("");
   const [filterRoomType, setFilterRoomType] = useState("");
   const [filterGender, setFilterGender] = useState("");
@@ -26,6 +28,12 @@ const RoomData = () => {
     page: currentPage,
     size: pageSize,
   } as getRoomParams);
+
+     useEffect(() => {
+       if (roles === "Hostel_manager") {
+         setFilterHostel(hostelID);
+       }
+     }, [roles, hostelID]);
 
   const { searchQuery } = useGlobalState();
 
