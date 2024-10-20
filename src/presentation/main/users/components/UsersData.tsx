@@ -7,6 +7,8 @@ import { EnableUsers } from "./EnableUsers";
 import { GroupPermission } from "./GroupPermission";
 import Pagination from "../../../../components/Pagination";
 import { useGlobalState } from "../../../../utils/GlobalStateContext";
+import { CgProfile } from "react-icons/cg";
+import { Link } from "react-router-dom";
 
 const UsersData = () => {
   const [roles] = useState(sessionStorage.getItem("roles") || "");
@@ -21,11 +23,11 @@ const UsersData = () => {
     size: pageSize,
   });
 
-    useEffect(() => {
-      if (roles === "Hostel_manager") {
-        setFilterValue(hostelID);
-      }
-    }, [roles, hostelID]);
+  useEffect(() => {
+    if (roles === "Hostel_manager") {
+      setFilterValue(hostelID);
+    }
+  }, [roles, hostelID]);
 
   const Users = response?.data.results || [];
 
@@ -114,6 +116,13 @@ const UsersData = () => {
                 <GroupPermission user={row.original} />
               </div>
             )}
+            <Link
+              to={`/view-profile/${row.original.id}`}
+              className="py-2 px-2 inline-flex items-center gap-x-2 text-xs font-medium rounded-xl border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-800 dark:border-slate-600 dark:text-white dark:hover:bg-slate-700"
+            >
+              <CgProfile className="flex-shrink-0 size-3.5" />
+              View Profile
+            </Link>
           </div>
         ),
       },

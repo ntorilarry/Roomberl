@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetUserProfileQuery } from "../../../services/user-service";
 import { useGetAddInfoByUserIdQuery } from "../../../services/auth-service";
@@ -7,6 +7,7 @@ import ProfileTabs from "../Profile/components/ProfileTabs";
 import { StartMessageModal } from "../messages/components/StartMessageModal";
 
 const ViewMemberProfile = () => {
+  const [roles] = useState(sessionStorage.getItem("roles") || "");
   const { userId } = useParams();
   const { data: profileResponse, isLoading: getProfileLoading } =
     useGetUserProfileQuery(userId || "");
@@ -39,10 +40,12 @@ const ViewMemberProfile = () => {
                   }
                   alt="Bordered avatar"
                 />
-                <div className="px-4">
-                  {" "}
-                  <StartMessageModal objectID={userId} />
-                </div>
+                {roles === "Student" && (
+                  <div className="px-4">
+                    {" "}
+                    <StartMessageModal objectID={userId} />
+                  </div>
+                )}
               </div>
               <ProfileTabs profile={profile} addData={addData} />
             </div>
